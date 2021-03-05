@@ -1,10 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
-
+import { userReducer } from './reducers';
 
 export default configureStore({
-	reducer: {
-
-	},
-	middleware: [thunk]
-})
+  reducer: {
+    user: userReducer,
+  },
+  middleware: [thunk],
+});
