@@ -30,7 +30,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix --color"
   },
   "eslintConfig": {
     "extends": [
@@ -71,6 +73,7 @@
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
+      "npx eslint . --ext .js,.jsx,.ts,.tsx",
       "eslint --quiet --fix"
     ],
     "*.{json,md,html}": [

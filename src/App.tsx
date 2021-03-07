@@ -11,7 +11,8 @@ const App: React.FC = () => {
   if (fetchingState === 'loading') {
     return <LoadingSpin />
   }
-console.log("isAuth", isAuth)
+  console.log("for chech husky and eslint");
+
   return (
     <div className="main-content">
       <Switch>
