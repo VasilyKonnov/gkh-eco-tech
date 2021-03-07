@@ -1,0 +1,13 @@
+.timer-wrapper {
+	margin: 12px 0 16px;
+	text-align: center;
+}
+
+.timer-wrapper span {
+	font-size: 16px;
+	color: #004F9E;
+}
+
+.request-pass-again {
+	cursor: pointer;
+}
