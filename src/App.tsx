@@ -1,19 +1,24 @@
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { PageContainer } from './components';
+import { PageContainer, LoginPage } from './components';
 import { Spin } from 'antd';
 import { useSelector } from 'react-redux';
-import { userSelector } from './store/selectors';
+import { userSelector } from './store/user';
+import { FetchingStateTypes } from './store';
 
-const LoginPage: React.FC = () => <div>Login Page</div>;
 const LoadingPage: React.FC = () => <Spin size="large" />;
 
 const App: React.FC = () => {
   const { isAuth, fetchingState } = useSelector(userSelector);
-  // const isAuth: boolean = true;
-  // const fetchingState: string = 'success';
+  const patches: string[] = [
+    '/payments',
+    '/metering',
+    '/tickets/:id?',
+    '/services',
+    '/news',
+  ];
 
-  const pageContent = () =>
-    fetchingState === 'loading' ? (
+  const pageContent: React.FC = () =>
+    fetchingState === FetchingStateTypes.loading ? (
       <LoadingPage />
     ) : isAuth ? (
       <PageContainer />
@@ -33,17 +38,7 @@ const App: React.FC = () => {
     >
       <Switch>
         <Route path="/login" component={LoginPage} />
-        <Route
-          exact
-          path={[
-            '/payments',
-            '/metering',
-            '/tickets/:id?',
-            '/services',
-            '/news',
-          ]}
-          component={pageContent}
-        />
+        <Route exact path={patches} component={pageContent} />
         <Route path="*">
           <Redirect to="/payments" />
         </Route>

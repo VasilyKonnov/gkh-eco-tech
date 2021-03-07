@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
-import { userReducer } from './reducers';
+import { userReducer, userAction } from './user';
 
 export const store = configureStore({
   reducer: {
@@ -10,3 +10,6 @@ export const store = configureStore({
 });
 
 export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = ReturnType<typeof store.dispatch>;
+
+store.dispatch(userAction.verify() as any);
