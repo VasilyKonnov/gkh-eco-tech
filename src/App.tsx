@@ -1,11 +1,13 @@
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { PageContainer, LoginPage } from './components';
-import { Spin } from 'antd';
+import {
+  PageBase,
+  LoginPage,
+  PageWrapper,
+  SpinLoader,
+} from './components';
 import { useSelector } from 'react-redux';
 import { userSelector } from './store/user';
 import { FetchingStateTypes } from './store';
-
-const LoadingPage: React.FC = () => <Spin size="large" />;
 
 const App: React.FC = () => {
   const { isAuth, fetchingState } = useSelector(userSelector);
@@ -14,28 +16,25 @@ const App: React.FC = () => {
     '/metering',
     '/tickets/:id?',
     '/services',
+    '/admin',
     '/news',
   ];
 
+  const isCheckingToken =
+    window.localStorage.getItem('Token') &&
+    fetchingState === FetchingStateTypes.loading;
+
   const pageContent: React.FC = () =>
-    fetchingState === FetchingStateTypes.loading ? (
-      <LoadingPage />
+    isCheckingToken ? (
+      <SpinLoader />
     ) : isAuth ? (
-      <PageContainer />
+      <PageBase />
     ) : (
       <Redirect to="/login" />
     );
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        background: '#f2f2f2',
-        margin: '0 auto',
-        height: '100vh',
-      }}
-    >
+    <PageWrapper>
       <Switch>
         <Route path="/login" component={LoginPage} />
         <Route exact path={patches} component={pageContent} />
@@ -43,7 +42,7 @@ const App: React.FC = () => {
           <Redirect to="/payments" />
         </Route>
       </Switch>
-    </div>
+    </PageWrapper>
   );
 };
 

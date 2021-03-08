@@ -1,16 +1,19 @@
 import { Menu } from 'antd';
 
-interface NavbarProps {
+export interface INavMenuProps {
   currentMenu: string;
-  changeMenu(props: object): void;
+  onChangeMenu(props: object): void;
 }
 
-export const NavBar: React.FC<NavbarProps> = ({ currentMenu, changeMenu }) => (
+export const NavMenu: React.FC<INavMenuProps> = ({
+  currentMenu,
+  onChangeMenu,
+}) => (
   <Menu
     theme="light"
     mode="horizontal"
     defaultSelectedKeys={[currentMenu]}
-    onClick={(key) => changeMenu(key)}
+    onClick={(key) => onChangeMenu(key)}
   >
     <Menu.Item key="payments">Начисления</Menu.Item>
     <Menu.Item key="metering">Показания</Menu.Item>
