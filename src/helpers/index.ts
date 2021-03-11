@@ -1,2 +1,2 @@
-export * from './openNotification';
+export * from './OpenNotification/OpenNotification';
 export * from './formatPhoneNumber';

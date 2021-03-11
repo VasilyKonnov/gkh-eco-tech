@@ -1,0 +1,1 @@
+export { SendPassForm } from "./SendPassForm";

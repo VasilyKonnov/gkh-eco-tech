@@ -1,12 +1,8 @@
 import { Avatar, Button, Space, Typography } from 'antd';
 import { LogoutOutlined } from '@ant-design/icons';
-import { formatPhoneNumber } from '../helpers';
+import { formatPhoneNumber } from '../../helpers';
+import { IUserMenuProps } from './UserMenuType';
 
-export interface IUserMenuProps {
-  onLogout(): void;
-  userPhone?: string;
-  avatarUrl?: string;
-}
 
 export const UserMenu: React.FC<IUserMenuProps> = ({
   avatarUrl,

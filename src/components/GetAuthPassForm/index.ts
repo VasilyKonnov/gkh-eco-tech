@@ -1,0 +1,1 @@
+export { GetAuthPassForm } from "./GetAuthPassForm";
