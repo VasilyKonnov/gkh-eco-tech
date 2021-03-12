@@ -1,9 +1,8 @@
-import { ChangeEvent, useState, useEffect, FC } from "react"
-import { Input, Modal, Checkbox, Button, Typography } from 'antd';
+import { Button } from 'antd';
 import MaskedInput from 'antd-mask-input';
 import { TGetAuthPassFormimport } from "./GetAuthPassFormTypes"
 
-export const GetAuthPassForm: FC<TGetAuthPassFormimport> = ({
+export const GetAuthPassForm: React.FC<TGetAuthPassFormimport> = ({
 	phoneValue,
 	setRequestPassword,
 	handlePhoneNumber,
