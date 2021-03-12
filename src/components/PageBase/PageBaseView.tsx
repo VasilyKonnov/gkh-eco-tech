@@ -1,9 +1,12 @@
 import { Layout, Row, Col } from 'antd';
-import { IPageBaseViewProps } from './PageBaseTypes';
-import { NavMenu } from './../../components/NavMenu/NavMenu';
-import { UserMenu } from './../../components/UserMenu/UserMenu';
+import { NavMenu, INavMenuProps } from '../NavMenu';
+import { UserMenu, IUserMenuProps } from '../UserMenu';
+
 const { Header, Sider, Content } = Layout;
 
+interface IPageBaseViewProps extends INavMenuProps, IUserMenuProps {
+  isAdmin: boolean;
+}
 
 export const PageBaseView: React.FC<IPageBaseViewProps> = ({
   isAdmin,

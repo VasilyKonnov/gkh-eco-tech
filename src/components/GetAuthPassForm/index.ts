@@ -1,1 +1,0 @@
-export { GetAuthPassForm } from "./GetAuthPassForm";

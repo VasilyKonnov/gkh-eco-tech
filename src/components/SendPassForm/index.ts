@@ -1,1 +1,0 @@
-export { SendPassForm } from "./SendPassForm";
