@@ -1,0 +1,36 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  docker_html_path: "/www"
+  env: dev
+  deploy_subfolder: /home/bondit/
+
+install_dependencies:
+  image: node:14.15.0-stretch
+  stage: build
+  script:
+    - yarn install
+    - yarn build
+    - mv build build_$env
+  artifacts:
+    paths:
+      - node_modules
+      - build_$env
+  cache:
+    key:
+      files:
+        - yarn.lock
+    paths:
+      - node_modules
+
+deploy_dev:
+  stage: deploy
+  script:
+    - rm -rf $docker_html_path/$deploy_subfolder/build/{*,.*}
+    - cp -r build_$env $docker_html_path/$deploy_subfolder/build
+  only:
+    - develop
+
+
