@@ -1,10 +1,6 @@
 import { Route, Switch, Redirect } from 'react-router-dom';
-import {
-  PageBase,
-  LoginPage,
-  PageWrapper,
-  SpinLoader,
-} from './components';
+import { PageWrapper, SpinLoader } from './components';
+import { LoginPage, PageBase } from './pages';
 import { useSelector } from 'react-redux';
 import { userSelector } from './store/user';
 import { FetchingStateTypes } from './store';
