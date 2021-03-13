@@ -17,22 +17,20 @@ const App: React.FC = () => {
   ];
 
   const isCheckingToken =
-    window.localStorage.getItem('Token') &&
-    fetchingState === FetchingStateTypes.loading;
+    window.localStorage.getItem('Token') && fetchingState === FetchingStateTypes.loading;
 
-  const pageContent: React.FC = () =>
-    isCheckingToken ? (
-      <SpinLoader />
-    ) : isAuth ? (
-      <PageBase />
-    ) : (
-      <Redirect to="/login" />
-    );
+  if (isCheckingToken) {
+    return <SpinLoader />;
+  }
+
+  const pageContent: React.FC = () => {
+    return isAuth ? <PageBase /> : <Redirect to="/" />;
+  };
 
   return (
     <PageWrapper>
       <Switch>
-        <Route path="/login" component={LoginPage} />
+        <Route path="/" component={LoginPage} />
         <Route exact path={patches} component={pageContent} />
         <Route path="*">
           <Redirect to="/payments" />

@@ -4,8 +4,8 @@ import { TFormInputPhoneProps } from './FormInputPhoneTypes';
 
 export const FormInputPhone: React.FC<TFormInputPhoneProps> = ({
   phoneValue,
-  setRequestPassword,
-  handlePhoneNumber,
+  handlerRequestPasswor,
+  handlerPhoneNumber,
   checkLengthPhone,
 }) => (
   <>
@@ -16,13 +16,10 @@ export const FormInputPhone: React.FC<TFormInputPhoneProps> = ({
           name="phone"
           mask="+7 111 111 11 11"
           placeholder="Номер телефона"
-          onChange={handlePhoneNumber}
+          onChange={handlerPhoneNumber}
           value={phoneValue}
         />
-        <Button
-          disabled={checkLengthPhone() ? false : true}
-          onClick={() => setRequestPassword(false)}
-        >
+        <Button disabled={checkLengthPhone() ? false : true} onClick={handlerRequestPasswor}>
           Далее
         </Button>
       </form>

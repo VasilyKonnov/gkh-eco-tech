@@ -1,13 +1,15 @@
+import { CheckboxChangeEvent } from "antd/lib/checkbox";
+
 export type TFormInputPassProps = {
   passValue: string | number | undefined;
   phoneValue: string | number | undefined;
-  handlePassword: React.ChangeEventHandler<HTMLInputElement>;
-  setRequestPassword: Function;
+  handlerPassword: React.ChangeEventHandler<HTMLInputElement>;
+  changePhone: React.MouseEventHandler<HTMLButtonElement>;
   isCheckedBox: boolean;
-  handleLogin: React.MouseEventHandler<HTMLElement>;
-  showModalUserAgreement: Function;
-  showModalPersonalData: Function;
+  handlerLogin: React.MouseEventHandler<HTMLElement>;
+  showModalUserAgreementCallback: React.MouseEventHandler<HTMLSpanElement>;
+  showModalPersonalDataCallback: React.MouseEventHandler<HTMLSpanElement>;
   fetchingState: string;
-  setIsCheckedBox: Function;
+  handlerCheckedBox: (e: CheckboxChangeEvent) => void;
   canAgree: boolean;
 };

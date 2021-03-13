@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useEffect } from 'react';
+import { ChangeEvent, useState, useEffect, useCallback } from 'react';
 import { Modal, Typography } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { userAction, userSelector } from '../../store/user';
@@ -7,6 +7,7 @@ import { useHistory } from 'react-router';
 import imgLoginPage from '../../assets/image/loginpage.png';
 import gplay from '../../assets/image/gplay.png';
 import appstr from '../../assets/image/appstr.png';
+import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import './LoginPage.css';
 
 export const LoginPage = () => {
@@ -24,13 +25,23 @@ export const LoginPage = () => {
   const showModalUserAgreement = () => {
     setIsUserAgreementVisible(true);
   };
-  const handleCancelUserAgreement = () => {
-    setIsUserAgreementVisible(false);
-  };
 
   const showModalPersonalData = () => {
     setIsPersonalDataVisible(true);
   };
+
+  const showModalUserAgreementCallback = useCallback(() => {
+    showModalUserAgreement();
+  }, []);
+
+  const showModalPersonalDataCallback = useCallback(() => {
+    showModalPersonalData();
+  }, []);
+
+  const handlerCancelUserAgreement = () => {
+    setIsUserAgreementVisible(false);
+  };
+
   const handleCancelPersonalData = () => {
     setIsPersonalDataVisible(false);
   };
@@ -39,12 +50,12 @@ export const LoginPage = () => {
     isAuth && history.push('/');
   }, [history, isAuth]);
 
-  const handlePhoneNumber = (event: ChangeEvent<HTMLInputElement>) => {
+  const handlerPhoneNumber = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setPhoneValue(value);
   };
 
-  const handlePassword = (event: ChangeEvent<HTMLInputElement>) => {
+  const handlerPassword = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setPassValue(value);
   };
@@ -54,13 +65,22 @@ export const LoginPage = () => {
     return phoneLength === 11;
   }
 
-  function handleLogin() {
-    // event.preventDefault();
-
-    dispatch(
-      userAction.auth({ phone: phoneValue.slice(2).replace(/(\s)|(_)/g, '') })
-    );
+  function handlerLogin() {
+    dispatch(userAction.auth({ phone: phoneValue.slice(2).replace(/(\s)|(_)/g, '') }));
   }
+
+  const handlerRequestPasswor = () => {
+    setRequestPassword(false);
+  };
+
+  const changePhone = () => {
+    setRequestPassword(true);
+  };
+
+  const handlerCheckedBox = (event: CheckboxChangeEvent) => {
+    const checked = event.target.checked;
+    setIsCheckedBox(checked);
+  };
 
   return (
     <div className="auth-layout">
@@ -70,23 +90,23 @@ export const LoginPage = () => {
         {requestPassword ? (
           <FormInputPhone
             phoneValue={phoneValue}
-            setRequestPassword={setRequestPassword}
-            handlePhoneNumber={handlePhoneNumber}
+            handlerPhoneNumber={handlerPhoneNumber}
             checkLengthPhone={checkLengthPhone}
+            handlerRequestPasswor={handlerRequestPasswor}
           />
         ) : (
           <FormInputPass
-            setRequestPassword={setRequestPassword}
-            handlePassword={handlePassword}
+            changePhone={changePhone}
+            handlerPassword={handlerPassword}
             passValue={passValue}
             canAgree={passValue.length !== 6}
             phoneValue={phoneValue}
             isCheckedBox={isCheckedBox}
-            handleLogin={handleLogin}
+            handlerLogin={handlerLogin}
             fetchingState={fetchingState}
-            setIsCheckedBox={setIsCheckedBox}
-            showModalUserAgreement={showModalUserAgreement}
-            showModalPersonalData={showModalPersonalData}
+            handlerCheckedBox={handlerCheckedBox}
+            showModalUserAgreementCallback={showModalUserAgreementCallback}
+            showModalPersonalDataCallback={showModalPersonalDataCallback}
           />
         )}
 
@@ -102,7 +122,7 @@ export const LoginPage = () => {
         width={1000}
         title="Пользовательское соглашение"
         visible={isUserAgreementVisible}
-        onCancel={handleCancelUserAgreement}
+        onCancel={handlerCancelUserAgreement}
       >
         <h1>Тут будет тест Пользовательского соглашения</h1>
       </Modal>
@@ -113,9 +133,7 @@ export const LoginPage = () => {
         visible={isPersonalDataVisible}
         onCancel={handleCancelPersonalData}
       >
-        <h1>
-          Тут будет тест соглашения c Политикой обработки персональных данных
-        </h1>
+        <h1>Тут будет тест соглашения c Политикой обработки персональных данных</h1>
       </Modal>
     </div>
   );

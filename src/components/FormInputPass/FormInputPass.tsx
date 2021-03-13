@@ -8,26 +8,23 @@ import { TFormInputPassProps } from './FormInputPassTypes';
 const { Text } = Typography;
 
 export const FormInputPass: FC<TFormInputPassProps> = ({
-  setRequestPassword,
-  handlePassword,
+  changePhone,
+  handlerPassword,
   passValue,
   phoneValue,
   isCheckedBox,
-  handleLogin,
+  handlerLogin,
   fetchingState,
-  setIsCheckedBox,
-  showModalUserAgreement,
-  showModalPersonalData,
+  handlerCheckedBox,
+  showModalUserAgreementCallback,
+  showModalPersonalDataCallback,
   canAgree,
 }) => (
   <>
     <Text className="auth-instruction">
       Пожалуйста, введите одноразовый пароль отправленный на номер {phoneValue}
     </Text>
-    <button
-      className="auth-back-to-start"
-      onClick={() => setRequestPassword(true)}
-    >
+    <button className="auth-back-to-start" onClick={changePhone}>
       Поменять номер
     </button>
     <div className="auth-wrapper">
@@ -36,13 +33,13 @@ export const FormInputPass: FC<TFormInputPassProps> = ({
           maxLength={6}
           suffix={<EyeOutlined />}
           placeholder="Одноразовый пароль"
-          onChange={handlePassword}
+          onChange={handlerPassword}
           value={passValue}
         />
         <Timer />
         <Button
           disabled={!isCheckedBox}
-          onClick={handleLogin}
+          onClick={handlerLogin}
           loading={fetchingState === FetchingStateTypes.loading}
           // htmlType="submit"
         >
@@ -52,19 +49,15 @@ export const FormInputPass: FC<TFormInputPassProps> = ({
     </div>
     <div className="auth-check-box-wrapp">
       <div className="auth-check-box">
-        <Checkbox
-          checked={isCheckedBox}
-          onChange={() => setIsCheckedBox(!isCheckedBox)}
-          disabled={canAgree}
-        />
+        <Checkbox onChange={handlerCheckedBox} checked={isCheckedBox} disabled={canAgree} />
       </div>
       <Text>
         Вы соглашаетесь с правилами{' '}
-        <span className="polit-agree" onClick={() => showModalUserAgreement()}>
+        <span className="polit-agree" onClick={showModalUserAgreementCallback}>
           Пользовательского соглашения{' '}
         </span>{' '}
         и{' '}
-        <span className="polit-agree" onClick={() => showModalPersonalData()}>
+        <span className="polit-agree" onClick={showModalPersonalDataCallback}>
           Политикой обработки персональных данных
         </span>
         .
