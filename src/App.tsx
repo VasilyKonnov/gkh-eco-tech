@@ -1,12 +1,12 @@
-import { Route, Switch, Redirect } from 'react-router-dom';
-import { PageWrapper, SpinLoader } from './components';
-import { LoginPage, PageBase } from './pages';
-import { useSelector } from 'react-redux';
-import { userSelector } from './store/user';
-import { FetchingStateTypes } from './store';
+import { Route, Switch, Redirect } from 'react-router-dom'
+import { PageWrapper, SpinLoader } from './components'
+import { LoginPage, PageBase } from './pages'
+import { useSelector } from 'react-redux'
+import { userSelector } from './store/user'
+import { FetchingStateTypes } from './store'
 
 const App: React.FC = () => {
-  const { isAuth, fetchingState } = useSelector(userSelector);
+  const { isAuth, fetchingState } = useSelector(userSelector)
   const patches: string[] = [
     '/payments',
     '/metering',
@@ -14,30 +14,30 @@ const App: React.FC = () => {
     '/services',
     '/admin',
     '/news',
-  ];
+  ]
 
   const isCheckingToken =
-    window.localStorage.getItem('Token') && fetchingState === FetchingStateTypes.loading;
-
-  if (isCheckingToken) {
-    return <SpinLoader />;
-  }
+    window.localStorage.getItem('Token') &&
+    fetchingState === FetchingStateTypes.loading
 
   const pageContent: React.FC = () => {
-    return isAuth ? <PageBase /> : <Redirect to="/" />;
-  };
+    if (isCheckingToken) {
+      return <SpinLoader />
+    }
+    return isAuth ? <PageBase /> : <Redirect to="/login" />
+  }
 
   return (
     <PageWrapper>
       <Switch>
-        <Route path="/" component={LoginPage} />
+        <Route path="/login" component={LoginPage} />
         <Route exact path={patches} component={pageContent} />
         <Route path="*">
           <Redirect to="/payments" />
         </Route>
       </Switch>
     </PageWrapper>
-  );
-};
+  )
+}
 
-export default App;
+export default App

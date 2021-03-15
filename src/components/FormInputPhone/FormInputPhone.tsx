@@ -4,9 +4,10 @@ import { TFormInputPhoneProps } from './FormInputPhoneTypes';
 
 export const FormInputPhone: React.FC<TFormInputPhoneProps> = ({
   phoneValue,
-  handlerRequestPasswor,
-  handlerPhoneNumber,
-  checkLengthPhone,
+  handlerSendPhone,
+  onChangePhone,
+  phoneLengthIsValid,
+  loading,
 }) => (
   <>
     <div className="auth-wrapper">
@@ -16,10 +17,14 @@ export const FormInputPhone: React.FC<TFormInputPhoneProps> = ({
           name="phone"
           mask="+7 111 111 11 11"
           placeholder="Номер телефона"
-          onChange={handlerPhoneNumber}
+          onChange={onChangePhone}
           value={phoneValue}
         />
-        <Button disabled={checkLengthPhone() ? false : true} onClick={handlerRequestPasswor}>
+        <Button
+          disabled={phoneLengthIsValid}
+          onClick={handlerSendPhone}
+          loading={loading}
+        >
           Далее
         </Button>
       </form>

@@ -1,0 +1,1 @@
+export { RightAgreementBox } from './RightAgreementBox';

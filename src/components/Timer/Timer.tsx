@@ -1,25 +1,30 @@
-import { useState, useEffect } from 'react';
-import { format } from '../../utils/common';
-import './Timer.css';
+import { useState, useEffect } from 'react'
+import { format } from '../../utils/common'
+import './Timer.css'
+import { TTimerProps } from './TimerTypes'
 
-export const Timer = () => {
-  const [counter, setCounter] = useState(60);
+export const Timer: React.FC<TTimerProps> = ({ handlerSendPhone }) => {
+  const [counter, setCounter] = useState(60)
 
   const handlerClick = () => {
-    setCounter(60);
-  };
+    setCounter(60)
+    handlerSendPhone()
+  }
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let timer: NodeJS.Timeout
     if (counter > 0) {
-      timer = setTimeout(() => setCounter((counter: number) => counter - 1), 1000);
+      timer = setTimeout(
+        () => setCounter((counter: number) => counter - 1),
+        1000,
+      )
     }
     return () => {
       if (timer) {
-        clearTimeout(timer);
+        clearTimeout(timer)
       }
-    };
-  }, [counter]);
+    }
+  }, [counter])
 
   return (
     <div className="timer-wrapper">
@@ -31,5 +36,5 @@ export const Timer = () => {
         <span>{format(counter)}</span>
       )}
     </div>
-  );
-};
+  )
+}

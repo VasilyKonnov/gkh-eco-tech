@@ -1,30 +1,30 @@
-import { FC } from 'react';
-import { EyeOutlined } from '@ant-design/icons';
-import { Input, Checkbox, Button, Typography } from 'antd';
-import { Timer } from '../Timer';
-import { FetchingStateTypes } from '../../store';
-import { TFormInputPassProps } from './FormInputPassTypes';
+import { FC } from 'react'
+import { EyeOutlined } from '@ant-design/icons'
+import { Input, Checkbox, Button, Typography } from 'antd'
+import { Timer } from '../Timer'
+import { TFormInputPassProps } from './FormInputPassTypes'
+import { RightAgreementBox } from '../RightsAgreementBox'
 
-const { Text } = Typography;
+const { Text } = Typography
 
 export const FormInputPass: FC<TFormInputPassProps> = ({
-  changePhone,
-  handlerPassword,
+  onResendPass,
+  onChangePass,
   passValue,
   phoneValue,
   isCheckedBox,
+  isButtonDisable,
   handlerLogin,
-  fetchingState,
-  handlerCheckedBox,
-  showModalUserAgreementCallback,
-  showModalPersonalDataCallback,
+  handlerSendPhone,
+  loading,
+  setIsCheckedBox,
   canAgree,
 }) => (
   <>
     <Text className="auth-instruction">
       Пожалуйста, введите одноразовый пароль отправленный на номер {phoneValue}
     </Text>
-    <button className="auth-back-to-start" onClick={changePhone}>
+    <button className="auth-back-to-start" onClick={onResendPass}>
       Поменять номер
     </button>
     <div className="auth-wrapper">
@@ -33,15 +33,14 @@ export const FormInputPass: FC<TFormInputPassProps> = ({
           maxLength={6}
           suffix={<EyeOutlined />}
           placeholder="Одноразовый пароль"
-          onChange={handlerPassword}
+          onChange={onChangePass}
           value={passValue}
         />
-        <Timer />
+        <Timer handlerSendPhone={handlerSendPhone} />
         <Button
-          disabled={!isCheckedBox}
+          disabled={isButtonDisable}
           onClick={handlerLogin}
-          loading={fetchingState === FetchingStateTypes.loading}
-          // htmlType="submit"
+          loading={loading}
         >
           Войти
         </Button>
@@ -49,19 +48,13 @@ export const FormInputPass: FC<TFormInputPassProps> = ({
     </div>
     <div className="auth-check-box-wrapp">
       <div className="auth-check-box">
-        <Checkbox onChange={handlerCheckedBox} checked={isCheckedBox} disabled={canAgree} />
+        <Checkbox
+          checked={isCheckedBox}
+          onChange={() => setIsCheckedBox(!isCheckedBox)}
+          disabled={canAgree}
+        />
       </div>
-      <Text>
-        Вы соглашаетесь с правилами{' '}
-        <span className="polit-agree" onClick={showModalUserAgreementCallback}>
-          Пользовательского соглашения{' '}
-        </span>{' '}
-        и{' '}
-        <span className="polit-agree" onClick={showModalPersonalDataCallback}>
-          Политикой обработки персональных данных
-        </span>
-        .
-      </Text>
+      <RightAgreementBox />
     </div>
   </>
-);
+)
