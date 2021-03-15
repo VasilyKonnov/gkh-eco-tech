@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Typography, Modal } from 'antd'
 import './RightAgreementBox.css'
 
@@ -7,18 +7,24 @@ export const RightAgreementBox = () => {
   const [isPersonalDataVisible, setIsPersonalDataVisible] = useState(false)
   const handleCancelUserAgreement = () => setIsUserAgreementVisible(false)
   const handleCancelPersonalData = () => setIsPersonalDataVisible(false)
-  const showModalUserAgreement = () => setIsUserAgreementVisible(true)
-  const showModalPersonalData = () => setIsPersonalDataVisible(true)
+  const showModalUserAgreement = useCallback(
+    () => setIsUserAgreementVisible(true),
+    [setIsUserAgreementVisible],
+  )
+  const showModalPersonalData = useCallback(
+    () => setIsPersonalDataVisible(true),
+    [setIsPersonalDataVisible],
+  )
 
   return (
     <>
       <Typography.Text>
         Я согласен c{' '}
-        <span className="polit-agree" onClick={() => showModalUserAgreement()}>
+        <span className="polit-agree" onClick={showModalUserAgreement}>
           Пользовательского соглашения
         </span>{' '}
         и{' '}
-        <span className="polit-agree" onClick={() => showModalPersonalData()}>
+        <span className="polit-agree" onClick={showModalPersonalData}>
           Политикой обработки персональных данных.
         </span>
       </Typography.Text>

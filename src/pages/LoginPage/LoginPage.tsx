@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useEffect } from 'react'
+import { ChangeEvent, useState, useEffect, useCallback } from 'react'
 import { Typography } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -37,15 +37,22 @@ export const LoginPage: React.FC = () => {
     }
   }, [isCheckedBox, passValue])
 
-  const onChangePhone = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value
-    setPhoneValue(value)
-  }
+  const onChangePhone = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const value = event.target.value
+      setPhoneValue(value)
+    },
+    [setPhoneValue],
+  )
 
   const onChangePass = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value
     setPassValue(value)
   }
+
+  const onChangeCheckedBox = useCallback(() => {
+    setIsCheckedBox(!isCheckedBox)
+  }, [isCheckedBox])
 
   function handlerSendPhone() {
     dispatch(
@@ -53,6 +60,7 @@ export const LoginPage: React.FC = () => {
         mobile: getNormalizedPhoneValue(phoneValue),
       }),
     )
+    setPassValue('')
   }
 
   function onResendPass() {
@@ -94,7 +102,7 @@ export const LoginPage: React.FC = () => {
             handlerLogin={handlerLogin}
             handlerSendPhone={handlerSendPhone}
             loading={fetchingState === FetchingStateTypes.loading}
-            setIsCheckedBox={setIsCheckedBox}
+            onChangeCheckedBox={onChangeCheckedBox}
           />
         )}
         <div className="auth-line-under-button"></div>

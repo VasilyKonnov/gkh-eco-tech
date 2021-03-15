@@ -8,6 +8,6 @@ export type TFormInputPassProps = {
   handlerLogin: React.MouseEventHandler<HTMLElement>
   handlerSendPhone: () => void
   loading: boolean
-  setIsCheckedBox: Function
+  onChangeCheckedBox: () => void
   canAgree: boolean
 }
