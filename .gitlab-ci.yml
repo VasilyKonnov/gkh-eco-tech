@@ -10,7 +10,9 @@ variables:
 install_dependencies:
   image: node:14.15.0-stretch
   stage: build
-  script:
+  when: manual
+script:
+    - export REACT_APP_API_URL=http://dev.brain4you.ru/api/v1
     - yarn install
     - yarn build
     - mv build build_$env
@@ -27,6 +29,7 @@ install_dependencies:
 
 deploy_dev:
   stage: deploy
+  when: manual
   script:
     - rm -rf $deploy_subfolder/build/{*,.*}
     - cp -r build_$env $deploy_subfolder/build
