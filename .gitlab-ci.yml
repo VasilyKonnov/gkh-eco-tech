@@ -5,7 +5,7 @@ stages:
 variables:
   docker_html_path: "/www"
   env: dev
-  deploy_subfolder: /home/bondit/
+  deploy_subfolder: /home/bondit
 
 install_dependencies:
   image: node:14.15.0-stretch
@@ -28,8 +28,8 @@ install_dependencies:
 deploy_dev:
   stage: deploy
   script:
-    - rm -rf $docker_html_path/$deploy_subfolder/build/{*,.*}
-    - cp -r build_$env $docker_html_path/$deploy_subfolder/build
+    - rm -rf $deploy_subfolder/build/{*,.*}
+    - cp -r build_$env /$deploy_subfolder/build
   only:
     - develop
 
