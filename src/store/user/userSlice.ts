@@ -1,21 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { FetchingStateTypes, UserRoleTypes } from '../types';
+import { FetchingStateTypes } from '../types';
+import { TUserState } from './userTypes';
 
-export interface IUserState {
-  userId: number;
-  phone: string;
-  role: UserRoleTypes;
-  isAuth: boolean;
-  fetchingState: FetchingStateTypes;
-  errorText: string;
-}
-
-const initialState: IUserState = {
+const initialState: TUserState = {
   userId: 0,
   phone: '',
   role: 'none',
   isAuth: false,
   fetchingState: FetchingStateTypes.none,
+  passDeliveryState: false,
   errorText: '',
 };
 
@@ -23,6 +16,10 @@ const userSlice = createSlice({
   name: 'USER',
   initialState,
   reducers: {
+    setStateDeliveryPass: (state, { payload }) => {
+      state.passDeliveryState = payload.deliveryState;
+      state.fetchingState = FetchingStateTypes.success;
+    },
     setAuthData: (state, { payload }) => {
       state.userId = payload.userId;
       state.phone = payload.phone;
@@ -52,5 +49,6 @@ export const {
   userFetching,
   userFetchingError,
   userLogout,
+  setStateDeliveryPass,
 } = userSlice.actions;
 export const userReducer = userSlice.reducer;

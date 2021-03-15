@@ -1,0 +1,1 @@
+export { FormInputPhone } from "./FormInputPhone";
