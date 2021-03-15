@@ -11,7 +11,7 @@ install_dependencies:
   image: node:14.15.0-stretch
   stage: build
   when: manual
-script:
+  script:
     - export REACT_APP_API_URL=http://dev.brain4you.ru/api/v1
     - yarn install
     - yarn build
