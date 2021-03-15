@@ -31,8 +31,8 @@ deploy_dev:
   stage: deploy
   when: manual
   script:
-    - rm -rf $deploy_subfolder/build/{*,.*}
-    - cp -r build_$env $deploy_subfolder/build
+    - rm -rf $docker_html_path{*,.*}
+    - cp -r build_$env $docker_html_path
   only:
     - develop
 
