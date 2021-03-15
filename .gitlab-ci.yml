@@ -29,7 +29,7 @@ deploy_dev:
   stage: deploy
   script:
     - rm -rf $deploy_subfolder/build/{*,.*}
-    - cp -r build_$env /$deploy_subfolder/build
+    - cp -r build_$env $deploy_subfolder/build
   only:
     - develop
 
