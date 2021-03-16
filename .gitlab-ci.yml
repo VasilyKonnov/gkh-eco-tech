@@ -24,6 +24,8 @@ install_dependencies:
         - yarn.lock
     paths:
       - node_modules
+  only:
+    - develop
 
 deploy_dev:
   stage: deploy
