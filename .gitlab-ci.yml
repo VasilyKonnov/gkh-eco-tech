@@ -5,12 +5,10 @@ stages:
 variables:
   docker_html_path: "/www"
   env: dev
-  deploy_subfolder: /home/bondit
 
 install_dependencies:
   image: node:14.15.0-stretch
   stage: build
-  when: manual
   script:
     - export REACT_APP_API_URL=http://dev.brain4you.ru/api/v1
     - yarn install
@@ -29,9 +27,8 @@ install_dependencies:
 
 deploy_dev:
   stage: deploy
-  when: manual
   script:
-    - rm -rf $docker_html_path{*,.*}
+    - rm -rf $docker_html_path/build_$env
     - cp -r build_$env $docker_html_path
   only:
     - develop
