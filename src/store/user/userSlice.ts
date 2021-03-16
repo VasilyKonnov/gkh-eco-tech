@@ -40,6 +40,7 @@ const userSlice = createSlice({
       state.role = 'none';
       state.isAuth = false;
       state.fetchingState = FetchingStateTypes.none;
+      state.passDeliveryState = false;
     },
   },
 });
