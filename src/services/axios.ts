@@ -10,7 +10,6 @@ axios.interceptors.request.use(function (config) {
   if (apiUrlWithoutToken.includes(config.url!)) {
     config.headers = {};
   }
-
   return config;
 });
 
@@ -19,7 +18,7 @@ axios.interceptors.response.use(
     return response;
   },
   function (error) {
-    if (error.response.status === 401) {
+    if (error.response && error.response.status === 401) {
       window.history.pushState({}, '/login');
     }
   }

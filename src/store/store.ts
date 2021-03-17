@@ -1,19 +1,23 @@
-import { configureStore } from '@reduxjs/toolkit'
-import thunk from 'redux-thunk'
-import { userReducer, userAction } from './user'
+import { configureStore } from '@reduxjs/toolkit';
+import thunk from 'redux-thunk';
+import { userReducer, userAction } from './user';
+import { meterReducer } from './meter';
+import { valueReducer } from './value';
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
+    meter: meterReducer,
+    value: valueReducer,
   },
   middleware: [thunk],
-})
+});
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = ReturnType<typeof store.dispatch>
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = ReturnType<typeof store.dispatch>;
 
 store.dispatch(
   userAction.verify({
     token: window.localStorage.getItem('Token') || '',
-  }) as any,
-)
+  }) as any
+);

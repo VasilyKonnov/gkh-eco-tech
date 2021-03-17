@@ -33,7 +33,8 @@ export const userAction: TUserAction = {
       .then(({ data }) => {
         const sub = jwt_decode<TJwt>(data.access);
         window.localStorage.setItem('Token', data.access);
-        axios.defaults.headers.common['Token'] = data.access;
+        axios.defaults.headers.common['Authorization'] =
+          'Bearer ' + data.access;
 
         dispatch(
           setAuthData({
@@ -93,7 +94,7 @@ export const userAction: TUserAction = {
         dispatch(userFetchingError({ errorText: 'Ошибка проверки токена' }));
         window.localStorage.removeItem('Token');
         openNotification({
-          title: 'Пользоватеь не определён!',
+          title: 'Время сессии истекло!',
           text: 'Необходимо авторизоваться повторно',
         });
       });
