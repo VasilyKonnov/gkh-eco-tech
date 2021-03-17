@@ -1,9 +1,11 @@
-.page-container {
+.page {
   height: 100vh;
   max-width: 1440px;
   margin: 0 40px;
 }
 
-.page-container .header {
+.page .page-header,
+.page .page-content {
+  padding: 0 50px;
   background: #fff;
 }

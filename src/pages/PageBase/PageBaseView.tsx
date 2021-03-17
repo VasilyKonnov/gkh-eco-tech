@@ -1,7 +1,14 @@
 import { Layout, Row, Col } from 'antd';
-import { NavMenu, INavMenuProps, UserMenu, IUserMenuProps } from '../../components';
+import {
+  NavMenu,
+  INavMenuProps,
+  UserMenu,
+  IUserMenuProps,
+  PageContent,
+} from '../../components';
+import imgLoginPage from '../../assets/image/loginpage.png';
 
-const { Header, Sider, Content } = Layout;
+const { Header, Content } = Layout;
 
 interface IPageBaseViewProps extends INavMenuProps, IUserMenuProps {
   isAdmin: boolean;
@@ -15,18 +22,28 @@ export const PageBaseView: React.FC<IPageBaseViewProps> = ({
   userPhone,
   avatarUrl,
 }) => (
-  <Layout className="page-container">
-    {!isAdmin && <Sider theme="light">Sider</Sider>}
-    <Layout>
-      <Header className="header">
-        <Row justify="space-between">
-          <Col>{!isAdmin && <NavMenu currentMenu={currentMenu} onChangeMenu={onChangeMenu} />}</Col>
-          <Col>
-            <UserMenu onLogout={onLogout} avatarUrl={avatarUrl} userPhone={userPhone} />
-          </Col>
-        </Row>
-      </Header>
-      <Content>Content</Content>
-    </Layout>
+  <Layout className="page">
+    <Header className="page-header">
+      <Row justify="space-between">
+        <Col span={4}>
+          <img src={imgLoginPage} width={80} height={50} alt="logo" />
+        </Col>
+        <Col flex={1}>
+          {!isAdmin && (
+            <NavMenu currentMenu={currentMenu} onChangeMenu={onChangeMenu} />
+          )}
+        </Col>
+        <Col>
+          <UserMenu
+            onLogout={onLogout}
+            avatarUrl={avatarUrl}
+            userPhone={userPhone}
+          />
+        </Col>
+      </Row>
+    </Header>
+    <Content className="page-header">
+      <PageContent currentPage={currentMenu} />
+    </Content>
   </Layout>
 );
