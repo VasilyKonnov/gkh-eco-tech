@@ -28,3 +28,7 @@
   min-height: 56px;
   background: #2b6db0;
 }
+
+.ant-card-meta-description {
+  font-weight: 500;
+}
