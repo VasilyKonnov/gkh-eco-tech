@@ -10,6 +10,7 @@ export type TSendValueProps = {
 };
 
 export const valueApi = {
+  list: () => axios.get('/values/'),
   send: (post: TSendValueProps) =>
     axios.post('/values/', post, { responseType: 'json' }),
 };

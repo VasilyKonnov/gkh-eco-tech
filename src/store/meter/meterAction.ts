@@ -19,7 +19,7 @@ export const meterAction: TMeterAction = {
   list: () => (dispatch) => {
     dispatch(meterFetching());
     meterApi.list().then(({ data }) => {
-      dispatch(setMeterData({ data: data }));
+      dispatch(setMeterData({ data }));
     });
   },
   create: (post, cbCloseForm) => (dispatch) => {
@@ -53,9 +53,5 @@ export const meterAction: TMeterAction = {
       });
     }
     dispatch(setRefresh());
-    // values.apartment;
-    // values.building;
-    // values.house;
-    // values.street;
   },
 };

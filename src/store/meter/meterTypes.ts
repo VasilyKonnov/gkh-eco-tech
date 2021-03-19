@@ -9,12 +9,7 @@ export type TMeterItem = {
   user: string;
   meters_type: number;
   previous_value: string;
-  address: {
-    street: string;
-    house: string;
-    building: string;
-    apartment: string;
-  };
+  address: TMeterAddressItem;
 };
 
 export type TMeterAddress = {
@@ -24,6 +19,14 @@ export type TMeterAddress = {
     building: string;
     apartment: string;
   };
+};
+
+export type TMeterAddressItem = {
+  id: number;
+  street: string;
+  house: string;
+  building: string;
+  apartment: string;
 };
 
 export type TMeterType = {

@@ -11,11 +11,13 @@ export type TValueState = {
 export type TValueItem = {
   id: number;
   meter: number;
+  value: number;
   previous_value: number;
   date: Date;
 };
 
 export type TValueAction = {
+  list: () => (dispatch: Dispatch) => void;
   send: (
     values: TSendValueProps,
     onResetFields: () => void

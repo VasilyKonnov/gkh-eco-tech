@@ -20,6 +20,7 @@ export const SelectMeter: React.FC<TSelectMeterProps> = ({
       placeholder="Выберите счетчик"
       onChange={onChangeMeter}
       value={activeMeter}
+      allowClear
     >
       {data.map((meter) => (
         <Option value={meter.id} key={meter.id}>
