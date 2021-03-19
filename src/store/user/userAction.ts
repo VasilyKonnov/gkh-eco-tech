@@ -16,8 +16,8 @@ export const userAction: TUserAction = {
     dispatch(userFetching());
     userApi
       .mobile(post)
-      .then(({status}) => {
-        if (status !== 200) throw new Error("Failed to connection");
+      .then(({ status }) => {
+        if (status !== 200) throw new Error('Failed to connection');
         dispatch(setStateDeliveryPass({ deliveryState: true }));
       })
       .catch(() => {
@@ -105,6 +105,7 @@ export const userAction: TUserAction = {
   logout: () => (dispatch) => {
     window.localStorage.removeItem('Token');
     dispatch(userLogout());
+    window.location.reload();
     openNotification({
       type: 'success',
       title: 'Выполнен выход',
