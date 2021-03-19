@@ -1,10 +1,7 @@
-export type TTabItem = {
-  title: 'string';
-  content: 'string';
-};
-// FIXME: type any
+import { TTabItem } from '../PageContent';
+
 export type TPageTabsProps = {
-  tabs: any
+  tabs: TTabItem;
   activeTab?: string;
   onChangeTab?: (key: string) => void;
 };

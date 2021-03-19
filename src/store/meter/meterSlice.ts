@@ -7,6 +7,7 @@ const initialState: TMeterState = {
   types: [],
   data: [],
   errorText: '',
+  visibleModalAddMeter: false,
 };
 
 const meterSlice = createSlice({
@@ -16,6 +17,10 @@ const meterSlice = createSlice({
     setMeterData: (state, { payload }) => {
       state.data = payload.data;
       state.fetchingState = FetchingStateTypes.success;
+    },
+    addNewMeter: (state, { payload }) => {
+      state.data = [payload.meter, ...state.data];
+      state.visibleModalAddMeter = false;
     },
     meterFetching: (state) => {
       state.fetchingState = FetchingStateTypes.loading;
@@ -27,6 +32,12 @@ const meterSlice = createSlice({
     setMeterTypes: (state, { payload }) => {
       state.types = payload.types;
     },
+    setVisibleModal: (state, { payload }) => {
+      state.visibleModalAddMeter = payload.visible;
+    },
+    setRefresh: (state) => {
+      state.fetchingState = FetchingStateTypes.none;
+    },
   },
 });
 
@@ -35,5 +46,8 @@ export const {
   meterFetching,
   meterFetchingError,
   setMeterTypes,
+  addNewMeter,
+  setVisibleModal,
+  setRefresh
 } = meterSlice.actions;
 export const meterReducer = meterSlice.reducer;

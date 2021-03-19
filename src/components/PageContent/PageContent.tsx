@@ -1,32 +1,12 @@
-import { useCallback, useEffect, useState, memo } from 'react';
-import { HeadingPage } from './HeadingPage/HeadingPage';
-import { PageTabs } from './PageTabs';
-import { FormMeteringTab } from './FormMeteringTab';
-
-type TPages = {
-  [key: string]: {
-    title: string;
-    content?: any;
-    // tabs?: {
-    //   [key: string]: TTab;
-    // };
-    tabs?: any;
-  };
-};
-
-// type TTab = {
-//   [key: string]: {
-//     title: 'string';
-//     content: React.ReactNode;
-//   };
-// };
-
-type TPageContentProps = {
-  currentPage: string;
-};
+import { useCallback, useEffect, useState, memo, useRef } from 'react';
+import { HeadingPage } from '../HeadingPage/HeadingPage';
+import { PageTabs } from '../PageTabs';
+import { TabMetering } from '../TabMetering';
+import { TabMeteringHistory } from '../TabMeteringHistory';
+import { TPages, TPageContentProps } from './PageContentTypes';
 
 const PageContent: React.FC<TPageContentProps> = ({ currentPage }) => {
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState<React.ReactNode>(null);
   const getPageData = useCallback(() => {
     const pages: TPages = {
       payments: {
@@ -38,11 +18,11 @@ const PageContent: React.FC<TPageContentProps> = ({ currentPage }) => {
         tabs: {
           'send-meter-value': {
             title: 'Подать показания',
-            content: <FormMeteringTab />,
+            content: <TabMetering />,
           },
           'metering-history': {
             title: 'История',
-            content: <div>Форма истории подачи показаний</div>,
+            content: <TabMeteringHistory />,
           },
         },
       },
@@ -75,36 +55,38 @@ const PageContent: React.FC<TPageContentProps> = ({ currentPage }) => {
     return pages[currentPage];
   }, [currentPage]);
   const { title } = getPageData();
-  const [pageHasTabs, setPageHasTabs] = useState(false);
+  const pageHasTabs = useRef(false);
   const [tabs, setTabs] = useState({});
   const [activeTab, setActiveTab] = useState('');
 
   useEffect(() => {
-    const { content: pageContent, tabs } = getPageData();
+    const { tabs } = getPageData();
     if (tabs) {
+      // default tab is first key
       const defaultTab = Object.keys(tabs)[0];
-      setPageHasTabs(true);
-      setTabs(tabs);
+      const content = tabs[defaultTab]['content'];
+      pageHasTabs.current = true;
       setActiveTab(defaultTab);
-      setContent(tabs[defaultTab]['content']);
+      setTabs(tabs);
+      setContent(content);
     } else {
-      setPageHasTabs(false);
-      setContent(pageContent);
+      const { content } = getPageData();
+      pageHasTabs.current = false;
+      setContent(content);
     }
   }, [getPageData]);
 
   function onChangeTab(key: string) {
     if (key === activeTab) return;
     setActiveTab(key);
-    const page = getPageData();
-    setContent(page['tabs'][key]['content']);
+    const { tabs } = getPageData();
+    setContent(tabs![key]['content']);
   }
-  // console.log('render page content');
 
   return (
     <>
       <HeadingPage title={title} />
-      {pageHasTabs && (
+      {pageHasTabs.current && (
         <PageTabs tabs={tabs} onChangeTab={onChangeTab} activeTab={activeTab} />
       )}
       {content}

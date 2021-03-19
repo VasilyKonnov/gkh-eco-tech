@@ -5,4 +5,4 @@ export * from './UserMenu';
 export { FormInputPhone } from './FormInputPhone';
 export { FormInputPass } from './FormInputPass';
 export { RightAgreementBox } from './RightsAgreementBox';
-export { default as PageContent } from './PageContent';
+export { PageContent } from './PageContent';

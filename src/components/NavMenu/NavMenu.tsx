@@ -1,10 +1,6 @@
 import { Menu } from 'antd';
+import { INavMenuProps } from './NavMenuTypes';
 import './NavMenu.css';
-
-export interface INavMenuProps {
-  currentMenu: string;
-  onChangeMenu(props: object): void;
-}
 
 export const NavMenu: React.FC<INavMenuProps> = ({
   currentMenu,

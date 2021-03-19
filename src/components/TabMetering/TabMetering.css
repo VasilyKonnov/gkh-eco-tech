@@ -1,0 +1,30 @@
+.badge-count-meter .ant-badge-count {
+  color: #999;
+  background-color: #fff;
+  box-shadow: 0 0 0 1px #d9d9d9 inset;
+  margin-left: 4px;
+}
+
+.form-item .ant-form-item-label label,
+.btn-submit.ant-btn-primary span,
+.title {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 36px;
+}
+
+.btn-add-meter.ant-btn-background-ghost.ant-btn-primary {
+  color: #004f9e;
+  border-color: #004f9e;
+}
+
+.btn-add-meter span {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.btn-submit.ant-btn-primary {
+  min-width: 300px;
+  min-height: 56px;
+  background: #2b6db0;
+}

@@ -16,5 +16,8 @@ export type TValueItem = {
 };
 
 export type TValueAction = {
-  send: (post: TSendValueProps) => (dispatch: Dispatch) => void;
-}
+  send: (
+    values: TSendValueProps,
+    onResetFields: () => void
+  ) => (dispatch: Dispatch) => void;
+};

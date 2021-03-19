@@ -12,6 +12,8 @@ const { Header, Content } = Layout;
 
 interface IPageBaseViewProps extends INavMenuProps, IUserMenuProps {
   isAdmin: boolean;
+  currentMenu: string;
+  onChangeMenu: (props: React.Attributes) => void;
 }
 
 export const PageBaseView: React.FC<IPageBaseViewProps> = ({

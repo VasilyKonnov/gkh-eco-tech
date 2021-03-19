@@ -1,1 +1,2 @@
-export * from './NavMenu';
+export { NavMenu } from './NavMenu';
+export * from './NavMenuTypes';

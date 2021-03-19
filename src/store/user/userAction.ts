@@ -16,7 +16,10 @@ export const userAction: TUserAction = {
     dispatch(userFetching());
     userApi
       .mobile(post)
-      .then(() => dispatch(setStateDeliveryPass({ deliveryState: true })))
+      .then(({status}) => {
+        if (status !== 200) throw new Error("Failed to connection");
+        dispatch(setStateDeliveryPass({ deliveryState: true }));
+      })
       .catch(() => {
         dispatch(setStateDeliveryPass({ deliveryState: false }));
         openNotification({
