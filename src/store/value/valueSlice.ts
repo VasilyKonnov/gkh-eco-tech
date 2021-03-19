@@ -23,6 +23,9 @@ const valueSlice = createSlice({
       state.fetchingState = FetchingStateTypes.failed;
       state.errorText = payload.errorText;
     },
+    setRefresh: (state) => {
+      state.fetchingState = FetchingStateTypes.none;
+    },
   },
 });
 
@@ -30,5 +33,6 @@ export const {
   setValueData,
   valueFetching,
   valueFetchingError,
+  setRefresh,
 } = valueSlice.actions;
 export const valueReducer = valueSlice.reducer;
