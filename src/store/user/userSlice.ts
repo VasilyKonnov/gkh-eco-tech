@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { FetchingStateTypes } from '../types';
-import { TUserState } from './userTypes';
+import { createSlice } from '@reduxjs/toolkit'
+import { FetchingStateTypes } from '../types'
+import { TUserState } from './userTypes'
 
 const initialState: TUserState = {
   userId: 0,
@@ -10,40 +10,40 @@ const initialState: TUserState = {
   fetchingState: FetchingStateTypes.none,
   passDeliveryState: false,
   errorText: '',
-};
+}
 
 const userSlice = createSlice({
   name: 'USER',
   initialState,
   reducers: {
     setStateDeliveryPass: (state, { payload }) => {
-      state.passDeliveryState = payload.deliveryState;
-      state.fetchingState = FetchingStateTypes.success;
+      state.passDeliveryState = payload.deliveryState
+      state.fetchingState = FetchingStateTypes.success
     },
     setAuthData: (state, { payload }) => {
-      state.userId = payload.userId;
-      state.phone = payload.phone;
-      state.role = payload.role;
-      state.isAuth = true;
-      state.fetchingState = FetchingStateTypes.success;
+      state.userId = payload.userId
+      state.phone = payload.phone
+      state.role = payload.role
+      state.isAuth = true
+      state.fetchingState = FetchingStateTypes.success
     },
     userFetching: (state) => {
-      state.fetchingState = FetchingStateTypes.loading;
+      state.fetchingState = FetchingStateTypes.loading
     },
     userFetchingError: (state, { payload }) => {
-      state.fetchingState = FetchingStateTypes.failed;
-      state.errorText = payload.errorText;
+      state.fetchingState = FetchingStateTypes.failed
+      state.errorText = payload.errorText
     },
     userLogout: (state) => {
-      state.userId = 0;
-      state.phone = '';
-      state.role = 'none';
-      state.isAuth = false;
-      state.fetchingState = FetchingStateTypes.none;
-      state.passDeliveryState = false;
+      state.userId = 0
+      state.phone = ''
+      state.role = 'none'
+      state.isAuth = false
+      state.fetchingState = FetchingStateTypes.none
+      state.passDeliveryState = false
     },
   },
-});
+})
 
 export const {
   setAuthData,
@@ -51,5 +51,5 @@ export const {
   userFetchingError,
   userLogout,
   setStateDeliveryPass,
-} = userSlice.actions;
-export const userReducer = userSlice.reducer;
+} = userSlice.actions
+export const userReducer = userSlice.reducer

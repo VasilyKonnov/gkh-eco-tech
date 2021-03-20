@@ -1,12 +1,14 @@
-import { useCallback, useEffect, useState, memo, useRef } from 'react';
-import { HeadingPage } from '../HeadingPage/HeadingPage';
-import { PageTabs } from '../PageTabs';
-import { TabMetering } from '../TabMetering';
-import { TabMeteringHistory } from '../TabMeteringHistory';
-import { TPages, TPageContentProps } from './PageContentTypes';
+import { useCallback, useEffect, useState, memo, useRef } from 'react'
+import { HeadingPage } from '../HeadingPage/HeadingPage'
+import { PageTabs } from '../PageTabs'
+import { TabMetering } from '../TabMetering'
+import { TabMeteringHistory } from '../TabMeteringHistory'
+import { TabTickets } from '../TabTickets'
+import { TabTicketsHistory } from '../TabTicketsHistory'
+import { TPages, TPageContentProps } from './PageContentTypes'
 
 const PageContent: React.FC<TPageContentProps> = ({ currentPage }) => {
-  const [content, setContent] = useState<React.ReactNode>(null);
+  const [content, setContent] = useState<React.ReactNode>(null)
   const getPageData = useCallback(() => {
     const pages: TPages = {
       payments: {
@@ -31,11 +33,11 @@ const PageContent: React.FC<TPageContentProps> = ({ currentPage }) => {
         tabs: {
           'create-ticket': {
             title: 'Создание заявки',
-            content: <div>Форма создания заявки</div>,
+            content: <TabTickets />,
           },
           'ticket-history': {
             title: 'История',
-            content: <div>Форма истории выполнения заявок</div>,
+            content: <TabTicketsHistory />,
           },
         },
       },
@@ -51,36 +53,36 @@ const PageContent: React.FC<TPageContentProps> = ({ currentPage }) => {
         title: 'Администратор',
         content: 'Форма администратора',
       },
-    };
-    return pages[currentPage];
-  }, [currentPage]);
-  const { title } = getPageData();
-  const pageHasTabs = useRef(false);
-  const [tabs, setTabs] = useState({});
-  const [activeTab, setActiveTab] = useState('');
+    }
+    return pages[currentPage]
+  }, [currentPage])
+  const { title } = getPageData()
+  const pageHasTabs = useRef(false)
+  const [tabs, setTabs] = useState({})
+  const [activeTab, setActiveTab] = useState('')
 
   useEffect(() => {
-    const { tabs } = getPageData();
+    const { tabs } = getPageData()
     if (tabs) {
       // default tab is first key
-      const defaultTab = Object.keys(tabs)[0];
-      const content = tabs[defaultTab]['content'];
-      pageHasTabs.current = true;
-      setActiveTab(defaultTab);
-      setTabs(tabs);
-      setContent(content);
+      const defaultTab = Object.keys(tabs)[0]
+      const content = tabs[defaultTab]['content']
+      pageHasTabs.current = true
+      setActiveTab(defaultTab)
+      setTabs(tabs)
+      setContent(content)
     } else {
-      const { content } = getPageData();
-      pageHasTabs.current = false;
-      setContent(content);
+      const { content } = getPageData()
+      pageHasTabs.current = false
+      setContent(content)
     }
-  }, [getPageData]);
+  }, [getPageData])
 
   function onChangeTab(key: string) {
-    if (key === activeTab) return;
-    setActiveTab(key);
-    const { tabs } = getPageData();
-    setContent(tabs![key]['content']);
+    if (key === activeTab) return
+    setActiveTab(key)
+    const { tabs } = getPageData()
+    setContent(tabs![key]['content'])
   }
 
   return (
@@ -91,7 +93,7 @@ const PageContent: React.FC<TPageContentProps> = ({ currentPage }) => {
       )}
       {content}
     </>
-  );
-};
+  )
+}
 
-export default memo(PageContent);
+export default memo(PageContent)
