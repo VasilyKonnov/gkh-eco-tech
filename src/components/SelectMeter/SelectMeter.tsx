@@ -1,6 +1,7 @@
 import { Select } from 'antd';
 import { useSelector } from 'react-redux';
 import { meterSelector } from '../../store/meter';
+import { IconText } from '../IconText';
 
 const { Option } = Select;
 
@@ -14,6 +15,7 @@ export const SelectMeter: React.FC<TSelectMeterProps> = ({
   activeMeter,
 }) => {
   const { data } = useSelector(meterSelector);
+
   return (
     <Select
       style={{ width: '100%' }}
@@ -24,7 +26,7 @@ export const SelectMeter: React.FC<TSelectMeterProps> = ({
     >
       {data.map((meter) => (
         <Option value={meter.id} key={meter.id}>
-          {meter.title}
+          <IconText meters_type={meter.meters_type} text={meter.title} />
         </Option>
       ))}
     </Select>
