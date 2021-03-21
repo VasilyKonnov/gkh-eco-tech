@@ -1,25 +1,9 @@
 import { memo } from 'react';
-import {
-  Input,
-  Form,
-  Button,
-  Row,
-  Col,
-  Typography,
-  Badge,
-  ConfigProvider,
-  Empty,
-} from 'antd';
+import { Input, Form, Button, Row, Col, Typography, Badge } from 'antd';
 import { TabMeteringViewProps } from './TabMeteringTypes';
 import { FormAddress } from '../FormAddress';
 import { SelectMeter } from '../SelectMeter/SelectMeter';
-
-const customizeEmptyMeters = () => (
-  <div style={{ textAlign: 'center' }}>
-    <Empty description={false} image={Empty.PRESENTED_IMAGE_SIMPLE} />
-    <p>Нет добавленных счетчиков</p>
-  </div>
-);
+import { EmptyBox } from '../EmptyBox';
 
 const responsiveColNum = { xs: 24, sm: 24, md: 24, lg: 7, xl: 7 };
 
@@ -34,7 +18,7 @@ const TabMeteringView: React.FC<TabMeteringViewProps> = ({
   prevValue,
   onChangeMeter,
 }) => (
-  <ConfigProvider renderEmpty={customizeEmptyMeters}>
+  <EmptyBox text="Нет добавленных счетчиков">
     <Form layout="vertical" size="large" onFinish={onSubmit} form={form}>
       <FormAddress />
       <Form.Item>
@@ -101,7 +85,7 @@ const TabMeteringView: React.FC<TabMeteringViewProps> = ({
         </Button>
       </Form.Item>
     </Form>
-  </ConfigProvider>
+  </EmptyBox>
 );
 
 export default memo(TabMeteringView);
