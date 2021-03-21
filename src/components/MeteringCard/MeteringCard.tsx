@@ -1,6 +1,12 @@
 import { Card } from 'antd';
 import { TMeteringCardProps, TMeterIconVariant } from './MeteringCardTypes';
-import { blueColor, IconGas, IconRaindrop, redColor } from '../../assets/icons';
+import {
+  blueColor,
+  IconGas,
+  IconRaindrop,
+  redColor,
+  IconElectricity,
+} from '../../assets/icons';
 
 const { Meta } = Card;
 
@@ -13,6 +19,7 @@ export const MeteringCard: React.FC<TMeteringCardProps> = ({
     1: <IconRaindrop color={blueColor} />,
     2: <IconRaindrop color={redColor} />,
     3: <IconGas />,
+    4: <IconElectricity />,
   };
   const icon = meterIcons[meters_type];
 
