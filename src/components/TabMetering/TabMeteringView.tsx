@@ -68,7 +68,7 @@ const TabMeteringView: React.FC<TabMeteringViewProps> = ({
       <Row gutter={32}>
         <Col {...responsiveColNum}>
           <Form.Item
-            label="Текущие показания"
+            label="Счетчик"
             name="meter"
             rules={[{ required: true, message: 'Не выбран счетчик!' }]}
             className="form-item"
