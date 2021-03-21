@@ -10,4 +10,5 @@ export type TFormInputPassProps = {
   loading: boolean
   onChangeCheckedBox: () => void
   canAgree: boolean
+  handlerSubmitLogin: (event: React.FormEvent<HTMLFormElement>) => void
 }

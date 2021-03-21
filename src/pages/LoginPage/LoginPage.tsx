@@ -1,5 +1,6 @@
 import { ChangeEvent, useState, useEffect, useCallback } from 'react'
 import { Typography } from 'antd'
+import { MailOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   userAction,
@@ -46,13 +47,20 @@ export const LoginPage: React.FC = () => {
   )
 
   const onChangePass = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value
+    const value = event.target.value.replace(/[^0-9\.]/g, '')
     setPassValue(value)
   }
 
   const onChangeCheckedBox = useCallback(() => {
     setIsCheckedBox(!isCheckedBox)
   }, [isCheckedBox])
+
+  const handlerSubmitPhone = (
+    event: React.FormEvent<HTMLFormElement>,
+  ): void => {
+    event.preventDefault()
+    handlerSendPhone()
+  }
 
   function handlerSendPhone() {
     dispatch(
@@ -65,6 +73,13 @@ export const LoginPage: React.FC = () => {
 
   function onResendPass() {
     dispatch(setStateDeliveryPass({ deliveryState: false }))
+  }
+
+  const handlerSubmitLogin = (
+    event: React.FormEvent<HTMLFormElement>,
+  ): void => {
+    event.preventDefault()
+    handlerLogin()
   }
 
   function handlerLogin() {
@@ -84,6 +99,7 @@ export const LoginPage: React.FC = () => {
         <Title>Вход в личный кабинет</Title>
         {!passDeliveryState ? (
           <FormInputPhone
+            handlerSubmitPhone={handlerSubmitPhone}
             phoneValue={phoneValue}
             onChangePhone={onChangePhone}
             handlerSendPhone={handlerSendPhone}
@@ -92,6 +108,7 @@ export const LoginPage: React.FC = () => {
           />
         ) : (
           <FormInputPass
+            handlerSubmitLogin={handlerSubmitLogin}
             onResendPass={onResendPass}
             onChangePass={onChangePass}
             passValue={passValue}
@@ -106,7 +123,9 @@ export const LoginPage: React.FC = () => {
           />
         )}
         <div className="auth-line-under-button"></div>
-        <button className="auth-support-link">Служба поддержки</button>
+        <button className="auth-support-link">
+          <MailOutlined /> {` `}Служба поддержки
+        </button>
         <div className="auth-play-stores">
           <img src={appstr} alt="Apple store icon" />
           <img src={gplay} alt="Google store icon" />

@@ -1,6 +1,6 @@
-import { Button } from 'antd';
-import MaskedInput from 'antd-mask-input';
-import { TFormInputPhoneProps } from './FormInputPhoneTypes';
+import { Button } from 'antd'
+import MaskedInput from 'antd-mask-input'
+import { TFormInputPhoneProps } from './FormInputPhoneTypes'
 
 export const FormInputPhone: React.FC<TFormInputPhoneProps> = ({
   phoneValue,
@@ -8,14 +8,15 @@ export const FormInputPhone: React.FC<TFormInputPhoneProps> = ({
   onChangePhone,
   phoneLengthIsValid,
   loading,
+  handlerSubmitPhone,
 }) => (
   <>
     <div className="auth-wrapper">
-      <form>
+      <form onSubmit={handlerSubmitPhone}>
         <MaskedInput
           type="tel"
           name="phone"
-          mask="+7 111 111 11 11"
+          mask="+1 111 111 11 11"
           placeholder="Номер телефона"
           onChange={onChangePhone}
           value={phoneValue}
@@ -31,4 +32,4 @@ export const FormInputPhone: React.FC<TFormInputPhoneProps> = ({
     </div>
     <button className="auth-try-demo">Демо-режим</button>
   </>
-);
+)

@@ -42,8 +42,8 @@ export const TabTicketsHistory = () => {
   const dispatch = useDispatch()
   const { data, fetchingState, errorText } = useSelector(ticketsSelector)
 
-  useEffect(() => {
-    if (data.length < 1) {
+  const getTableData = () => {
+    if (data.length === 0) {
       dispatch(ticketsAction.list())
     }
     const getTicketsData = data.map((tableData, id) => {
@@ -57,6 +57,15 @@ export const TabTicketsHistory = () => {
       }
     })
     setTableTicketsData(getTicketsData)
+  }
+
+  useEffect(() => {
+    getTableData()
+    if (data.length === 0) {
+      console.log('data.length -- ', data.length)
+    }
+    console.log('data ', data)
+    console.log('tableTicketsData', tableTicketsData)
   }, [])
 
   if (fetchingState === 'failed') {

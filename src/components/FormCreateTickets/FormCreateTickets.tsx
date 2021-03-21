@@ -11,7 +11,10 @@ export const FormCreateTickets: React.FC = () => {
   const [form] = Form.useForm()
   const dispatch = useDispatch()
 
-  console.log('values - ', values)
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let file = e.target.files
+    console.log('e.target.files', e.target.files)
+  }
 
   function onCreateFields() {
     form.validateFields().then((values) => {
@@ -21,9 +24,9 @@ export const FormCreateTickets: React.FC = () => {
         surname: values.surname.surname,
         name: values.name.name,
         patronymic: values.patronymic.patronymic,
-        phone: getNormalizedPhoneValue(values.phone.phone),
+        phone: getNormalizedPhoneValue(values.phone.phone).substr(1),
         email: values.email.email,
-        // attachment: values.attachment.attachment,
+        attachment: values.attachment.attachment,
         address: {
           street: values.street.street,
           house: values.house.house,
@@ -31,6 +34,7 @@ export const FormCreateTickets: React.FC = () => {
           apartment: values.apartment.apartment,
         },
       }
+
       console.log('sendTicketData - ', sendTicketData)
 
       dispatch(ticketsAction.create(sendTicketData))
@@ -38,7 +42,7 @@ export const FormCreateTickets: React.FC = () => {
   }
 
   return (
-    <Form name="nest-messages" form={form}>
+    <Form name="nest-messages" form={form} encType="multipart/form-data">
       <Row
         gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
         className="tickets-form-row tickets-form-row-top "
@@ -96,7 +100,6 @@ export const FormCreateTickets: React.FC = () => {
               name={['apartment', 'apartment']}
               rules={[
                 {
-                  required: true,
                   message: 'Это поле обязательно для заполнения!',
                 },
               ]}
@@ -240,10 +243,13 @@ export const FormCreateTickets: React.FC = () => {
           </Form.Item>
         </Col>
       </Row>
-      <UploadFile />
+      <Form.Item name={['attachment', 'attachment']}>
+        {/* <UploadFile /> */}
+        <input name="attachment" type="file" onChange={handleFileChange} />
+      </Form.Item>
       <Button
         className="button-primary"
-        htmlType="submit"
+        htmlType="button"
         onClick={onCreateFields}
       >
         Отправить
@@ -251,11 +257,17 @@ export const FormCreateTickets: React.FC = () => {
     </Form>
   )
 }
+
 function dispatch(
   arg0: (dispatch: import('redux').Dispatch<import('redux').AnyAction>) => void,
 ) {
   throw new Error('Function not implemented.')
 }
 function values(arg0: string, values: any) {
+  throw new Error('Function not implemented.')
+}
+function sendTicketData(
+  sendTicketData: any,
+): (dispatch: import('redux').Dispatch<import('redux').AnyAction>) => void {
   throw new Error('Function not implemented.')
 }
