@@ -1,21 +1,21 @@
-import { Row, Col, Table, Form } from 'antd';
-import { SelectDateRange } from '../SelectDateRange';
-import { SelectMeter } from '../SelectMeter';
-import { SelectAddress } from '../SelectAddress';
-import { useDispatch, useSelector } from 'react-redux';
-import { meterSelector } from '../../store/meter';
-import { valueSelector } from '../../store/value/valueSelector';
-import { useCallback, useEffect, useState } from 'react';
-import { FetchingStateTypes } from '../../store';
-import { valueAction } from '../../store/value';
+import { Row, Col, Table, Form } from 'antd'
+import { SelectDateRange } from '../SelectDateRange'
+import { SelectMeter } from '../SelectMeter'
+import { SelectAddress } from '../SelectAddress'
+import { useDispatch, useSelector } from 'react-redux'
+import { meterSelector } from '../../store/meter'
+import { valueSelector } from '../../store/value/valueSelector'
+import { useCallback, useEffect, useState } from 'react'
+import { FetchingStateTypes } from '../../store'
+import { valueAction } from '../../store/value'
 
 type TValueItem = {
-  key: number;
-  meter: string;
-  value: number;
-  date: string;
-  address: string;
-};
+  key: number
+  meter: string
+  value: number
+  date: string
+  address: string
+}
 
 export const TabMeteringHistory = () => {
   const columns = [
@@ -39,33 +39,33 @@ export const TabMeteringHistory = () => {
       dataIndex: 'address',
       key: 'address',
     },
-  ];
-  const { data: meters, types: meterTypes } = useSelector(meterSelector);
-  const addressList = meters.map((meter) => meter.address);
-  const { fetchingState, data: values } = useSelector(valueSelector);
-  const dispatch = useDispatch();
-  const [tableData, setTableData] = useState<TValueItem[]>([]);
+  ]
+  const { data: meters, types: meterTypes } = useSelector(meterSelector)
+  const addressList = meters.map((meter) => meter.address)
+  const { fetchingState, data: values } = useSelector(valueSelector)
+  const dispatch = useDispatch()
+  const [tableData, setTableData] = useState<TValueItem[]>([])
   const getMeterTitle = useCallback(
     (meterId: number) => {
-      const [meter] = meters.filter((meter) => meter.id === meterId);
-      return meter.title;
+      const [meter] = meters.filter((meter) => meter.id === meterId)
+      return meter.title
     },
-    [meters]
-  );
+    [meters],
+  )
   const getMeterAddress = useCallback(
     (meterId: number) => {
-      const [meter] = meters.filter((meter) => meter.id === meterId);
-      const { street, house, building, apartment } = meter.address;
-      return `${street} дом ${house}  ${building || ''} ${apartment || ''}`;
+      const [meter] = meters.filter((meter) => meter.id === meterId)
+      const { street, house, building, apartment } = meter.address
+      return `${street} дом ${house}  ${building || ''} ${apartment || ''}`
     },
-    [meters]
-  );
+    [meters],
+  )
 
   useEffect(() => {
     if (fetchingState === FetchingStateTypes.none) {
-      dispatch(valueAction.list());
+      dispatch(valueAction.list())
     }
-  }, [dispatch, fetchingState]);
+  }, [dispatch, fetchingState])
 
   useEffect(() => {
     const date = values.map((val) => {
@@ -75,11 +75,11 @@ export const TabMeteringHistory = () => {
         meter: getMeterTitle(val.meter),
         value: val.value,
         address: getMeterAddress(val.meter),
-      };
-    });
+      }
+    })
 
-    setTableData(date);
-  }, [getMeterAddress, getMeterTitle, meterTypes, values]);
+    setTableData(date)
+  }, [getMeterAddress, getMeterTitle, meterTypes, values])
 
   function refreshData(meterId: number | string) {
     if (meterId) {
@@ -92,9 +92,9 @@ export const TabMeteringHistory = () => {
             meter: getMeterTitle(val.meter),
             value: val.value,
             address: getMeterAddress(val.meter),
-          };
-        });
-      setTableData(date);
+          }
+        })
+      setTableData(date)
     } else {
       const date = values.map((val) => {
         return {
@@ -103,9 +103,9 @@ export const TabMeteringHistory = () => {
           meter: getMeterTitle(val.meter),
           value: val.value,
           address: getMeterAddress(val.meter),
-        };
-      });
-      setTableData(date);
+        }
+      })
+      setTableData(date)
     }
   }
 
@@ -124,7 +124,7 @@ export const TabMeteringHistory = () => {
         </Col>
         <Col span={8}>
           <Form.Item label="Адрес" name="address" className="form-item">
-            <SelectAddress onChangeAddress={() => {}} data={addressList} />
+            {/* <SelectAddress onChangeAddress={() => {}} data={addressList} /> */}
           </Form.Item>
         </Col>
       </Row>
@@ -136,5 +136,5 @@ export const TabMeteringHistory = () => {
         loading={fetchingState === FetchingStateTypes.loading}
       />
     </Form>
-  );
-};
+  )
+}

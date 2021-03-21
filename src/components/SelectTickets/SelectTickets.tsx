@@ -19,13 +19,19 @@ export const SelectTickets: React.FC<TSelectTicketsProps> = ({
       value={activeTickets}
       allowClear
     >
-      <Option value={'Новая'} key={1}>
+      <Option value={'new'} key={1}>
         Новая
       </Option>
-      <Option value={'Принята'} key={2}>
+      <Option value={'recieved'} key={2}>
         Принята
       </Option>
-      <Option value={'Выполнена'} key={3}>
+      <Option value={'in_work'} key={3}>
+        В работе
+      </Option>
+      <Option value={'rejected'} key={3}>
+        Отклонена
+      </Option>
+      <Option value={'complete'} key={3}>
         Выполнена
       </Option>
     </Select>

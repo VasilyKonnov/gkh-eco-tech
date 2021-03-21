@@ -42,14 +42,19 @@ export const TabTicketsHistory = () => {
   const dispatch = useDispatch()
   const { data, fetchingState, errorText } = useSelector(ticketsSelector)
 
-  const getTableData = () => {
-    if (data.length === 0) {
+  useEffect(() => {
+    if (fetchingState === FetchingStateTypes.none) {
       dispatch(ticketsAction.list())
     }
+  }, [dispatch, fetchingState])
+
+  useEffect(() => {
     const getTicketsData = data.map((tableData, id) => {
       return {
         key: id,
-        date: tableData.created_at.slice(0, 10),
+        date: new Date(tableData.created_at)
+          .toLocaleDateString('en-GB')
+          .replace(/\//g, '.'),
         status: tableData.status,
         topic: tableData.subject,
         fio: `${tableData.surname} ${tableData.name} ${tableData.patronymic}`,
@@ -57,23 +62,14 @@ export const TabTicketsHistory = () => {
       }
     })
     setTableTicketsData(getTicketsData)
-  }
-
-  useEffect(() => {
-    getTableData()
-    if (data.length === 0) {
-      console.log('data.length -- ', data.length)
-    }
-    console.log('data ', data)
-    console.log('tableTicketsData', tableTicketsData)
-  }, [])
+  }, [data, fetchingState])
 
   if (fetchingState === 'failed') {
     return <h1 style={{ marginTop: '50px' }}>{errorText}</h1>
   }
 
   return (
-    <Form layout="vertical" size="large">
+    <Form layout="vertical" size="large" className="form-data-history">
       <Row justify="space-between" gutter={[16, 16]}>
         <Col span={8}>
           <Form.Item label="Дата" name="date" className="form-item">
@@ -81,7 +77,7 @@ export const TabTicketsHistory = () => {
           </Form.Item>
         </Col>
         <Col span={8}>
-          <Form.Item label="Счетчик" name="meter" className="form-item">
+          <Form.Item label="Статус" name="meter" className="form-item">
             <SelectTickets />
           </Form.Item>
         </Col>

@@ -24,17 +24,17 @@ h1 {
 	margin-right: 10px;
 }
 
-.label-input-flex-wrap .ant-form-item {
+.label-input-page-base.ant-form-item {
 	display: flex;
 	flex-direction: column;
 	width: 100%;
 }
 
-.label-input-flex-wrap .ant-form-item .ant-form-item-label {
+.label-input-page-base.ant-form-item .ant-form-item-label {
 	text-align: left;
 }
 
-.label-input-flex-wrap .ant-form-item .ant-form-item-label>label {
+.label-input-page-base.ant-form-item .ant-form-item-label>label {
 	text-align: left;
 	color: #212121;
 	font-size: 16px;
@@ -43,7 +43,7 @@ h1 {
 	padding-bottom: 8px;
 }
 
-.label-input-flex-wrap .ant-form-item .ant-form-item-label>label::after {
+.label-input-page-base.ant-form-item .ant-form-item-label>label::after {
 	content: '';
 }
 
@@ -163,6 +163,10 @@ h1 {
 	background: #f5f5f5;
 }
 
+.form-data-history {
+	padding-bottom: 50px;
+}
+
 .table-data-history .ant-table-thead>tr>th {
 	font-size: 11px;
 	text-transform: uppercase;
@@ -176,4 +180,8 @@ h1 {
 
 .table-data-history .ant-table-tbody>tr:nth-child(odd) {
 	background: #F5F5F5;
+}
+
+.col-page-base {
+	margin-bottom: 20px;
 }

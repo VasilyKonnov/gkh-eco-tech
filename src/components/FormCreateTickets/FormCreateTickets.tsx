@@ -47,170 +47,146 @@ export const FormCreateTickets: React.FC = () => {
         gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
         className="tickets-form-row tickets-form-row-top "
       >
-        <Col xs={24} sm={20} md={9}>
-          <div className="label-input-flex-wrap">
-            <Form.Item
-              className="label-input-page-base"
-              label="Улица"
-              name={['street', 'street']}
-              rules={[
-                {
-                  required: true,
-                  message: 'Это поле обязательно для заполнения!',
-                },
-              ]}
-            >
-              <Input className="input-page-base" placeholder="Название улицы" />
-            </Form.Item>
-          </div>
+        <Col xs={24} sm={20} md={9} className="col-page-base">
+          <Form.Item
+            className="label-input-page-base"
+            label="Улица"
+            name={['street', 'street']}
+            rules={[
+              {
+                required: true,
+                message: 'Не указана улица!',
+              },
+            ]}
+          >
+            <Input className="input-page-base" placeholder="Название улицы" />
+          </Form.Item>
         </Col>
-        <Col xs={24} sm={20} md={5}>
-          <div className="label-input-flex-wrap">
-            <Form.Item
-              className="label-input-page-base"
-              label="Дом"
-              name={['house', 'house']}
-              rules={[
-                {
-                  required: true,
-                  message: 'Это поле обязательно для заполнения!',
-                },
-              ]}
-            >
-              <Input className="input-page-base" placeholder="Номер" />
-            </Form.Item>
-          </div>
+        <Col xs={24} sm={20} md={5} className="col-page-base">
+          <Form.Item
+            className="label-input-page-base"
+            label="Дом"
+            name={['house', 'house']}
+            rules={[
+              {
+                required: true,
+                message: 'Не указан дом!',
+              },
+            ]}
+          >
+            <Input className="input-page-base" placeholder="Номер" />
+          </Form.Item>
         </Col>
-        <Col xs={24} sm={20} md={5}>
-          <div className="label-input-flex-wrap">
-            <Form.Item
-              className="label-input-page-base"
-              label="Корпус"
-              name={['building', 'building']}
-            >
-              <Input className="input-page-base" placeholder="Номер" />
-            </Form.Item>
-          </div>
+        <Col xs={24} sm={20} md={5} className="col-page-base">
+          <Form.Item
+            className="label-input-page-base"
+            label="Корпус"
+            name={['building', 'building']}
+          >
+            <Input className="input-page-base" placeholder="Номер" />
+          </Form.Item>
         </Col>
-        <Col xs={24} sm={20} md={5}>
-          <div className="label-input-flex-wrap">
-            <Form.Item
-              className="label-input-page-base"
-              label="Квартира"
-              name={['apartment', 'apartment']}
-              rules={[
-                {
-                  message: 'Это поле обязательно для заполнения!',
-                },
-              ]}
-            >
-              <Input className="input-page-base" placeholder="Номер" />
-            </Form.Item>
-          </div>
+        <Col xs={24} sm={20} md={5} className="col-page-base">
+          <Form.Item
+            className="label-input-page-base"
+            label="Квартира"
+            name={['apartment', 'apartment']}
+            rules={[
+              {
+                message: 'Не указана квартира!',
+              },
+            ]}
+          >
+            <Input className="input-page-base" placeholder="Номер" />
+          </Form.Item>
         </Col>
       </Row>
       <Row
         gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
         className="tickets-form-row"
       >
-        <Col xs={24} sm={20} md={8}>
-          <div className="label-input-flex-wrap">
-            <Form.Item
-              className="label-input-page-base"
-              label="Фамилия"
-              name={['surname', 'surname']}
-              rules={[
-                {
-                  required: true,
-                  message: 'Это поле обязательно для заполнения!',
-                },
-              ]}
-            >
-              <Input
-                className="input-page-base"
-                placeholder="Введите фамилию"
-              />
-            </Form.Item>
-          </div>
+        <Col xs={24} sm={20} md={8} className="col-page-base">
+          <Form.Item
+            className="label-input-page-base"
+            label="Фамилия"
+            name={['surname', 'surname']}
+            rules={[
+              {
+                required: true,
+                message: 'Не указана фамилия!',
+              },
+            ]}
+          >
+            <Input className="input-page-base" placeholder="Введите фамилию" />
+          </Form.Item>
         </Col>
-        <Col xs={24} sm={20} md={8}>
-          <div className="label-input-flex-wrap">
-            <Form.Item
-              className="label-input-page-base"
-              label="Имя"
-              name={['name', 'name']}
-              rules={[
-                {
-                  required: true,
-                  message: 'Это поле обязательно для заполнения!',
-                },
-              ]}
-            >
-              <Input className="input-page-base" placeholder="Введите имя" />
-            </Form.Item>
-          </div>
+        <Col xs={24} sm={20} md={8} className="col-page-base">
+          <Form.Item
+            className="label-input-page-base"
+            label="Имя"
+            name={['name', 'name']}
+            rules={[
+              {
+                required: true,
+                message: 'Не указано имя!',
+              },
+            ]}
+          >
+            <Input className="input-page-base" placeholder="Введите имя" />
+          </Form.Item>
         </Col>
-        <Col xs={24} sm={20} md={8}>
-          <div className="label-input-flex-wrap">
-            <Form.Item
-              className="label-input-page-base"
-              label="Отчество"
-              name={['patronymic', 'patronymic']}
-              rules={[
-                {
-                  required: true,
-                  message: 'Это поле обязательно для заполнения!',
-                },
-              ]}
-            >
-              <Input
-                className="input-page-base"
-                placeholder="Введите отчество"
-              />
-            </Form.Item>
-          </div>
+        <Col xs={24} sm={20} md={8} className="col-page-base">
+          <Form.Item
+            className="label-input-page-base"
+            label="Отчество"
+            name={['patronymic', 'patronymic']}
+            rules={[
+              {
+                required: true,
+                message: 'Не указано отчество!',
+              },
+            ]}
+          >
+            <Input className="input-page-base" placeholder="Введите отчество" />
+          </Form.Item>
         </Col>
-        <Col xs={24} sm={20} md={8}>
-          <div className="label-input-flex-wrap">
-            <Form.Item
-              className="label-input-page-base"
-              label="Телефон"
-              name={['phone', 'phone']}
-              rules={[
-                {
-                  required: true,
-                  message: 'Это поле обязательно для заполнения!',
-                },
-              ]}
-            >
-              <MaskedInput
-                mask="+1 111 111 11 11"
-                placeholder="Введите телефон"
-                className="input-page-base"
-              />
-            </Form.Item>
-          </div>
+        <Col xs={24} sm={20} md={8} className="col-page-base">
+          <Form.Item
+            className="label-input-page-base"
+            label="Телефон"
+            name={['phone', 'phone']}
+            rules={[
+              {
+                required: true,
+                message: 'Не указан телефон!',
+              },
+            ]}
+          >
+            <MaskedInput
+              mask="+1 111 111 11 11"
+              placeholder="Введите телефон"
+              className="input-page-base"
+            />
+          </Form.Item>
         </Col>
-        <Col xs={24} sm={20} md={8}>
-          <div className="label-input-flex-wrap">
-            <Form.Item
-              className="label-input-page-base"
-              label="Электронная почта"
-              name={['email', 'email']}
-              rules={[
-                {
-                  type: 'email',
-                  required: true,
-                  message: 'Введите корректный Email!',
-                },
-              ]}
-            >
-              <Input
-                className="input-page-base"
-                placeholder="Введите электронную почту"
-              />
-            </Form.Item>
-          </div>
+        <Col xs={24} sm={20} md={8} className="col-page-base">
+          <Form.Item
+            className="label-input-page-base"
+            label="Электронная почта"
+            name={['email', 'email']}
+            rules={[
+              {
+                type: 'email',
+                required: true,
+                message: 'Введите корректный Email!',
+              },
+            ]}
+          >
+            <Input
+              className="input-page-base"
+              placeholder="Введите электронную почту"
+            />
+          </Form.Item>
         </Col>
       </Row>
       <Row
@@ -218,21 +194,19 @@ export const FormCreateTickets: React.FC = () => {
         className="tickets-form-row"
       >
         <Col xs={24} sm={20} md={9}>
-          <div className="label-input-flex-wrap">
-            <Form.Item
-              className="label-input-page-base"
-              label="Обращение"
-              name={['subject', 'subject']}
-              rules={[
-                {
-                  required: true,
-                  message: 'Это поле обязательно для заполнения!',
-                },
-              ]}
-            >
-              <Input className="input-page-base" placeholder="Тема" />
-            </Form.Item>
-          </div>
+          <Form.Item
+            className="label-input-page-base"
+            label="Обращение"
+            name={['subject', 'subject']}
+            rules={[
+              {
+                required: true,
+                message: 'Не указана тема обращения!',
+              },
+            ]}
+          >
+            <Input className="input-page-base" placeholder="Тема" />
+          </Form.Item>
         </Col>
         <Col xs={24}>
           <Form.Item name={['text', 'text']}>
