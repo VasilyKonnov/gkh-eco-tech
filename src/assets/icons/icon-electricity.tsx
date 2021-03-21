@@ -9,7 +9,7 @@ export const IconElectricity: React.FC<IconProps> = ({ size = 40, color }) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <g clip-path="url(#clip0)">
+    <g>
       <path
         d="M15.7714 40.0001L18.2298 21.5631H9.17274L24.393 0L21.9111 14.8977H30.8325L15.7714 40.0001ZM11.7458 20.23H19.752L17.9451 33.7865L28.4784 16.2308H20.3365L22.1197 5.53275L11.7458 20.23Z"
         fill="#FFC927"
