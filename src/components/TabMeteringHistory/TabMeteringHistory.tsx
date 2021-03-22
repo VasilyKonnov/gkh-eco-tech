@@ -18,41 +18,46 @@ type TValueItem = {
   address: string;
 };
 
+const columns = [
+  {
+    title: 'Дата',
+    dataIndex: 'date',
+    key: 'date',
+  },
+  {
+    title: 'Cчетчик',
+    dataIndex: 'meter',
+    key: 'meter',
+  },
+  {
+    title: 'Значение',
+    dataIndex: 'value',
+    key: 'value',
+  },
+  {
+    title: 'Адрес',
+    dataIndex: 'address',
+    key: 'address',
+  },
+];
+
+type TValuesForm = {
+  date: string | null;
+  meter: string | null;
+  address: string | null;
+};
+
 export const TabMeteringHistory = () => {
-  const columns = [
-    {
-      title: 'Дата',
-      dataIndex: 'date',
-      key: 'date',
-    },
-    {
-      title: 'Cчетчик',
-      dataIndex: 'meter',
-      key: 'meter',
-    },
-    {
-      title: 'Значение',
-      dataIndex: 'value',
-      key: 'value',
-    },
-    {
-      title: 'Адрес',
-      dataIndex: 'address',
-      key: 'address',
-    },
-  ];
   const { data: meters, types: meterTypes } = useSelector(meterSelector);
   const addressList = meters.map((meter) => meter.address);
   const { fetchingState, data: values } = useSelector(valueSelector);
+  const [valuesForm, setValuesForm] = useState<TValuesForm>({
+    date: 'all',
+    meter: null,
+    address: null,
+  });
   const dispatch = useDispatch();
   const [tableData, setTableData] = useState<TValueItem[]>([]);
-  const getMeterTitle = useCallback(
-    (meterId: number) => {
-      const [meter] = meters.filter((meter) => meter.id === meterId);
-      return meter.title;
-    },
-    [meters]
-  );
   const getMeterAddress = useCallback(
     (meterId: number) => {
       const [meter] = meters.filter((meter) => meter.id === meterId);
@@ -61,6 +66,35 @@ export const TabMeteringHistory = () => {
     },
     [meters]
   );
+
+  const getMeterTitle = useCallback(
+    (meterId: number) => {
+      const [meter] = meters.filter((meter) => meter.id === meterId);
+      return meter.title;
+    },
+    [meters]
+  );
+  const refreshData = useCallback(() => {
+    const { date, meter, address } = valuesForm;
+
+    const filterByMeter = (val: any) => (meter ? meter === val.meter : true);
+    const filterByAddress = (val: any) =>
+      address ? address === val.address.id : true;
+
+    const data = values
+      .filter(filterByAddress)
+      .filter(filterByMeter)
+      .map((val) => {
+        return {
+          key: val.id,
+          date: new Date(val.date).toLocaleDateString('en-GB'),
+          meter: getMeterTitle(val.meter),
+          value: val.value,
+          address: `${val.address.street} дом ${val.address.house}`,
+        };
+      });
+    setTableData(data);
+  }, [getMeterTitle, values, valuesForm]);
 
   useEffect(() => {
     if (fetchingState === FetchingStateTypes.none) {
@@ -82,32 +116,15 @@ export const TabMeteringHistory = () => {
     setTableData(date);
   }, [getMeterAddress, getMeterTitle, meterTypes, values]);
 
-  function refreshData(meterId: number | string) {
-    if (meterId) {
-      const date = values
-        .filter((val) => val.meter === meterId)
-        .map((val) => {
-          return {
-            key: val.id,
-            date: new Date(val.date).toLocaleDateString('en-GB'),
-            meter: getMeterTitle(val.meter),
-            value: val.value,
-            address: getMeterAddress(val.meter),
-          };
-        });
-      setTableData(date);
-    } else {
-      const date = values.map((val) => {
-        return {
-          key: val.id,
-          date: new Date(val.date).toLocaleDateString('en-GB'),
-          meter: getMeterTitle(val.meter),
-          value: val.value,
-          address: getMeterAddress(val.meter),
-        };
-      });
-      setTableData(date);
-    }
+  useEffect(() => {
+    refreshData();
+  }, [refreshData]);
+
+  function handlerChangeValue(name: string, value: number | string) {
+    const newState = {
+      [name]: value,
+    };
+    setValuesForm({ ...valuesForm, ...newState });
   }
 
   return (
@@ -116,17 +133,24 @@ export const TabMeteringHistory = () => {
         <Row justify="space-between" gutter={[16, 16]}>
           <Col span={8}>
             <Form.Item label="Дата" name="date" className="form-item">
-              <SelectDateRange onChangeRange={() => {}} />
+              <SelectDateRange
+                onChangeRange={handlerChangeValue.bind(null, 'date')}
+              />
             </Form.Item>
           </Col>
           <Col span={8}>
             <Form.Item label="Счетчик" name="meter" className="form-item">
-              <SelectMeter onChangeMeter={refreshData} />
+              <SelectMeter
+                onChangeMeter={handlerChangeValue.bind(null, 'meter')}
+              />
             </Form.Item>
           </Col>
           <Col span={8}>
             <Form.Item label="Адрес" name="address" className="form-item">
-              <SelectAddress onChangeAddress={() => {}} data={addressList} />
+              <SelectAddress
+                onChangeAddress={handlerChangeValue.bind(null, 'address')}
+                data={addressList}
+              />
             </Form.Item>
           </Col>
         </Row>

@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux';
 import { FetchingStateTypes } from '../types';
 import { TSendValueProps } from '../../utils/api';
+import { TMeterAddressItem } from '../meter';
 
 export type TValueState = {
   fetchingState: FetchingStateTypes;
@@ -14,6 +15,7 @@ export type TValueItem = {
   value: number;
   previous_value: number;
   date: Date;
+  address: TMeterAddressItem;
 };
 
 export type TValueAction = {

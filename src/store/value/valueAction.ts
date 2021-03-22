@@ -1,3 +1,4 @@
+import { store } from './../store';
 import { meterAction } from './../meter/meterAction';
 import { valueApi } from '../../utils/api';
 import { TValueAction } from './valueTypes';
@@ -11,9 +12,23 @@ export const valueAction: TValueAction = {
     valueApi
       .list()
       .then(({ data }) => {
-        dispatch(setValueData({ data }));
+        const { meter: meters } = store.getState();
+        // fill address data
+        const getAddressId = (meterId: number) => {
+          const [meter] = meters.data.filter(
+            (item: any) => item.id === meterId
+          );
+          return meter.address;
+        };
+        const values = data.map((val: any) => {
+          return { ...val, ...{ address: getAddressId(val.meter) } };
+        });
+
+        dispatch(setValueData({ data: values }));
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error);
+
         openNotification({
           type: 'error',
           title: 'Ошибка',
