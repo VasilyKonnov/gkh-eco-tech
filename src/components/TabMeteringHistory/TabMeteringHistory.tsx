@@ -126,8 +126,8 @@ export const TabMeteringHistory = () => {
           </Col>
           <Col span={8}>
             <Form.Item label="Адрес" name="address" className="form-item">
-              <SelectMeter onChangeMeter={refreshData} />
-              {/* <SelectAddress onChangeAddress={() => {}} data={addressList} /> */}
+              {/* <SelectMeter onChangeMeter={refreshData} /> */}
+              <SelectAddress onChangeAddress={() => {}} data={addressList} />
             </Form.Item>
           </Col>
         </Row>
