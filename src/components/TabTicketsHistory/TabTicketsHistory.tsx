@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ticketsAction, ticketsSelector } from '../../store/tickets'
 import { SelectDateRange } from '../SelectDateRange'
 import { SelectTicketsStatus } from '../SelectTicketsStatus'
-import { SelectAddress } from '../SelectAddress'
+import { SelectTicketsAddress } from '../SelectTicketsAddress'
 import { useEffect, useState } from 'react'
 import { TTabTicketsHistoryTypes } from './TabTicketsHistoryTypes'
 import { FetchingStateTypes } from '../../store'
 import { EmptyBox } from '../EmptyBox'
+import { uniqueVal } from '../../utils/common'
 
 export const TabTicketsHistory = () => {
   const columns = [
@@ -33,20 +34,30 @@ export const TabTicketsHistory = () => {
     },
     {
       title: 'Адрес',
-      dataIndex: 'adress',
-      key: 'adress',
+      dataIndex: 'address',
+      key: 'address',
     },
   ]
+  const { data, fetchingState } = useSelector(ticketsSelector)
+  const dispatch = useDispatch()
+
   const [tableTicketsData, setTableTicketsData] = useState<
     TTabTicketsHistoryTypes[]
   >()
   const [filterTicketsData, setFilterTicketsData] = useState<
     TTabTicketsHistoryTypes[]
   >()
-  const dispatch = useDispatch()
-  const { data, fetchingState } = useSelector(ticketsSelector)
+  const [addressList, setAddressList] = useState<string[]>()
+
+  const getAddressList = () => {
+    if (filterTicketsData) {
+      let addressList = filterTicketsData.map((tickets) => tickets.address)
+      addressList = addressList.filter(uniqueVal)
+      setAddressList(addressList)
+    }
+  }
+
   const getTableTicketsData = () => {
-    // @ts-ignore
     const getTicketsData = data.map((tableData, id) => {
       return {
         key: id + 1,
@@ -56,18 +67,31 @@ export const TabTicketsHistory = () => {
         status: tableData.status,
         topic: tableData.subject,
         fio: `${tableData.surname} ${tableData.name} ${tableData.patronymic}`,
-        adress: `${tableData.address.street} ${tableData.address.house} ${tableData.address.building} ${tableData.address.apartment} `,
+        address: `${tableData.address.street} Дом ${tableData.address.house} ${
+          tableData.address.building || ''
+        } ${tableData.address.apartment || ''} `,
       }
     })
     setTableTicketsData(getTicketsData)
     setFilterTicketsData(getTicketsData)
+    getAddressList()
   }
 
-  function refreshData(ticketId: number | string) {
-    if (ticketId) {
-      // @ts-ignore
+  function searchDataStatus(ticketId: number | string) {
+    if (ticketId && filterTicketsData) {
       const dataTable = filterTicketsData.filter(
         (value) => value.status === ticketId,
+      )
+      setTableTicketsData(dataTable)
+    } else if (data) {
+      getTableTicketsData()
+    }
+  }
+
+  function searchDataAddress(ticketId: number | string) {
+    if (ticketId && filterTicketsData) {
+      const dataTable = filterTicketsData.filter(
+        (value) => value.address === ticketId,
       )
       setTableTicketsData(dataTable)
     } else if (data) {
@@ -96,12 +120,15 @@ export const TabTicketsHistory = () => {
           </Col>
           <Col span={8}>
             <Form.Item label="Статус заявки" name="meter" className="form-item">
-              <SelectTicketsStatus onChangeStatus={refreshData} />
+              <SelectTicketsStatus onChangeStatus={searchDataStatus} />
             </Form.Item>
           </Col>
           <Col span={8}>
             <Form.Item label="Адрес" name="address" className="form-item">
-              <Select />
+              <SelectTicketsAddress
+                dataAddress={addressList ? addressList : []}
+                onChangeAddress={searchDataAddress}
+              />
             </Form.Item>
           </Col>
         </Row>

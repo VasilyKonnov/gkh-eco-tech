@@ -34,7 +34,6 @@ export const FormInputPass: FC<TFormInputPassProps> = memo(
         <form onSubmit={handlerSubmitLogin}>
           <Input
             maxLength={6}
-            suffix={<EyeOutlined />}
             placeholder="Одноразовый пароль"
             onChange={onChangePass}
             value={passValue}

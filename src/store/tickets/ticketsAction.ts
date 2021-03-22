@@ -18,7 +18,7 @@ export const ticketsAction: TTicketsAction = {
         console.log(response)
         // @ts-ignore
         // eslint-disable-next-line no-restricted-globals
-        if (status !== 201) throw new Error('Failed create tickets!')
+        if (status !== 200) throw new Error('Failed create tickets!')
         // @ts-ignore
         dispatch(addNewTicket({ ticket: data }))
         message.success('Заявка отправлена!')

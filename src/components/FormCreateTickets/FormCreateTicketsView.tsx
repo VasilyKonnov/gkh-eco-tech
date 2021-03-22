@@ -26,7 +26,7 @@ export const FormCreateTicketsView: React.FC<TFormCreateTicketsProps> = ({
           label="Фамилия"
           name="surname"
           className="label-input-page-base"
-          rules={[{ required: true, message: 'Не указана фамилия!' }]}
+          rules={[{ required: true, message: 'Не указана фамилия' }]}
         >
           <Input className="input-page-base" placeholder="Введите фамилию" />
         </Form.Item>
@@ -36,7 +36,7 @@ export const FormCreateTicketsView: React.FC<TFormCreateTicketsProps> = ({
           className="label-input-page-base"
           label="Имя"
           name="name"
-          rules={[{ required: true, message: 'Не указано имя!' }]}
+          rules={[{ required: true, message: 'Не указано имя' }]}
         >
           <Input className="input-page-base" placeholder="Введите имя" />
         </Form.Item>
@@ -46,7 +46,7 @@ export const FormCreateTicketsView: React.FC<TFormCreateTicketsProps> = ({
           className="label-input-page-base"
           label="Отчество"
           name="patronymic"
-          rules={[{ required: true, message: 'Не указано отчество!' }]}
+          rules={[{ required: true, message: 'Не указано отчество' }]}
         >
           <Input className="input-page-base" placeholder="Введите отчество" />
         </Form.Item>
@@ -58,12 +58,12 @@ export const FormCreateTicketsView: React.FC<TFormCreateTicketsProps> = ({
           className="label-input-page-base"
           label="Телефон"
           name="phone"
-          rules={[
-            { required: true, message: 'Это поле обязательно для заполнения!' },
-          ]}
+          rules={[{ required: true, message: 'Введите корректный номер' }]}
         >
           <MaskedInput
-            mask="1 111 111 1111"
+            maxLength={11}
+            minLength={11}
+            mask="+1 111 111 1111"
             placeholder="Введите телефон"
             className="input-page-base"
           />
@@ -78,7 +78,7 @@ export const FormCreateTicketsView: React.FC<TFormCreateTicketsProps> = ({
             {
               type: 'email',
               required: true,
-              message: 'Введите корректный Email!',
+              message: 'Введите корректный Email',
             },
           ]}
         >
@@ -97,11 +97,11 @@ export const FormCreateTicketsView: React.FC<TFormCreateTicketsProps> = ({
         rules={[
           {
             required: true,
-            message: 'Не указана тема обращения!',
+            message: 'Не указана тема обращения',
           },
         ]}
       >
-        <Input placeholder="Тема" />
+        <Input className="input-page-base" placeholder="Тема" />
       </Form.Item>
     </Col>
     <Form.Item name="text">

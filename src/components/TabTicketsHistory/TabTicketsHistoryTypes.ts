@@ -4,7 +4,7 @@ export type TTabTicketsHistoryTypes = {
   status: string
   topic: string
   fio: string
-  adress: string
+  address: string
 }
 
 type TSelectTicketsProps = {
