@@ -5,7 +5,7 @@ export type TabMeteringViewProps = {
   onSubmit: (value: TSendValueProps) => void;
   onShowAllMeters: () => void;
   meterListComponent: React.ReactNode;
-  onChangeMeter?: (id: any) => void;
+  onChangeMeter?: (id: number | string) => void;
   activeMeter: number | string;
   onTypeMeterChange?: (value: string) => void;
   onAddMeter: () => void;
