@@ -23,7 +23,7 @@ export const TabMetering = () => {
   const [count, setCount] = useState(0);
   const [prevValue, setPrevValue] = useState('');
   const onSelectMeter = useCallback(
-    (id: number) => {
+    (id: number | string) => {
       setActiveMeter(id);
       const [meter] = meters.filter((meter) => meter.id === id);
       setPrevValue(meter.previous_value);

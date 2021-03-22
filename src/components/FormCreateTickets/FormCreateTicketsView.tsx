@@ -63,7 +63,7 @@ export const FormCreateTicketsView: React.FC<TFormCreateTicketsProps> = ({
           <MaskedInput
             maxLength={11}
             minLength={11}
-            mask="+1 111 111 1111"
+            mask="1 111 111 1111"
             placeholder="Введите телефон"
             className="input-page-base"
           />

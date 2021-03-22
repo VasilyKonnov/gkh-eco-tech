@@ -14,12 +14,8 @@ export const ticketsAction: TTicketsAction = {
   create: (formData) => (dispatch) => {
     ticketsApi
       .create(formData)
-      .then((response: any) => {
-        console.log(response)
-        // @ts-ignore
-        // eslint-disable-next-line no-restricted-globals
-        if (status !== 200) throw new Error('Failed create tickets!')
-        // @ts-ignore
+      .then(({ status, data }) => {
+        if (status !== 201) throw new Error('Failed create tickets!')
         dispatch(addNewTicket({ ticket: data }))
         message.success('Заявка отправлена!')
       })
