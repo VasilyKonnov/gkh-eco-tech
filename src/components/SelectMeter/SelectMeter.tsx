@@ -8,11 +8,13 @@ const { Option } = Select;
 type TSelectMeterProps = {
   onChangeMeter?: (id: number | string) => void;
   activeMeter?: number | string;
+  onClearMeter?: () => void;
 };
 
 export const SelectMeter: React.FC<TSelectMeterProps> = ({
   onChangeMeter,
   activeMeter,
+  onClearMeter,
 }) => {
   const { data } = useSelector(meterSelector);
 
@@ -23,6 +25,7 @@ export const SelectMeter: React.FC<TSelectMeterProps> = ({
       onChange={onChangeMeter}
       value={activeMeter}
       allowClear
+      onClear={onClearMeter}
     >
       {data.map((meter) => (
         <Option value={meter.id} key={meter.id}>

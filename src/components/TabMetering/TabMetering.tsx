@@ -21,12 +21,17 @@ export const TabMetering = () => {
     'Выберите счетчик'
   );
   const [count, setCount] = useState(0);
-  const [prevValue, setPrevValue] = useState('');
+  const [prevValue, setPrevValue] = useState<string>('');
   const onSelectMeter = useCallback(
     (id: number | string) => {
+      if (!id) {
+        form.resetFields();
+        return;
+      }
       setActiveMeter(id);
       const [meter] = meters.filter((meter) => meter.id === id);
       setPrevValue(meter.previous_value);
+
       if (meter.address) {
         form.setFieldsValue({
           street: meter.address.street,
@@ -95,6 +100,7 @@ export const TabMetering = () => {
           <MeteringList data={meterList} onSelectMeter={onSelectMeter} />
         }
         onChangeMeter={onSelectMeter}
+        onClearMeter={handlerRefreshForm}
         countMeters={count}
         prevValue={prevValue}
       />
