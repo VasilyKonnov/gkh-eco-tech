@@ -7,7 +7,7 @@ const { TabPane } = Tabs;
 export const PageTabs: React.FC<TPageTabsProps> = memo(
   ({ tabs, activeTab, onChangeTab }) => (
     <Tabs onChange={onChangeTab} activeKey={activeTab}>
-      {Object.entries(tabs).map((tab: any) => {
+      {Object.entries(tabs).map((tab) => {
         const [key, val] = tab;
         return <TabPane key={key} tab={val.title} />;
       })}

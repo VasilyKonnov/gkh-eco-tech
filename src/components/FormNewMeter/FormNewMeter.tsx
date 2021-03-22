@@ -5,15 +5,30 @@ import { IconText } from '../IconText';
 
 const { Option } = Select;
 
+const layout = {
+  labelCol: { span: 6 },
+  wrapperCol: { span: 16 },
+};
+
+const fieldParams = {
+  title: [
+    {
+      required: true,
+      message: 'Пожалуйста укажите название счетчика!',
+    },
+  ],
+  meters_type: [
+    {
+      required: true,
+      message: 'Пожалуйста укажите тип счетчика!',
+    },
+  ],
+};
+
 export const FormNewMeter: React.FC = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const { types, visibleModalAddMeter } = useSelector(meterSelector);
-
-  const layout = {
-    labelCol: { span: 6 },
-    wrapperCol: { span: 16 },
-  };
 
   function onCreateMeter() {
     form.validateFields().then((values) => {
@@ -35,27 +50,13 @@ export const FormNewMeter: React.FC = () => {
         cancelText="Отмена"
       >
         <Form {...layout} form={form}>
-          <Form.Item
-            name="title"
-            label="Счетчик"
-            rules={[
-              {
-                required: true,
-                message: 'Пожалуйста укажите название счетчика!',
-              },
-            ]}
-          >
+          <Form.Item name="title" label="Счетчик" rules={fieldParams['title']}>
             <Input placeholder="Введите название счетчика" />
           </Form.Item>
           <Form.Item
             name="meters_type"
             label="Тип счетчика"
-            rules={[
-              {
-                required: true,
-                message: 'Пожалуйста укажите тип счетчика!',
-              },
-            ]}
+            rules={fieldParams['meters_type']}
           >
             <Select placeholder="Выберите тип" allowClear>
               {types.map((type) => (
