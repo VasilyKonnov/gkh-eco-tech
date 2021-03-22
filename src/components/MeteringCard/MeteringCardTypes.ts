@@ -7,7 +7,3 @@ export type TMeteringCardProps = {
     previous_value: number | string;
   };
 };
-
-export type TMeterIconVariant = {
-  [key: number]: React.ReactNode;
-};

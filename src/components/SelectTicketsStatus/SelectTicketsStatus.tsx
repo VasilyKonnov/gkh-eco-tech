@@ -1,21 +1,17 @@
 import { Select } from 'antd'
+import { TSelectTicketsProps } from './SelectTicketsStatusTypes'
 
 const { Option } = Select
 
-type TSelectTicketsProps = {
-  onChangeTickets?: (id: number | string) => void
-  activeTickets?: number | string
-}
-
-export const SelectTickets: React.FC<TSelectTicketsProps> = ({
-  onChangeTickets,
+export const SelectTicketsStatus: React.FC<TSelectTicketsProps> = ({
+  onChangeStatus,
   activeTickets,
 }) => {
   return (
     <Select
       style={{ width: '100%' }}
       placeholder="Выберите статус"
-      onChange={onChangeTickets}
+      onChange={onChangeStatus}
       value={activeTickets}
       allowClear
     >
@@ -25,13 +21,13 @@ export const SelectTickets: React.FC<TSelectTicketsProps> = ({
       <Option value={'recieved'} key={2}>
         Принята
       </Option>
-      <Option value={'in_work'} key={3}>
+      <Option value={'in_work'} key={4}>
         В работе
       </Option>
-      <Option value={'rejected'} key={3}>
+      <Option value={'rejected'} key={5}>
         Отклонена
       </Option>
-      <Option value={'complete'} key={3}>
+      <Option value={'complete'} key={6}>
         Выполнена
       </Option>
     </Select>

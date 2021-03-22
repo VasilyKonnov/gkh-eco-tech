@@ -1,5 +1,4 @@
 import { Dispatch } from 'redux'
-import { TCreateTicketsProps } from '../../utils/api'
 import { FetchingStateTypes } from '../types'
 
 export type TTicketsItem = {
@@ -35,5 +34,5 @@ export type TTicketsState = {
 
 export type TTicketsAction = {
   list: () => (dispatch: Dispatch) => void
-  create: (post: TCreateTicketsProps) => (dispatch: Dispatch) => void
+  create: (formData: any) => (dispatch: Dispatch) => void
 }

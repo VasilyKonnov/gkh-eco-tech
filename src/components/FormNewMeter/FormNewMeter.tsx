@@ -1,6 +1,7 @@
 import { Form, Input, Select, Modal } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { meterAction, meterSelector, setVisibleModal } from '../../store/meter'
+import { IconText } from '../IconText'
 
 const { Option } = Select
 
@@ -60,7 +61,7 @@ export const FormNewMeter: React.FC = () => {
             <Select placeholder="Выберите тип" allowClear>
               {types.map((type) => (
                 <Option value={type.id} key={type.id}>
-                  {type.title}
+                  <IconText meters_type={type.id} text={type.title} />
                 </Option>
               ))}
             </Select>

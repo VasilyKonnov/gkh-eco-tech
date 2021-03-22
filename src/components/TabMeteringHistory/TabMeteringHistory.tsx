@@ -1,4 +1,4 @@
-import { Row, Col, Table, Form } from 'antd'
+import { Row, Col, Table, Form, ConfigProvider } from 'antd'
 import { SelectDateRange } from '../SelectDateRange'
 import { SelectMeter } from '../SelectMeter'
 import { SelectAddress } from '../SelectAddress'
@@ -8,6 +8,7 @@ import { valueSelector } from '../../store/value/valueSelector'
 import { useCallback, useEffect, useState } from 'react'
 import { FetchingStateTypes } from '../../store'
 import { valueAction } from '../../store/value'
+import { EmptyBox } from '../EmptyBox'
 
 type TValueItem = {
   key: number
@@ -110,31 +111,34 @@ export const TabMeteringHistory = () => {
   }
 
   return (
-    <Form layout="vertical" size="large">
-      <Row justify="space-between" gutter={[16, 16]}>
-        <Col span={8}>
-          <Form.Item label="Дата" name="date" className="form-item">
-            <SelectDateRange onChangeRange={() => {}} />
-          </Form.Item>
-        </Col>
-        <Col span={8}>
-          <Form.Item label="Счетчик" name="meter" className="form-item">
-            <SelectMeter onChangeMeter={refreshData} />
-          </Form.Item>
-        </Col>
-        <Col span={8}>
-          <Form.Item label="Адрес" name="address" className="form-item">
-            {/* <SelectAddress onChangeAddress={() => {}} data={addressList} /> */}
-          </Form.Item>
-        </Col>
-      </Row>
-      <Table
-        className="table-data-history"
-        dataSource={tableData}
-        columns={columns}
-        pagination={{ position: [] }}
-        loading={fetchingState === FetchingStateTypes.loading}
-      />
-    </Form>
+    <EmptyBox text="Нет данных для отображения">
+      <Form layout="vertical" size="large">
+        <Row justify="space-between" gutter={[16, 16]}>
+          <Col span={8}>
+            <Form.Item label="Дата" name="date" className="form-item">
+              <SelectDateRange onChangeRange={() => {}} />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item label="Счетчик" name="meter" className="form-item">
+              <SelectMeter onChangeMeter={refreshData} />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item label="Адрес" name="address" className="form-item">
+              <SelectMeter onChangeMeter={refreshData} />
+              {/* <SelectAddress onChangeAddress={() => {}} data={addressList} /> */}
+            </Form.Item>
+          </Col>
+        </Row>
+        <Table
+          className="table-data-history"
+          dataSource={tableData}
+          columns={columns}
+          pagination={{ position: [] }}
+          loading={fetchingState === FetchingStateTypes.loading}
+        />
+      </Form>
+    </EmptyBox>
   )
 }
