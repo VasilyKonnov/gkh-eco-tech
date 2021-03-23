@@ -17,7 +17,6 @@ type TValueItem = {
   date: string
   address: string
 }
-
 export const TabMeteringHistory = () => {
   const columns = [
     {

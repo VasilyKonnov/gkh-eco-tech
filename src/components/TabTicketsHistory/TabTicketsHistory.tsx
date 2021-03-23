@@ -58,7 +58,7 @@ export const TabTicketsHistory = () => {
   }
 
   const getTableTicketsData = () => {
-    const getTicketsData = data.map((tableData, id) => {
+    const getTicketsData = data.map((tableData: any, id: number) => {
       return {
         key: id + 1,
         date: new Date(tableData.created_at).toLocaleDateString('ru-Ru', {
@@ -66,7 +66,20 @@ export const TabTicketsHistory = () => {
           minute: 'numeric',
           second: 'numeric',
         }),
-        status: tableData.status,
+
+        status:
+          tableData.status === 'new'
+            ? 'Новая'
+            : tableData.status === 'recieved'
+            ? 'Принята'
+            : tableData.status === 'in work'
+            ? 'В процессе'
+            : tableData.status === 'rejected'
+            ? 'Отклонена'
+            : tableData.status === 'complete'
+            ? 'Выполнена'
+            : tableData.status,
+
         topic: tableData.subject,
         fio: `${tableData.surname} ${tableData.name} ${tableData.patronymic}`,
         address: `${tableData.address.street} Дом ${tableData.address.house} ${
@@ -77,6 +90,32 @@ export const TabTicketsHistory = () => {
     setTableTicketsData(getTicketsData)
     setFilterTicketsData(getTicketsData)
     getAddressList()
+  }
+  const halfYearInSec = 15778458
+  const yearInSec = 31556916
+  const toDay = new Date().toLocaleDateString('ru-Ru', {
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+  })
+
+  function toTimestamp(strDate: string) {
+    var datum = Date.parse(strDate)
+    return datum / 1000
+  }
+
+  function searchData(ticketData: number | string) {
+    if (ticketData && filterTicketsData) {
+      const dataTable = filterTicketsData.filter((value) => {
+        let timeVal = toTimestamp(value.date)
+        let today = toTimestamp(toDay)
+        return timeVal === ticketData
+      })
+
+      setTableTicketsData(dataTable)
+    } else if (data) {
+      getTableTicketsData()
+    }
   }
 
   function searchDataStatus(ticketId: number | string) {
