@@ -12,4 +12,5 @@ export type TabMeteringViewProps = {
   form: FormInstance;
   countMeters: number;
   prevValue: string;
+  onClearMeter: () => void;
 };

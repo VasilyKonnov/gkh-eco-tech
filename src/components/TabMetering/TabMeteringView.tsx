@@ -6,6 +6,10 @@ import { SelectMeter } from '../SelectMeter/SelectMeter';
 import { EmptyBox } from '../EmptyBox';
 
 const responsiveColNum = { xs: 24, sm: 24, md: 24, lg: 7, xl: 7 };
+const fieldParams = {
+  meter: [{ required: true, message: 'Не выбран счетчик!' }],
+  value: [{ required: true, message: 'Не указано значение!' }],
+};
 
 const TabMeteringView: React.FC<TabMeteringViewProps> = ({
   onSubmit,
@@ -17,6 +21,7 @@ const TabMeteringView: React.FC<TabMeteringViewProps> = ({
   countMeters,
   prevValue,
   onChangeMeter,
+  onClearMeter,
 }) => (
   <EmptyBox text="Нет добавленных счетчиков">
     <Form layout="vertical" size="large" onFinish={onSubmit} form={form}>
@@ -54,12 +59,13 @@ const TabMeteringView: React.FC<TabMeteringViewProps> = ({
           <Form.Item
             label="Счетчик"
             name="meter"
-            rules={[{ required: true, message: 'Не выбран счетчик!' }]}
+            rules={fieldParams['meter']}
             className="form-item"
           >
             <SelectMeter
               onChangeMeter={onChangeMeter}
               activeMeter={activeMeter}
+              onClearMeter={onClearMeter}
             />
           </Form.Item>
         </Col>
@@ -72,7 +78,7 @@ const TabMeteringView: React.FC<TabMeteringViewProps> = ({
           <Form.Item
             label="Текущие показания"
             name="value"
-            rules={[{ required: true, message: 'Не указано значение!' }]}
+            rules={fieldParams['value']}
             className="form-item"
           >
             <Input placeholder="Введите показания" />
