@@ -14,7 +14,7 @@ export type TValueItem = {
   meter: number;
   value: number;
   previous_value: number;
-  date: Date;
+  date: string;
   address: TMeterAddressItem;
 };
 

@@ -47,6 +47,19 @@ type TValuesForm = {
   address: string | null;
 };
 
+type TTimes = {
+  [key: string]: number;
+};
+
+const checkDate = (type: string, date: string) => {
+  const times: TTimes = {
+    'half-a-year': 60 * 60 * 24 * 30 * 6 * 1000,
+    year: 60 * 60 * 24 * 30 * 12 * 1000,
+  };
+  const dt = Date.now() - times[type];
+  return Date.parse(date) > dt;
+};
+
 export const TabMeteringHistory = () => {
   const { data: meters, types: meterTypes } = useSelector(meterSelector);
   const addressList = meters.reduce(
@@ -85,7 +98,7 @@ export const TabMeteringHistory = () => {
     const filterByAddress = (val: TValueItem) =>
       address ? +address === val.address?.id : true;
     const filterByDate = (val: TValueItem) =>
-      date !== EDateValue.all ? val.date : true;
+      date !== EDateValue.all ? checkDate(date as string, val.date) : true;
 
     const data = values
       .filter(cbHasAddress)
