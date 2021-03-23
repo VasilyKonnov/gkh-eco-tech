@@ -13,7 +13,9 @@ import './TabMetering.css';
 
 export const TabMetering = () => {
   const dispatch = useDispatch();
-  const { fetchingState, data: meters } = useSelector(meterSelector);
+  const { fetchingState, data: meters, types: meterTypes } = useSelector(
+    meterSelector
+  );
   const [form] = Form.useForm();
   const [showAllMeters, setShowAllMeters] = useState(false);
   const [meterList, setMeterList] = useState<TMeterItem[]>([]);
@@ -47,14 +49,15 @@ export const TabMetering = () => {
   );
 
   useEffect(() => {
-    if (fetchingState === FetchingStateTypes.none) {
+    if (fetchingState === FetchingStateTypes.none && meterTypes.length) {
       dispatch(meterAction.list());
     }
-  }, [dispatch, fetchingState]);
+  }, [dispatch, fetchingState, meterTypes.length]);
 
   useEffect(() => {
-    activeMeter !== 'Выберите счетчик' &&
+    if (activeMeter !== 'Выберите счетчик') {
       form.setFieldsValue({ meter: activeMeter });
+    }
   }, [activeMeter, form]);
 
   useEffect(() => {

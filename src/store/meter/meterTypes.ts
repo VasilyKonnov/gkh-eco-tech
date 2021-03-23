@@ -32,6 +32,7 @@ export type TMeterAddressItem = {
 export type TMeterType = {
   id: number;
   title: string;
+  measure: string;
 };
 
 export type TMeterState = {

@@ -1,6 +1,8 @@
 import { Card } from 'antd';
 import { TMeteringCardProps } from './MeteringCardTypes';
 import { getMeterIcon } from '../../helpers';
+import { meterSelector } from '../../store/meter';
+import { useSelector } from 'react-redux';
 
 const { Meta } = Card;
 
@@ -10,6 +12,8 @@ export const MeteringCard: React.FC<TMeteringCardProps> = ({
 }) => {
   const { id, title, meters_type, previous_value } = meter;
   const icon = getMeterIcon(meters_type);
+  const { types } = useSelector(meterSelector);
+  const [meterType] = types.filter((type) => type.id === meters_type);
 
   return (
     <Card
@@ -20,7 +24,7 @@ export const MeteringCard: React.FC<TMeteringCardProps> = ({
       <Meta
         avatar={icon}
         title={title}
-        description={`${+previous_value} м.куб.`}
+        description={`${+previous_value} ${meterType.measure}`}
       />
     </Card>
   );
