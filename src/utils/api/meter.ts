@@ -11,7 +11,7 @@ export const meterApi = {
   byId: (meterId: number) => axios.get(`/meter/${meterId}`),
   create: (post: TCreateMeterProps) => axios.post('/meter/', post),
   fillAddress: (meterId: number, address: TMeterAddress) =>
-    axios.patch(`/meter/${meterId}`, address),
+    axios.patch(`/meter/${meterId}/`, address),
   changeName: (meterId: number, post: TCreateMeterProps) =>
     axios.put(`/meter/${meterId}/`, post),
   getTypes: () => axios.get(`/metertypes/`),

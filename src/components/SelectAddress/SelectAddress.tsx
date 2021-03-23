@@ -1,5 +1,6 @@
 import { Select } from 'antd';
 import { TSelectAddressProps } from './SelectAddressType';
+import { parseAddressValue } from '../../helpers';
 
 const { Option } = Select;
 
@@ -15,9 +16,7 @@ export const SelectAddress: React.FC<TSelectAddressProps> = ({
   >
     {data.map((address) => (
       <Option value={address.id} key={address.id}>
-        {`${address.street} дом ${address.house}  ${address.building || ''} ${
-          address.apartment || ''
-        }`}
+        {parseAddressValue(address)}
       </Option>
     ))}
   </Select>

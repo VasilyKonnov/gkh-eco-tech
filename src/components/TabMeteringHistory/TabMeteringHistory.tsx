@@ -3,20 +3,20 @@ import { SelectDateRange } from '../SelectDateRange';
 import { SelectMeter } from '../SelectMeter';
 import { SelectAddress } from '../SelectAddress';
 import { useDispatch, useSelector } from 'react-redux';
-import { meterSelector } from '../../store/meter';
+import { meterSelector, TMeterItem } from '../../store/meter';
 import { valueSelector } from '../../store/value/valueSelector';
 import { useCallback, useEffect, useState } from 'react';
 import { FetchingStateTypes } from '../../store';
-import { valueAction } from '../../store/value';
+import { valueAction, TValueItem } from '../../store/value';
 import { EmptyBox } from '../EmptyBox';
+import { TMeterAddressItem } from '../../store/meter';
+import { parseAddressValue } from '../../helpers';
 
-type TValueItem = {
-  key: number;
-  meter: string;
-  value: number;
-  date: string;
-  address: string;
-};
+enum EDateValue {
+  all = 'all',
+  half_a_year = 'half-a-year',
+  year = 'year',
+}
 
 const columns = [
   {
@@ -49,24 +49,26 @@ type TValuesForm = {
 
 export const TabMeteringHistory = () => {
   const { data: meters, types: meterTypes } = useSelector(meterSelector);
-  const addressList = meters.map((meter) => meter.address);
+  const addressList = meters.reduce(
+    (acc: TMeterAddressItem[], cur: TMeterItem) => {
+      if (
+        cur.address?.id &&
+        !acc.some((addressItem) => addressItem.id === cur.address.id)
+      ) {
+        acc.push(cur.address);
+      }
+      return acc;
+    },
+    []
+  );
   const { fetchingState, data: values } = useSelector(valueSelector);
   const [valuesForm, setValuesForm] = useState<TValuesForm>({
-    date: 'all',
+    date: EDateValue.all,
     meter: null,
     address: null,
   });
   const dispatch = useDispatch();
-  const [tableData, setTableData] = useState<TValueItem[]>([]);
-  const getMeterAddress = useCallback(
-    (meterId: number) => {
-      const [meter] = meters.filter((meter) => meter.id === meterId);
-      const { street, house, building, apartment } = meter.address;
-      return `${street} дом ${house}  ${building || ''} ${apartment || ''}`;
-    },
-    [meters]
-  );
-
+  const [tableData, setTableData] = useState<any>([]);
   const getMeterTitle = useCallback(
     (meterId: number) => {
       const [meter] = meters.filter((meter) => meter.id === meterId);
@@ -74,23 +76,29 @@ export const TabMeteringHistory = () => {
     },
     [meters]
   );
+  const cbHasAddress = (val: TValueItem) => val.address;
+
   const refreshData = useCallback(() => {
     const { date, meter, address } = valuesForm;
-
-    const filterByMeter = (val: any) => (meter ? meter === val.meter : true);
-    const filterByAddress = (val: any) =>
-      address ? address === val.address.id : true;
+    const filterByMeter = (val: TValueItem) =>
+      meter ? +meter === val.meter : true;
+    const filterByAddress = (val: TValueItem) =>
+      address ? +address === val.address?.id : true;
+    const filterByDate = (val: TValueItem) =>
+      date !== EDateValue.all ? val.date : true;
 
     const data = values
+      .filter(cbHasAddress)
       .filter(filterByAddress)
       .filter(filterByMeter)
+      .filter(filterByDate)
       .map((val) => {
         return {
           key: val.id,
           date: new Date(val.date).toLocaleDateString('en-GB'),
           meter: getMeterTitle(val.meter),
           value: val.value,
-          address: `${val.address.street} дом ${val.address.house}`,
+          address: parseAddressValue(val.address),
         };
       });
     setTableData(data);
@@ -103,18 +111,18 @@ export const TabMeteringHistory = () => {
   }, [dispatch, fetchingState]);
 
   useEffect(() => {
-    const date = values.map((val) => {
+    const date = values.filter(cbHasAddress).map((val) => {
       return {
         key: val.id,
         date: new Date(val.date).toLocaleDateString('en-GB'),
         meter: getMeterTitle(val.meter),
         value: val.value,
-        address: getMeterAddress(val.meter),
+        address: parseAddressValue(val.address),
       };
     });
 
     setTableData(date);
-  }, [getMeterAddress, getMeterTitle, meterTypes, values]);
+  }, [getMeterTitle, meterTypes, values]);
 
   useEffect(() => {
     refreshData();
