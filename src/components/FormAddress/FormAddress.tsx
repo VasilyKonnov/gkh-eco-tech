@@ -9,7 +9,7 @@ export const FormAddress = () => (
       <Form.Item
         label="Улица"
         name="street"
-        rules={[{ required: true, message: 'Не указана улица!' }]}
+        rules={[{ required: true, message: 'Укажите улицу' }]}
         className="form-item"
       >
         <Input className="input-page-base" placeholder="Название улицы" />
@@ -19,7 +19,7 @@ export const FormAddress = () => (
       <Form.Item
         label="Дом"
         name="house"
-        rules={[{ required: true, message: 'Не указан дом!' }]}
+        rules={[{ required: true, message: 'Укажите дом' }]}
         className="form-item"
       >
         <Input className="input-page-base" placeholder="Номер" />

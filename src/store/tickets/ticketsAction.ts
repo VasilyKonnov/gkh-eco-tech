@@ -1,7 +1,13 @@
 import { message } from 'antd'
 import { openNotification } from '../../helpers'
 import { TCreateTicketsProps, ticketsApi } from '../../utils/api/tickets'
-import { addNewTicket, setTicketsData, ticketsFetching } from './ticketsSlice'
+import {
+  addNewTicket,
+  setTicketsData,
+  ticketsFetching,
+  clearFormFalse,
+  clearFormTrue,
+} from './ticketsSlice'
 import { TTicketsAction } from './ticketsTypes'
 
 export const ticketsAction: TTicketsAction = {
@@ -15,9 +21,14 @@ export const ticketsAction: TTicketsAction = {
     ticketsApi
       .create(formData)
       .then(({ status, data }) => {
-        if (status !== 201) throw new Error('Failed create tickets!')
+        dispatch(clearFormFalse())
+        if (status !== 201) {
+          throw new Error('Failed create tickets!')
+          dispatch(clearFormFalse())
+        }
         dispatch(addNewTicket({ ticket: data }))
         message.success('Заявка отправлена!')
+        dispatch(clearFormTrue())
       })
       .catch(() => {
         openNotification({

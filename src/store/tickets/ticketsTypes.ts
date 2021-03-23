@@ -30,6 +30,7 @@ export type TTicketsState = {
   fetchingState: FetchingStateTypes
   data: TTicketsItem[]
   errorText: string
+  clearForm: string
 }
 
 export type TTicketsAction = {

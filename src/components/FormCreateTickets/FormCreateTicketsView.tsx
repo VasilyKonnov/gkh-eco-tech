@@ -26,7 +26,7 @@ export const FormCreateTicketsView: React.FC<TFormCreateTicketsProps> = ({
           label="Фамилия"
           name="surname"
           className="label-input-page-base"
-          rules={[{ required: true, message: 'Не указана фамилия' }]}
+          rules={[{ required: true, message: 'Введите фамилию' }]}
         >
           <Input className="input-page-base" placeholder="Введите фамилию" />
         </Form.Item>
@@ -36,7 +36,7 @@ export const FormCreateTicketsView: React.FC<TFormCreateTicketsProps> = ({
           className="label-input-page-base"
           label="Имя"
           name="name"
-          rules={[{ required: true, message: 'Не указано имя' }]}
+          rules={[{ required: true, message: 'Введите имя' }]}
         >
           <Input className="input-page-base" placeholder="Введите имя" />
         </Form.Item>
@@ -46,7 +46,7 @@ export const FormCreateTicketsView: React.FC<TFormCreateTicketsProps> = ({
           className="label-input-page-base"
           label="Отчество"
           name="patronymic"
-          rules={[{ required: true, message: 'Не указано отчество' }]}
+          rules={[{ required: true, message: 'Введите отчество' }]}
         >
           <Input className="input-page-base" placeholder="Введите отчество" />
         </Form.Item>
@@ -63,7 +63,7 @@ export const FormCreateTicketsView: React.FC<TFormCreateTicketsProps> = ({
           <MaskedInput
             maxLength={11}
             minLength={11}
-            mask="1 111 111 1111"
+            mask="+1 111 111 1111"
             placeholder="Введите телефон"
             className="input-page-base"
           />
@@ -78,7 +78,7 @@ export const FormCreateTicketsView: React.FC<TFormCreateTicketsProps> = ({
             {
               type: 'email',
               required: true,
-              message: 'Введите корректный Email',
+              message: 'Введите электронную почту',
             },
           ]}
         >
@@ -97,14 +97,22 @@ export const FormCreateTicketsView: React.FC<TFormCreateTicketsProps> = ({
         rules={[
           {
             required: true,
-            message: 'Не указана тема обращения',
+            message: 'Введите тему сообщения',
           },
         ]}
       >
         <Input className="input-page-base" placeholder="Тема" />
       </Form.Item>
     </Col>
-    <Form.Item name="text">
+    <Form.Item
+      name="text"
+      rules={[
+        {
+          required: true,
+          message: 'Введите сообщение',
+        },
+      ]}
+    >
       <Input.TextArea
         className="textarea-appel-filds"
         placeholder="Текст обращения"

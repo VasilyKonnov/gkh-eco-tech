@@ -61,9 +61,11 @@ export const TabTicketsHistory = () => {
     const getTicketsData = data.map((tableData, id) => {
       return {
         key: id + 1,
-        date: new Date(tableData.created_at)
-          .toLocaleDateString('en-GB')
-          .replace(/\//g, '.'),
+        date: new Date(tableData.created_at).toLocaleDateString('ru-Ru', {
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric',
+        }),
         status: tableData.status,
         topic: tableData.subject,
         fio: `${tableData.surname} ${tableData.name} ${tableData.patronymic}`,
