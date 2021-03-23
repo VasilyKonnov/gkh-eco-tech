@@ -6,6 +6,7 @@ import {
   setTicketsData,
   ticketsFetching,
   ticketSending,
+  ticketSendingError
 } from './ticketsSlice';
 import { TTicketsAction } from './ticketsTypes';
 
@@ -34,6 +35,7 @@ export const ticketsAction: TTicketsAction = {
           title: 'Ошибка!',
           text: 'Не удалось отправить  заявку!',
         });
+        dispatch(ticketSendingError());
       });
   },
 };

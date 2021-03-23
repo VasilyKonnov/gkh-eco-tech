@@ -31,6 +31,9 @@ const ticketsSlice = createSlice({
     ticketSending: (state) => {
       state.sendingTaskState = FetchingStateTypes.loading;
     },
+    ticketSendingError: (state) => {
+      state.sendingTaskState = FetchingStateTypes.failed;
+    },
   },
 });
 
@@ -40,5 +43,6 @@ export const {
   ticketsFetchError,
   addNewTicket,
   ticketSending,
+  ticketSendingError
 } = ticketsSlice.actions;
 export const ticketsReducer = ticketsSlice.reducer;
