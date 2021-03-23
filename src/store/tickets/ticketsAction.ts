@@ -1,41 +1,39 @@
-import { message } from 'antd'
-import { openNotification } from '../../helpers'
-import { TCreateTicketsProps, ticketsApi } from '../../utils/api/tickets'
+import { message } from 'antd';
+import { openNotification } from '../../helpers';
+import { ticketsApi } from '../../utils/api/tickets';
 import {
   addNewTicket,
   setTicketsData,
   ticketsFetching,
-  clearFormFalse,
-  clearFormTrue,
-} from './ticketsSlice'
-import { TTicketsAction } from './ticketsTypes'
+  ticketSending,
+} from './ticketsSlice';
+import { TTicketsAction } from './ticketsTypes';
 
 export const ticketsAction: TTicketsAction = {
   list: () => (dispatch) => {
-    dispatch(ticketsFetching())
+    dispatch(ticketsFetching());
     ticketsApi.list().then(({ data }) => {
-      dispatch(setTicketsData({ data: data }))
-    })
+      dispatch(setTicketsData({ data: data }));
+    });
   },
-  create: (formData) => (dispatch) => {
+  create: (formData, cbClearForm) => (dispatch) => {
+    dispatch(ticketSending());
     ticketsApi
       .create(formData)
       .then(({ status, data }) => {
-        dispatch(clearFormFalse())
         if (status !== 201) {
-          throw new Error('Failed create tickets!')
-          dispatch(clearFormFalse())
+          throw new Error('Failed create tickets!');
         }
-        dispatch(addNewTicket({ ticket: data }))
-        message.success('Заявка отправлена!')
-        dispatch(clearFormTrue())
+        cbClearForm();
+        dispatch(addNewTicket({ ticket: data }));
+        message.success('Заявка отправлена!');
       })
       .catch(() => {
         openNotification({
           type: 'error',
           title: 'Ошибка!',
           text: 'Не удалось отправить  заявку!',
-        })
-      })
+        });
+      });
   },
-}
+};

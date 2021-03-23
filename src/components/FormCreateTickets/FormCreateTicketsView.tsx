@@ -1,16 +1,16 @@
-import { Col, Form, Input, Row, Button } from 'antd'
-import { MaskedInput } from 'antd-mask-input'
-import { FormAddress } from '../FormAddress'
-import { TFormCreateTicketsProps } from './FormCreateTicketsTypes'
+import { Col, Form, Input, Row, Button } from 'antd';
+import { MaskedInput } from 'antd-mask-input';
+import { FormAddress } from '../FormAddress';
+import { TFormCreateTicketsProps } from './FormCreateTicketsTypes';
 
-const responsiveCol = { xs: 24, sm: 24, md: 24, lg: 8, xl: 8 }
-const responsiveColSubject = { xs: 24, sm: 24, md: 24, lg: 10, xl: 10 }
+const responsiveCol = { xs: 24, sm: 24, md: 24, lg: 8, xl: 8 };
+const responsiveColSubject = { xs: 24, sm: 24, md: 24, lg: 10, xl: 10 };
 
 export const FormCreateTicketsView: React.FC<TFormCreateTicketsProps> = ({
   form,
-  onSelectFile,
   onSubmit,
   fileRef,
+  isSending,
 }) => (
   <Form
     layout="vertical"
@@ -122,9 +122,14 @@ export const FormCreateTicketsView: React.FC<TFormCreateTicketsProps> = ({
       <input name="attachment" type="file" ref={fileRef} />
     </Form.Item>
     <Form.Item wrapperCol={{ span: 24 }}>
-      <Button type="primary" htmlType="submit" className="button-primary">
+      <Button
+        type="primary"
+        htmlType="submit"
+        className="button-primary"
+        loading={isSending}
+      >
         Отправить
       </Button>
     </Form.Item>
   </Form>
-)
+);

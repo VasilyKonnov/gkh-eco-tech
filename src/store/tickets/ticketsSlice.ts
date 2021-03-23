@@ -1,49 +1,44 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { FetchingStateTypes } from '../types'
-import { TTicketsState } from './ticketsTypes'
+import { createSlice } from '@reduxjs/toolkit';
+import { FetchingStateTypes } from '../types';
+import { TTicketsState } from './ticketsTypes';
 
 const initialState: TTicketsState = {
   fetchingState: FetchingStateTypes.none,
+  sendingTaskState: FetchingStateTypes.none,
   data: [],
   errorText: '',
-  clearForm: '',
-}
+};
 
 const ticketsSlice = createSlice({
   name: 'TICKETS',
   initialState,
   reducers: {
     setTicketsData: (state, { payload }) => {
-      state.data = payload.data
-      state.fetchingState = FetchingStateTypes.success
-      state.clearForm = 'success'
+      state.data = payload.data;
+      state.fetchingState = FetchingStateTypes.success;
     },
     ticketsFetching: (state) => {
-      state.fetchingState = FetchingStateTypes.loading
+      state.fetchingState = FetchingStateTypes.loading;
     },
     ticketsFetchError: (state, { payload }) => {
-      state.errorText = payload.fetchError
-      state.fetchingState = FetchingStateTypes.failed
+      state.errorText = payload.fetchError;
+      state.fetchingState = FetchingStateTypes.failed;
     },
     addNewTicket: (state, { payload }) => {
-      state.data = [payload.ticket, ...state.data]
-      state.clearForm = 'success'
+      state.data = [payload.ticket, ...state.data];
+      state.sendingTaskState = FetchingStateTypes.success;
     },
-    clearFormFalse: (state) => {
-      state.clearForm = 'none'
-    },
-    clearFormTrue: (state) => {
-      state.clearForm = 'success'
+    ticketSending: (state) => {
+      state.sendingTaskState = FetchingStateTypes.loading;
     },
   },
-})
+});
 
 export const {
   setTicketsData,
   ticketsFetching,
   ticketsFetchError,
   addNewTicket,
-  clearFormFalse,
-  clearFormTrue,
-} = ticketsSlice.actions
-export const ticketsReducer = ticketsSlice.reducer
+  ticketSending,
+} = ticketsSlice.actions;
+export const ticketsReducer = ticketsSlice.reducer;
