@@ -22,10 +22,11 @@ const TabMeteringView: React.FC<TabMeteringViewProps> = ({
   prevValue,
   onChangeMeter,
   onClearMeter,
+  lockFormAddress,
 }) => (
   <EmptyBox text="Нет добавленных счетчиков">
     <Form layout="vertical" size="large" onFinish={onSubmit} form={form}>
-      <FormAddress />
+      <FormAddress readOnly={lockFormAddress} />
       <Form.Item>
         <Row justify="space-between" align="middle">
           <Col>

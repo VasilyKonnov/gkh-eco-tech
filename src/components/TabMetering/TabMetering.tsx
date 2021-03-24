@@ -19,6 +19,7 @@ export const TabMetering = () => {
   const [form] = Form.useForm();
   const [showAllMeters, setShowAllMeters] = useState(false);
   const [meterList, setMeterList] = useState<TMeterItem[]>([]);
+  const [lockFormAddress, setLockFormAddress] = useState(false);
   const [activeMeter, setActiveMeter] = useState<number | string>(
     'Выберите счетчик'
   );
@@ -41,7 +42,9 @@ export const TabMetering = () => {
           building: meter.address.building,
           apartment: meter.address.apartment,
         });
+        setLockFormAddress(true);
       } else {
+        setLockFormAddress(false);
         form.resetFields();
       }
     },
@@ -106,6 +109,7 @@ export const TabMetering = () => {
         onClearMeter={handlerRefreshForm}
         countMeters={count}
         prevValue={prevValue}
+        lockFormAddress={lockFormAddress}
       />
       <FormNewMeter />
     </>
