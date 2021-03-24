@@ -1,13 +1,13 @@
 import { notification } from 'antd';
 
-export interface NotificationProps {
+interface INotificationProps {
   text?: string;
   type?: 'success' | 'info' | 'warning' | 'error';
   title: string;
   duration?: number;
 }
 
-export const openNotification: React.FC<NotificationProps> = ({
+export const openNotification: React.FC<INotificationProps> = ({
   text,
   type = 'info',
   title,

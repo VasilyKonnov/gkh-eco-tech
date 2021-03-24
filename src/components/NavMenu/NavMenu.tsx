@@ -1,9 +1,6 @@
 import { Menu } from 'antd';
-
-export interface INavMenuProps {
-  currentMenu: string;
-  onChangeMenu(props: object): void;
-}
+import { INavMenuProps } from './NavMenuTypes';
+import './NavMenu.css';
 
 export const NavMenu: React.FC<INavMenuProps> = ({
   currentMenu,
@@ -14,6 +11,7 @@ export const NavMenu: React.FC<INavMenuProps> = ({
     mode="horizontal"
     defaultSelectedKeys={[currentMenu]}
     onClick={(key) => onChangeMenu(key)}
+    className="page-navmenu"
   >
     <Menu.Item key="payments">Начисления</Menu.Item>
     <Menu.Item key="metering">Показания</Menu.Item>

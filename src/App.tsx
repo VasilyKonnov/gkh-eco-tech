@@ -1,12 +1,15 @@
-import { Route, Switch, Redirect } from 'react-router-dom'
-import { PageWrapper, SpinLoader } from './components'
-import { LoginPage, PageBase } from './pages'
-import { useSelector } from 'react-redux'
-import { userSelector } from './store/user'
-import { FetchingStateTypes } from './store'
+import { useEffect } from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { PageWrapper, SpinLoader } from './components';
+import { LoginPage, PageBase } from './pages';
+import { useSelector, useDispatch } from 'react-redux';
+import { userSelector } from './store/user';
+import { meterAction } from './store/meter';
+import { FetchingStateTypes } from './store';
 
 const App: React.FC = () => {
-  const { isAuth, fetchingState } = useSelector(userSelector)
+  const { isAuth, fetchingState } = useSelector(userSelector);
+  const dispatch = useDispatch();
   const patches: string[] = [
     '/payments',
     '/metering',
@@ -14,18 +17,22 @@ const App: React.FC = () => {
     '/services',
     '/admin',
     '/news',
-  ]
+  ];
 
   const isCheckingToken =
     window.localStorage.getItem('Token') &&
-    fetchingState === FetchingStateTypes.loading
+    fetchingState === FetchingStateTypes.loading;
 
   const pageContent: React.FC = () => {
     if (isCheckingToken) {
-      return <SpinLoader />
+      return <SpinLoader />;
     }
-    return isAuth ? <PageBase /> : <Redirect to="/login" />
-  }
+    return isAuth ? <PageBase /> : <Redirect to="/login" />;
+  };
+  // load all meter types
+  useEffect(() => {
+    isAuth && dispatch(meterAction.getTypes());
+  }, [dispatch, isAuth]);
 
   return (
     <PageWrapper>
@@ -37,7 +44,7 @@ const App: React.FC = () => {
         </Route>
       </Switch>
     </PageWrapper>
-  )
-}
+  );
+};
 
-export default App
+export default App;

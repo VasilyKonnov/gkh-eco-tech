@@ -1,0 +1,8 @@
+.ant-btn-icon-only .icon {
+  margin-left: 3px;
+  margin-bottom: -1px;
+}
+
+.ant-btn-icon-only:hover .icon-fill {
+  fill: #004f9e;
+}
