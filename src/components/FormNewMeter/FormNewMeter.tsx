@@ -1,14 +1,14 @@
-import { Form, Input, Select, Modal } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { meterAction, meterSelector, setVisibleModal } from '../../store/meter';
-import { IconText } from '../IconText';
+import { Form, Input, Select, Modal } from 'antd'
+import { useDispatch, useSelector } from 'react-redux'
+import { meterAction, meterSelector, setVisibleModal } from '../../store/meter'
+import { IconText } from '../IconText'
 
-const { Option } = Select;
+const { Option } = Select
 
 const layout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 16 },
-};
+}
 
 const fieldParams = {
   title: [
@@ -23,20 +23,21 @@ const fieldParams = {
       message: 'Пожалуйста укажите тип счетчика!',
     },
   ],
-};
+}
 
 export const FormNewMeter: React.FC = () => {
-  const [form] = Form.useForm();
-  const dispatch = useDispatch();
-  const { types, visibleModalAddMeter } = useSelector(meterSelector);
+  const [form] = Form.useForm()
+  const dispatch = useDispatch()
+  const { types, visibleModalAddMeter } = useSelector(meterSelector)
 
   function onCreateMeter() {
     form.validateFields().then((values) => {
-      dispatch(meterAction.create(values, form.resetFields));
-    });
+      dispatch(meterAction.create(values, form.resetFields))
+    })
   }
+
   function onClose() {
-    dispatch(setVisibleModal({ visible: false }));
+    dispatch(setVisibleModal({ visible: false }))
   }
 
   return (
@@ -69,5 +70,5 @@ export const FormNewMeter: React.FC = () => {
         </Form>
       </Modal>
     </>
-  );
-};
+  )
+}

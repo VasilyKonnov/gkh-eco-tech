@@ -1,0 +1,1 @@
+export { TabTicketsHistory } from './TabTicketsHistory'

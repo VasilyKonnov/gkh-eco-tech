@@ -20,6 +20,7 @@ export const FormInputPass: FC<TFormInputPassProps> = memo(
     loading,
     onChangeCheckedBox,
     canAgree,
+    handlerSubmitLogin,
   }) => (
     <>
       <Text className="auth-instruction">
@@ -30,10 +31,9 @@ export const FormInputPass: FC<TFormInputPassProps> = memo(
         Поменять номер
       </button>
       <div className="auth-wrapper">
-        <form>
+        <form onSubmit={handlerSubmitLogin}>
           <Input
             maxLength={6}
-            suffix={<EyeOutlined />}
             placeholder="Одноразовый пароль"
             onChange={onChangePass}
             value={passValue}
