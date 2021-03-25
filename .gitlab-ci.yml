@@ -11,17 +11,14 @@ install_dependencies:
   stage: build
   script:
     - export REACT_APP_API_URL=https://dev.brain4you.ru/api/v1/
-    - yarn install
-    - yarn build
+    - npm install
+    - npm build
     - mv build build_$env
   artifacts:
     paths:
       - node_modules
       - build_$env
   cache:
-    key:
-      files:
-        - yarn.lock
     paths:
       - node_modules
   only:
