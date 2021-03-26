@@ -1,59 +1,54 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { ticketsAction, ticketsSelector } from '../../store/tickets';
-import { useCallback, useEffect, useState } from 'react';
-import { TTableRowItem } from './TabTicketsHistoryTypes';
-import { FetchingStateTypes } from '../../store';
-import { TabTicketsHistoryView } from './TabTicketsHistoryView';
-import { TMeterAddressItem } from '../../store/meter';
-import { TTicketsItem } from '../../store/tickets';
-import { parseAddressValue } from '../../helpers';
+import { useDispatch, useSelector } from 'react-redux'
+import { ticketsAction, ticketsSelector } from '../../store/tickets'
+import { useCallback, useEffect, useState } from 'react'
+import { TTableRowItem, TValuesFrom } from './TabTicketsHistoryTypes'
+import { FetchingStateTypes } from '../../store'
+import { TabTicketsHistoryView } from './TabTicketsHistoryView'
+import { TMeterAddressItem } from '../../store/meter'
+import { TTicketsItem } from '../../store/tickets'
+import { parseAddressValue } from '../../helpers'
 import {
   EDateValue,
   filterByDate,
   filterByStatus,
   filterByAddressTicket,
-} from '../../utils/filter';
+} from '../../utils/filter'
 
 const sortByDate = (cur: TTicketsItem, sec: TTicketsItem) =>
-  Date.parse(sec.created_at) - Date.parse(cur.created_at);
+  Date.parse(sec.created_at) - Date.parse(cur.created_at)
 
 const fillUniqAddress = (acc: TMeterAddressItem[], cur: TTicketsItem) => {
   if (
     cur.address?.id &&
     !acc.some((addressItem) => addressItem.id === cur.address.id)
   )
-    acc.push(cur.address);
-  return acc;
-};
-
-type TValuesFrom = {
-  date: EDateValue;
-  status: string | null;
-  address: string | null;
-};
+    acc.push(cur.address)
+  return acc
+}
 
 export const TabTicketsHistory = () => {
   const { data: tasks, statuses: taskStatuses, fetchingState } = useSelector(
-    ticketsSelector
-  );
-  const dispatch = useDispatch();
-  const [tableData, setTableData] = useState<TTableRowItem[]>([]);
-  const addressList = tasks.reduce(fillUniqAddress, []);
+    ticketsSelector,
+  )
+
+  const dispatch = useDispatch()
+  const [tableData, setTableData] = useState<TTableRowItem[]>([])
+  const addressList = tasks.reduce(fillUniqAddress, [])
   const [valuesForm, setValuesForm] = useState<TValuesFrom>({
     date: EDateValue.all,
     status: null,
     address: null,
-  });
+  })
 
   const refreshData = useCallback(() => {
-    const { date, status, address } = valuesForm;
+    const { date, status, address } = valuesForm
 
     const data = tasks
       .filter(
         (val) =>
           filterByStatus(status, val) &&
           filterByAddressTicket(address, val) &&
-          filterByDate(date, val.created_at)
+          filterByDate(date, val.created_at),
       )
       .sort(sortByDate)
       .map((val) => {
@@ -68,27 +63,27 @@ export const TabTicketsHistory = () => {
           topic: val.subject,
           fio: `${val.surname} ${val.name} ${val.patronymic}`,
           address: parseAddressValue(val.address),
-        };
-      });
+        }
+      })
 
-    setTableData(data);
-  }, [tasks, valuesForm]);
+    setTableData(data)
+  }, [tasks, valuesForm])
 
   useEffect(() => {
     if (fetchingState === FetchingStateTypes.none) {
-      dispatch(ticketsAction.list());
+      dispatch(ticketsAction.list())
     }
-  }, [dispatch, fetchingState]);
+  }, [dispatch, fetchingState])
 
   useEffect(() => {
-    refreshData();
-  }, [refreshData]);
+    refreshData()
+  }, [refreshData])
 
   function onChangeFilter(name: string, value: number | string) {
     const newState = {
       [name]: value,
-    };
-    setValuesForm({ ...valuesForm, ...newState });
+    }
+    setValuesForm({ ...valuesForm, ...newState })
   }
 
   return (
@@ -99,5 +94,5 @@ export const TabTicketsHistory = () => {
       statusList={taskStatuses}
       onChangeFilter={onChangeFilter}
     />
-  );
-};
+  )
+}

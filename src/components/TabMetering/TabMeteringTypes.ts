@@ -13,4 +13,5 @@ export type TabMeteringViewProps = {
   countMeters: number;
   prevValue: string;
   onClearMeter: () => void;
+  lockFormAddress: boolean;
 };

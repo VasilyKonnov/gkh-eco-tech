@@ -1,7 +1,7 @@
-import { Select } from 'antd';
-import { TSelectTicketsProps } from './SelectTicketsStatusTypes';
+import { Select } from 'antd'
+import { TSelectTicketsProps } from './SelectTicketsStatusTypes'
 
-const { Option } = Select;
+const { Option } = Select
 
 export const SelectTicketsStatus: React.FC<TSelectTicketsProps> = ({
   onChangeStatus,
@@ -20,5 +20,5 @@ export const SelectTicketsStatus: React.FC<TSelectTicketsProps> = ({
         </Option>
       ))}
     </Select>
-  );
-};
+  )
+}

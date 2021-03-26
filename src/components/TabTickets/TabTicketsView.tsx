@@ -19,7 +19,7 @@ export const TabTicketsView: React.FC<TTabTicketsProps> = ({
     onFinish={onSubmit}
     encType="multipart/form-data"
   >
-    <FormAddress />
+    <FormAddress readOnly={false} />
     <Row gutter={32}>
       <Col {...responsiveCol} className="col-page-base">
         <Form.Item
