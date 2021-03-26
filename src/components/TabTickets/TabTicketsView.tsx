@@ -63,7 +63,7 @@ export const TabTicketsView: React.FC<TTabTicketsProps> = ({
           <MaskedInput
             maxLength={11}
             minLength={11}
-            mask="+1 111 111 1111"
+            mask="+1 111 111 11 11"
             placeholder="Введите телефон"
             className="input-page-base"
           />
