@@ -10,40 +10,50 @@ const fieldParams = {
       message: 'Пожалуйста укажите тип счетчика!',
     },
   ],
-  house: [{ required: true, message: 'Не указан дом!' }]
+  house: [{ required: true, message: 'Не указан дом!' }],
 };
 
-export const FormAddress = () => (
-  <Row gutter={32}>
-    <Col {...responsiveColStreet}>
-      <Form.Item
-        label="Улица"
-        name="street"
-        rules={fieldParams['street']}
-        className="form-item"
-      >
-        <Input placeholder="Название улицы" />
-      </Form.Item>
-    </Col>
-    <Col {...responsiveColNum}>
-      <Form.Item
-        label="Дом"
-        name="house"
-        rules={fieldParams['house']}
-        className="form-item"
-      >
-        <Input placeholder="Номер" />
-      </Form.Item>
-    </Col>
-    <Col {...responsiveColNum}>
-      <Form.Item label="Корпус" name="building" className="form-item">
-        <Input placeholder="Номер" />
-      </Form.Item>
-    </Col>
-    <Col {...responsiveColNum}>
-      <Form.Item label="Квартира" name="apartment" className="form-item">
-        <Input placeholder="Номер" />
-      </Form.Item>
-    </Col>
-  </Row>
-);
+type TFormAddressProps = {
+  readOnly: boolean;
+};
+
+export const FormAddress: React.FC<TFormAddressProps> = ({ readOnly }) => {
+  const inputProps = readOnly
+    ? { readOnly, bordered: false }
+    : { placeholder: 'Номер' };
+
+  return (
+    <Row gutter={32}>
+      <Col {...responsiveColStreet}>
+        <Form.Item
+          label="Улица"
+          name="street"
+          rules={fieldParams['street']}
+          className="form-item"
+        >
+          <Input placeholder="Название улицы" {...inputProps} />
+        </Form.Item>
+      </Col>
+      <Col {...responsiveColNum}>
+        <Form.Item
+          label="Дом"
+          name="house"
+          rules={fieldParams['house']}
+          className="form-item"
+        >
+          <Input {...inputProps} />
+        </Form.Item>
+      </Col>
+      <Col {...responsiveColNum}>
+        <Form.Item label="Корпус" name="building" className="form-item">
+          <Input {...inputProps} />
+        </Form.Item>
+      </Col>
+      <Col {...responsiveColNum}>
+        <Form.Item label="Квартира" name="apartment" className="form-item">
+          <Input {...inputProps} />
+        </Form.Item>
+      </Col>
+    </Row>
+  );
+};
