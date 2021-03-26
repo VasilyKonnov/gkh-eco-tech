@@ -13,7 +13,7 @@ export type TTicketsItem = {
   email: string;
   created_at: string;
   completed_at: string;
-  task_status: string;
+  task_status: number;
   user: number;
   performer: number;
   attachment: string;

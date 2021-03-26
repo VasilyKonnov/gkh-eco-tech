@@ -47,6 +47,10 @@ export const TabTicketsHistory = () => {
 
   const refreshData = useCallback(() => {
     const { date, status, address } = valuesForm;
+    const getStatusName = (statusId: number) => {
+      const [status] = taskStatuses.filter((status) => status.id === statusId);
+      return status.title;
+    };
 
     const data = tasks
       .filter(
@@ -64,7 +68,7 @@ export const TabTicketsHistory = () => {
             minute: 'numeric',
             second: 'numeric',
           }),
-          status: val.task_status,
+          status: getStatusName(val.task_status),
           topic: val.subject,
           fio: `${val.surname} ${val.name} ${val.patronymic}`,
           address: parseAddressValue(val.address),
@@ -72,7 +76,7 @@ export const TabTicketsHistory = () => {
       });
 
     setTableData(data);
-  }, [tasks, valuesForm]);
+  }, [taskStatuses, tasks, valuesForm]);
 
   useEffect(() => {
     if (fetchingState === FetchingStateTypes.none) {

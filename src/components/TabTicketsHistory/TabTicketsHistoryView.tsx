@@ -2,7 +2,6 @@ import { Row, Col, Table, Form } from 'antd';
 import { SelectDateRange } from '../SelectDateRange';
 import { SelectTicketsStatus } from '../SelectTicketsStatus';
 import { SelectAddress } from '../SelectAddress';
-
 import { EmptyBox } from '../EmptyBox';
 import { TTabTicketsHistoryViewProps } from './TabTicketsHistoryTypes';
 

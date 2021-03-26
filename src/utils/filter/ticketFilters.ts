@@ -4,7 +4,7 @@ export const filterByStatus = (
   requiredStatus: string | null,
   val: TTicketsItem
 ) => {
-  return requiredStatus ? val.task_status === requiredStatus : true;
+  return requiredStatus ? val.task_status === parseInt(requiredStatus) : true;
 };
 
 export const filterByAddressTicket = (
