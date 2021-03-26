@@ -6,7 +6,8 @@ import {
   setTicketsData,
   ticketsFetching,
   ticketSending,
-  ticketSendingError
+  ticketSendingError,
+  setTicketStatuses
 } from './ticketsSlice';
 import { TTicketsAction } from './ticketsTypes';
 
@@ -33,9 +34,14 @@ export const ticketsAction: TTicketsAction = {
         openNotification({
           type: 'error',
           title: 'Ошибка!',
-          text: 'Не удалось отправить  заявку!',
+          text: 'Не удалось отправить заявку!',
         });
         dispatch(ticketSendingError());
       });
+  },
+  getStatuses: () => (dispatch) => {
+    ticketsApi.getStatuses().then(({ data }) => {
+      dispatch(setTicketStatuses({ statuses: data }));
+    });
   },
 };

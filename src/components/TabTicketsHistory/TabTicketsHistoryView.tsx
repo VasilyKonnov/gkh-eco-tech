@@ -1,10 +1,10 @@
-import { Row, Col, Table, Form, Select } from 'antd'
-import { SelectDateRange } from '../SelectDateRange'
-import { SelectTicketsStatus } from '../SelectTicketsStatus'
-import { SelectTicketsAddress } from '../SelectTicketsAddress'
-import { FetchingStateTypes } from '../../store'
-import { EmptyBox } from '../EmptyBox'
-import { TTabTicketsHistoryViewProps } from './TabTicketsHistoryTypes'
+import { Row, Col, Table, Form } from 'antd';
+import { SelectDateRange } from '../SelectDateRange';
+import { SelectTicketsStatus } from '../SelectTicketsStatus';
+import { SelectAddress } from '../SelectAddress';
+
+import { EmptyBox } from '../EmptyBox';
+import { TTabTicketsHistoryViewProps } from './TabTicketsHistoryTypes';
 
 const columns = [
   {
@@ -32,39 +32,43 @@ const columns = [
     dataIndex: 'address',
     key: 'address',
   },
-]
+];
 
 export const TabTicketsHistoryView: React.FC<TTabTicketsHistoryViewProps> = ({
-  filterStatus,
-  filterAddress,
   tableTicketsData,
+  onChangeFilter,
   isLoading,
   addressList,
   statusList,
-  filterDate,
 }) => {
   return (
     <EmptyBox text="Нет данных для отображения">
       <Form layout="vertical" size="large" className="form-data-history">
         <Row justify="space-between" gutter={[16, 16]}>
           <Col span={8}>
-            <Form.Item label="Дата" name="date" className="form-item">
-              <SelectDateRange onChangeRange={filterDate} />
+            <Form.Item label="Дата" name="data" className="form-item">
+              <SelectDateRange
+                onChangeRange={onChangeFilter.bind(null, 'date')}
+              />
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item label="Статус заявки" name="meter" className="form-item">
+            <Form.Item
+              label="Статус заявки"
+              name="status"
+              className="form-item"
+            >
               <SelectTicketsStatus
-                statusList={statusList}
-                onChangeStatus={filterStatus}
+                data={statusList}
+                onChangeStatus={onChangeFilter.bind(null, 'status')}
               />
             </Form.Item>
           </Col>
           <Col span={8}>
             <Form.Item label="Адрес" name="address" className="form-item">
-              <SelectTicketsAddress
-                dataAddress={addressList ? addressList : []}
-                onChangeAddress={filterAddress}
+              <SelectAddress
+                data={addressList}
+                onChangeAddress={onChangeFilter.bind(null, 'address')}
               />
             </Form.Item>
           </Col>
@@ -73,10 +77,10 @@ export const TabTicketsHistoryView: React.FC<TTabTicketsHistoryViewProps> = ({
           className="table-data-history"
           dataSource={tableTicketsData}
           columns={columns}
-          pagination={{ position: [] }}
+          pagination={false}
           loading={isLoading}
         />
       </Form>
     </EmptyBox>
-  )
-}
+  );
+};

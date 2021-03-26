@@ -1,4 +1,6 @@
+import { TTaskStatus } from '../../store/tickets';
+
 export type TSelectTicketsProps = {
-  onChangeStatus?: (id: number | string) => void
-  statusList?: string[]
-}
+  onChangeStatus: (id: string) => void;
+  data: TTaskStatus[];
+};

@@ -1,3 +1,4 @@
+import { TMeterAddressItem } from './../meter/meterTypes';
 import { Dispatch } from 'redux';
 import { FetchingStateTypes } from '../types';
 
@@ -12,25 +13,24 @@ export type TTicketsItem = {
   email: string;
   created_at: string;
   completed_at: string;
-  status: string;
+  task_status: string;
   user: number;
   performer: number;
   attachment: string;
-  address: {
-    id: number;
-    street: string;
-    house: string;
-    building: string;
-    apartment: string;
-    user: number;
-  };
+  address: TMeterAddressItem;
 };
 
 export type TTicketsState = {
   fetchingState: FetchingStateTypes;
   sendingTaskState: FetchingStateTypes;
+  statuses: TTaskStatus[];
   data: TTicketsItem[];
   errorText: string;
+};
+
+export type TTaskStatus = {
+  id: number;
+  title: string;
 };
 
 export type TTicketsAction = {
@@ -39,4 +39,5 @@ export type TTicketsAction = {
     formData: any,
     cbClearForm: () => void
   ) => (dispatch: Dispatch) => void;
+  getStatuses: () => (dispatch: Dispatch) => void;
 };

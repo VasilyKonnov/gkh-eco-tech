@@ -1,111 +1,103 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { ticketsAction, ticketsSelector } from '../../store/tickets'
-import { useEffect, useState } from 'react'
-import { TTableRowItem } from './TabTicketsHistoryTypes'
-import { FetchingStateTypes } from '../../store'
-import { uniqueVal } from '../../utils/common'
-import { TabTicketsHistoryView } from './TabTicketsHistoryView'
+import { useDispatch, useSelector } from 'react-redux';
+import { ticketsAction, ticketsSelector } from '../../store/tickets';
+import { useCallback, useEffect, useState } from 'react';
+import { TTableRowItem } from './TabTicketsHistoryTypes';
+import { FetchingStateTypes } from '../../store';
+import { TabTicketsHistoryView } from './TabTicketsHistoryView';
+import { TMeterAddressItem } from '../../store/meter';
+import { TTicketsItem } from '../../store/tickets';
+import { parseAddressValue } from '../../helpers';
+import {
+  EDateValue,
+  filterByDate,
+  filterByStatus,
+  filterByAddressTicket,
+} from '../../utils/filter';
+
+const sortByDate = (cur: TTicketsItem, sec: TTicketsItem) =>
+  Date.parse(sec.created_at) - Date.parse(cur.created_at);
+
+const fillUniqAddress = (acc: TMeterAddressItem[], cur: TTicketsItem) => {
+  if (
+    cur.address?.id &&
+    !acc.some((addressItem) => addressItem.id === cur.address.id)
+  )
+    acc.push(cur.address);
+  return acc;
+};
+
+type TValuesFrom = {
+  date: EDateValue;
+  status: string | null;
+  address: string | null;
+};
 
 export const TabTicketsHistory = () => {
-  const { data, fetchingState } = useSelector(ticketsSelector)
-  const dispatch = useDispatch()
+  const { data: tasks, statuses: taskStatuses, fetchingState } = useSelector(
+    ticketsSelector
+  );
+  const dispatch = useDispatch();
+  const [tableData, setTableData] = useState<TTableRowItem[]>([]);
+  const addressList = tasks.reduce(fillUniqAddress, []);
+  const [valuesForm, setValuesForm] = useState<TValuesFrom>({
+    date: EDateValue.all,
+    status: null,
+    address: null,
+  });
 
-  const [tableTicketsData, setTableTicketsData] = useState<TTableRowItem[]>()
-  const [filterTicketsData, setFilterTicketsData] = useState<TTableRowItem[]>()
-  const [addressList, setAddressList] = useState<string[]>()
-  const [statusList, setStatusList] = useState<string[]>()
+  const refreshData = useCallback(() => {
+    const { date, status, address } = valuesForm;
 
-  const [statusForFilter, setStatusForFilter] = useState<
-    number | string | undefined
-  >()
-  const [addressForFilter, setAddressForFilter] = useState<
-    number | string | undefined
-  >()
-
-  const getAddressList = () => {
-    if (filterTicketsData) {
-      let addressList = filterTicketsData.map((tickets) => tickets.address)
-      addressList = addressList.filter(uniqueVal)
-      setAddressList(addressList)
-    }
-  }
-  const getStatusList = () => {
-    if (filterTicketsData) {
-      let statusList = filterTicketsData.map((tickets) => tickets.status)
-      statusList = statusList.filter(uniqueVal)
-      setStatusList(statusList)
-    }
-  }
-  const getTableTicketsData = () => {
-    const getTicketsData = data.map((tableData: any, id: number) => {
-      return {
-        key: id + 1,
-        date: new Date(tableData.created_at).toLocaleDateString('ru-Ru', {
-          hour: 'numeric',
-          minute: 'numeric',
-          second: 'numeric',
-        }),
-
-        status: tableData.status,
-        topic: tableData.subject,
-        fio: `${tableData.surname} ${tableData.name} ${tableData.patronymic}`,
-        address: `${tableData.address.street} Дом ${tableData.address.house} ${
-          tableData.address.building || ''
-        } ${tableData.address.apartment || ''} `,
-      }
-    })
-    setTableTicketsData(getTicketsData)
-    setFilterTicketsData(getTicketsData)
-  }
-
-  const filterStatus = (status: number | string) => {
-    if (status && filterTicketsData) {
-      const dataTable = filterTicketsData.filter(
-        (value) => value.status === status,
+    const data = tasks
+      .filter(
+        (val) =>
+          filterByStatus(status, val) &&
+          filterByAddressTicket(address, val) &&
+          filterByDate(date, val.created_at)
       )
-      setTableTicketsData(dataTable)
-    } else if (data) {
-      getTableTicketsData()
-    }
-  }
-  const filterAddress = (address: number | string) => {
-    if (address && filterTicketsData) {
-      const dataTable = filterTicketsData.filter(
-        (value) => value.address === address,
-      )
-      setTableTicketsData(dataTable)
-    } else if (data) {
-      getTableTicketsData()
-    }
-  }
-  const filterDate = (date: number | string) => {
-    console.log('filterDate ', date)
-  }
+      .sort(sortByDate)
+      .map((val) => {
+        return {
+          key: val.id,
+          date: new Date(val.created_at).toLocaleDateString('ru-Ru', {
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+          }),
+          status: val.task_status,
+          topic: val.subject,
+          fio: `${val.surname} ${val.name} ${val.patronymic}`,
+          address: parseAddressValue(val.address),
+        };
+      });
+
+    setTableData(data);
+  }, [tasks, valuesForm]);
 
   useEffect(() => {
     if (fetchingState === FetchingStateTypes.none) {
-      dispatch(ticketsAction.list())
+      dispatch(ticketsAction.list());
     }
-  }, [dispatch, fetchingState])
+  }, [dispatch, fetchingState]);
 
   useEffect(() => {
-    getTableTicketsData()
-  }, [data, fetchingState])
+    refreshData();
+  }, [refreshData]);
 
-  useEffect(() => {
-    getAddressList()
-    getStatusList()
-  }, [filterTicketsData])
+  function onChangeFilter(name: string, value: number | string) {
+    const newState = {
+      [name]: value,
+    };
+    setValuesForm({ ...valuesForm, ...newState });
+  }
 
   return (
     <TabTicketsHistoryView
-      filterStatus={filterStatus}
-      filterAddress={filterAddress}
-      tableTicketsData={tableTicketsData}
+      tableTicketsData={tableData}
       isLoading={fetchingState === FetchingStateTypes.loading}
       addressList={addressList}
-      statusList={statusList}
-      filterDate={filterDate}
+      statusList={taskStatuses}
+      onChangeFilter={onChangeFilter}
     />
-  )
-}
+  );
+};

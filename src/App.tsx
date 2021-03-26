@@ -5,6 +5,7 @@ import { LoginPage, PageBase } from './pages';
 import { useSelector, useDispatch } from 'react-redux';
 import { userSelector } from './store/user';
 import { meterAction } from './store/meter';
+import { ticketsAction } from './store/tickets';
 import { FetchingStateTypes } from './store';
 
 const App: React.FC = () => {
@@ -31,7 +32,10 @@ const App: React.FC = () => {
   };
   // load all meter types
   useEffect(() => {
-    isAuth && dispatch(meterAction.getTypes());
+    if (isAuth) {
+      dispatch(meterAction.getTypes());
+      dispatch(ticketsAction.getStatuses());
+    }
   }, [dispatch, isAuth]);
 
   return (

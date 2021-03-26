@@ -36,7 +36,7 @@ const inDateRange = (type: string, date: string) => {
   return Date.parse(date) > dt;
 };
 
-export const filterByDate = (formDateValue: string, val: TValueItem) =>
+export const filterByDate = (formDateValue: string, val: string) =>
   formDateValue !== EDateValue.all
-    ? inDateRange(formDateValue, val.date)
+    ? inDateRange(formDateValue, val)
     : true;

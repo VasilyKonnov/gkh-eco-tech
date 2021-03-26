@@ -7,11 +7,3 @@ export const format = (time: number) => {
   const seconds = time % 60
   return `${minutes}:${padTime(seconds)}`
 }
-
-export const uniqueVal = (
-  value: string,
-  index: string | number,
-  self: string | any[],
-) => {
-  return self.indexOf(value) === index
-}

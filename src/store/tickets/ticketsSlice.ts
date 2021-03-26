@@ -6,6 +6,7 @@ const initialState: TTicketsState = {
   fetchingState: FetchingStateTypes.none,
   sendingTaskState: FetchingStateTypes.none,
   data: [],
+  statuses: [],
   errorText: '',
 };
 
@@ -34,6 +35,9 @@ const ticketsSlice = createSlice({
     ticketSendingError: (state) => {
       state.sendingTaskState = FetchingStateTypes.failed;
     },
+    setTicketStatuses: (state, { payload }) => {
+      state.statuses = payload.statuses;
+    },
   },
 });
 
@@ -43,6 +47,7 @@ export const {
   ticketsFetchError,
   addNewTicket,
   ticketSending,
-  ticketSendingError
+  ticketSendingError,
+  setTicketStatuses,
 } = ticketsSlice.actions;
 export const ticketsReducer = ticketsSlice.reducer;
