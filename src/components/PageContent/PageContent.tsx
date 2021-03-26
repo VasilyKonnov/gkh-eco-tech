@@ -4,8 +4,8 @@ import { PageTabs } from '../PageTabs'
 import { TabMetering } from '../TabMetering'
 import { TabMeteringHistory } from '../TabMeteringHistory'
 import { TPages, TPageContentProps } from './PageContentTypes'
-import { TabTickets } from './../TabTickets/TabTickets'
-import { TabTicketsHistory } from './../TabTicketsHistory/TabTicketsHistory'
+import { TabTickets } from '../TabTickets'
+import { TabTicketsHistory } from '../TabTicketsHistory'
 
 const pages: TPages = {
   payments: {

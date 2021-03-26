@@ -32,11 +32,13 @@ export const TabMeteringHistory = () => {
   const { data: meters } = useSelector(meterSelector)
   const addresses = meters.reduce(fillUniqAddress, [])
   const { fetchingState, data: values } = useSelector(valueSelector)
+
   const [valuesForm, setValuesForm] = useState<TValuesForm>({
     date: EDateValue.all,
     meter: null,
     address: null,
   })
+
   const [tableData, setTableData] = useState<TTableRowItem[]>([])
   const refreshData = useCallback(() => {
     const { date, meter, address } = valuesForm

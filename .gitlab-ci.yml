@@ -3,7 +3,7 @@ stages:
   - deploy
 
 variables:
-  docker_html_path: "/www"
+  docker_html_path: '/www'
   env: dev
 
 install_dependencies:
@@ -34,5 +34,3 @@ deploy_dev:
     - cp -r build_$env $docker_html_path
   only:
     - develop
-
-

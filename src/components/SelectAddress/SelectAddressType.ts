@@ -1,6 +1,6 @@
-import { TMeterAddressItem } from './../../store/meter/meterTypes';
+import { TMeterAddressItem } from './../../store/meter/meterTypes'
 
 export type TSelectAddressProps = {
-  data: TMeterAddressItem[];
-  onChangeAddress: (id: number | string) => void;
-};
+  data: TMeterAddressItem[]
+  onChangeAddress: (id: number | string) => void
+}

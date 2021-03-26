@@ -1,12 +1,12 @@
-import { Col, Form, Input, Row, Button } from 'antd';
-import { MaskedInput } from 'antd-mask-input';
-import { FormAddress } from '../FormAddress';
-import { TFormCreateTicketsProps } from './FormCreateTicketsTypes';
+import { Col, Form, Input, Row, Button } from 'antd'
+import { MaskedInput } from 'antd-mask-input'
+import { FormAddress } from '../FormAddress'
+import { TTabTicketsProps } from './TabTicketsTypes'
 
-const responsiveCol = { xs: 24, sm: 24, md: 24, lg: 8, xl: 8 };
-const responsiveColSubject = { xs: 24, sm: 24, md: 24, lg: 10, xl: 10 };
+const responsiveCol = { xs: 24, sm: 24, md: 24, lg: 8, xl: 8 }
+const responsiveColSubject = { xs: 24, sm: 24, md: 24, lg: 10, xl: 10 }
 
-export const FormCreateTicketsView: React.FC<TFormCreateTicketsProps> = ({
+export const TabTicketsView: React.FC<TTabTicketsProps> = ({
   form,
   onSubmit,
   fileRef,
@@ -132,4 +132,4 @@ export const FormCreateTicketsView: React.FC<TFormCreateTicketsProps> = ({
       </Button>
     </Form.Item>
   </Form>
-);
+)

@@ -5,31 +5,37 @@ const { Option } = Select
 
 export const SelectTicketsStatus: React.FC<TSelectTicketsProps> = ({
   onChangeStatus,
-  activeTickets,
+  statusList,
 }) => {
   return (
     <Select
       style={{ width: '100%' }}
       placeholder="Выберите статус"
       onChange={onChangeStatus}
-      value={activeTickets}
       allowClear
     >
-      <Option value={'Новая'} key={1}>
+      {statusList
+        ? statusList.map((status: string, id: number) => (
+            <Option value={status} key={id}>
+              {`${status}`}
+            </Option>
+          ))
+        : ''}
+      {/* <Option value={'new'} key={1}>
         Новая
       </Option>
-      <Option value={'Принята'} key={2}>
+      <Option value={'recieved'} key={2}>
         Принята
       </Option>
-      <Option value={'В работе'} key={4}>
+      <Option value={'in work'} key={4}>
         В работе
       </Option>
-      <Option value={'Отклонена'} key={5}>
+      <Option value={'rejected'} key={5}>
         Отклонена
       </Option>
-      <Option value={'Выполнена'} key={6}>
+      <Option value={'complete'} key={6}>
         Выполнена
-      </Option>
+      </Option> */}
     </Select>
   )
 }
