@@ -5,10 +5,11 @@ import './NavMenu.css';
 export const NavMenu: React.FC<INavMenuProps> = ({
   currentMenu,
   onChangeMenu,
+  isVertical = false,
 }) => (
   <Menu
     theme="light"
-    mode="horizontal"
+    mode={isVertical ? 'vertical' : 'horizontal'}
     defaultSelectedKeys={[currentMenu]}
     onClick={(key) => onChangeMenu(key)}
     className="page-navmenu"
