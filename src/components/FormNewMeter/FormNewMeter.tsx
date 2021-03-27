@@ -1,4 +1,5 @@
 import { Form, Input, Select, Modal } from 'antd'
+import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { meterAction, meterSelector, setVisibleModal } from '../../store/meter'
 import { IconText } from '../IconText'
@@ -30,11 +31,11 @@ export const FormNewMeter: React.FC = () => {
   const dispatch = useDispatch()
   const { types, visibleModalAddMeter } = useSelector(meterSelector)
 
-  function onCreateMeter() {
+  const onCreateMeter = useCallback(() => {
     form.validateFields().then((values) => {
       dispatch(meterAction.create(values, form.resetFields))
     })
-  }
+  }, [dispatch, form])
 
   function onClose() {
     dispatch(setVisibleModal({ visible: false }))

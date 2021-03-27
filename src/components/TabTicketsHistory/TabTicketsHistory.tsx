@@ -4,8 +4,6 @@ import { useCallback, useEffect, useState } from 'react'
 import { TTableRowItem, TValuesFrom } from './TabTicketsHistoryTypes'
 import { FetchingStateTypes } from '../../store'
 import { TabTicketsHistoryView } from './TabTicketsHistoryView'
-import { TMeterAddressItem } from '../../store/meter'
-import { TTicketsItem } from '../../store/tickets'
 import { parseAddressValue } from '../../helpers'
 import {
   EDateValue,
@@ -13,20 +11,9 @@ import {
   filterByStatus,
   filterByAddressTicket,
 } from '../../utils/filter'
+import { sortByDate, fillUniqAddress } from './utils'
 
-const sortByDate = (cur: TTicketsItem, sec: TTicketsItem) =>
-  Date.parse(sec.created_at) - Date.parse(cur.created_at)
-
-const fillUniqAddress = (acc: TMeterAddressItem[], cur: TTicketsItem) => {
-  if (
-    cur.address?.id &&
-    !acc.some((addressItem) => addressItem.id === cur.address.id)
-  )
-    acc.push(cur.address)
-  return acc
-}
-
-export const TabTicketsHistory = () => {
+export const TabTicketsHistory: React.FC = () => {
   const { data: tasks, statuses: taskStatuses, fetchingState } = useSelector(
     ticketsSelector,
   )

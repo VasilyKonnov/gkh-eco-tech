@@ -3,7 +3,7 @@ import { Typography, Modal } from 'antd'
 import { userAgreementText, userPrivacyPolicy } from './constants'
 import './RightAgreementBox.css'
 
-export const RightAgreementBox = () => {
+export const RightAgreementBox: React.FC = () => {
   const [isUserAgreementVisible, setIsUserAgreementVisible] = useState(false)
   const [isPersonalDataVisible, setIsPersonalDataVisible] = useState(false)
   const handleCancelUserAgreement = () => setIsUserAgreementVisible(false)
