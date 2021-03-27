@@ -1,11 +1,6 @@
 import { TMeterAddressItem } from './../meter/meterTypes'
 import { Dispatch } from 'redux'
 import { FetchingStateTypes } from '../types'
-import {
-  TFormValues,
-  TSendTaskValues,
-} from '../../components/TabTickets/TabTicketsTypes'
-import { TCreateTicketsProps } from '../../utils/api'
 
 export type TTicketsItem = {
   id: number

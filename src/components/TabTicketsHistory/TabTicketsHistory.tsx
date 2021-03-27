@@ -17,7 +17,6 @@ export const TabTicketsHistory: React.FC = () => {
   const { data: tasks, statuses: taskStatuses, fetchingState } = useSelector(
     ticketsSelector,
   )
-
   const dispatch = useDispatch()
   const [tableData, setTableData] = useState<TTableRowItem[]>([])
   const addressList = tasks.reduce(fillUniqAddress, [])

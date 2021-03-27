@@ -1,5 +1,4 @@
 import { FC, memo } from 'react'
-import { EyeOutlined } from '@ant-design/icons'
 import { Input, Checkbox, Button, Typography } from 'antd'
 import { Timer } from '../Timer'
 import { TFormInputPassProps } from './FormInputPassTypes'

@@ -47,7 +47,7 @@ export const LoginPage: React.FC = () => {
   )
 
   const onChangePass = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value.replace(/[^0-9\.]/g, '')
+    const value = event.target.value.replace(/[^0-9]/g, '')
     setPassValue(value)
   }
 

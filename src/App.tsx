@@ -1,42 +1,42 @@
-import { useEffect } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import { PageWrapper, SpinLoader } from './components';
-import { LoginPage, PageBase } from './pages';
-import { useSelector, useDispatch } from 'react-redux';
-import { userSelector } from './store/user';
-import { meterAction } from './store/meter';
-import { ticketsAction } from './store/tickets';
-import { FetchingStateTypes } from './store';
+import { useEffect } from 'react'
+import { Route, Switch, Redirect } from 'react-router-dom'
+import { PageWrapper, SpinLoader } from './components'
+import { LoginPage, PageBase } from './pages'
+import { useSelector, useDispatch } from 'react-redux'
+import { userSelector } from './store/user'
+import { meterAction } from './store/meter'
+import { ticketsAction } from './store/tickets'
+import { FetchingStateTypes } from './store'
 
 const App: React.FC = () => {
-  const { isAuth, fetchingState } = useSelector(userSelector);
-  const dispatch = useDispatch();
+  const { isAuth, fetchingState } = useSelector(userSelector)
+  const dispatch = useDispatch()
   const patches: string[] = [
     '/payments',
     '/metering',
-    '/tickets/:id?',
+    '/tickets',
     '/services',
     '/admin',
-    '/news',
-  ];
+    '/news/:id?',
+  ]
 
   const isCheckingToken =
     window.localStorage.getItem('Token') &&
-    fetchingState === FetchingStateTypes.loading;
+    fetchingState === FetchingStateTypes.loading
 
   const pageContent: React.FC = () => {
     if (isCheckingToken) {
-      return <SpinLoader />;
+      return <SpinLoader />
     }
-    return isAuth ? <PageBase /> : <Redirect to="/login" />;
-  };
+    return isAuth ? <PageBase /> : <Redirect to="/login" />
+  }
   // load all meter types
   useEffect(() => {
     if (isAuth) {
-      dispatch(meterAction.getTypes());
-      dispatch(ticketsAction.getStatuses());
+      dispatch(meterAction.getTypes())
+      dispatch(ticketsAction.getStatuses())
     }
-  }, [dispatch, isAuth]);
+  }, [dispatch, isAuth])
 
   return (
     <PageWrapper>
@@ -48,7 +48,7 @@ const App: React.FC = () => {
         </Route>
       </Switch>
     </PageWrapper>
-  );
-};
+  )
+}
 
-export default App;
+export default App
