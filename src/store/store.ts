@@ -4,6 +4,7 @@ import { userReducer, userAction } from './user'
 import { meterReducer } from './meter'
 import { ticketsReducer } from './tickets'
 import { valueReducer } from './value'
+import { newsReducer } from './news'
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     meter: meterReducer,
     tickets: ticketsReducer,
     value: valueReducer,
+    news: newsReducer,
   },
   middleware: [thunk],
 })

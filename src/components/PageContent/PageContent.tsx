@@ -6,6 +6,7 @@ import { TabMeteringHistory } from '../TabMeteringHistory'
 import { TPages, TPageContentProps } from './PageContentTypes'
 import { TabTickets } from '../TabTickets'
 import { TabTicketsHistory } from '../TabTicketsHistory'
+import { TabNews } from '../TabNews'
 
 const pages: TPages = {
   payments: {
@@ -44,7 +45,7 @@ const pages: TPages = {
   },
   news: {
     title: 'Новости',
-    content: 'Форма новостей',
+    content: <TabNews />,
   },
   admin: {
     title: 'Администратор',
