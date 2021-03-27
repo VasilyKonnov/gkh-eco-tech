@@ -5,6 +5,15 @@ import { TTabTicketsProps } from './TabTicketsTypes'
 
 const responsiveCol = { xs: 24, sm: 24, md: 24, lg: 8, xl: 8 }
 const responsiveColSubject = { xs: 24, sm: 24, md: 24, lg: 10, xl: 10 }
+const surnameRules = [{ required: true, message: 'Введите фамилию' }]
+const nameRules = [{ required: true, message: 'Введите имя' }]
+const patronymicRules = [{ required: true, message: 'Введите отчество' }]
+const phoneRules = [{ required: true, message: 'Введите корректный номер' }]
+const emailRules = [
+  { required: true, message: 'Введите электронную почту', type: 'email' },
+]
+const subjectRules = [{ required: true, message: 'Введите тему сообщения' }]
+const textRules = [{ required: true, message: 'Введите сообщение' }]
 
 export const TabTicketsView: React.FC<TTabTicketsProps> = ({
   form,
@@ -26,7 +35,7 @@ export const TabTicketsView: React.FC<TTabTicketsProps> = ({
           label="Фамилия"
           name="surname"
           className="label-input-page-base"
-          rules={[{ required: true, message: 'Введите фамилию' }]}
+          rules={surnameRules}
         >
           <Input className="input-page-base" placeholder="Введите фамилию" />
         </Form.Item>
@@ -36,7 +45,7 @@ export const TabTicketsView: React.FC<TTabTicketsProps> = ({
           className="label-input-page-base"
           label="Имя"
           name="name"
-          rules={[{ required: true, message: 'Введите имя' }]}
+          rules={nameRules}
         >
           <Input className="input-page-base" placeholder="Введите имя" />
         </Form.Item>
@@ -46,7 +55,7 @@ export const TabTicketsView: React.FC<TTabTicketsProps> = ({
           className="label-input-page-base"
           label="Отчество"
           name="patronymic"
-          rules={[{ required: true, message: 'Введите отчество' }]}
+          rules={patronymicRules}
         >
           <Input className="input-page-base" placeholder="Введите отчество" />
         </Form.Item>
@@ -58,7 +67,7 @@ export const TabTicketsView: React.FC<TTabTicketsProps> = ({
           className="label-input-page-base"
           label="Телефон"
           name="phone"
-          rules={[{ required: true, message: 'Введите корректный номер' }]}
+          rules={phoneRules}
         >
           <MaskedInput
             maxLength={11}
@@ -74,13 +83,8 @@ export const TabTicketsView: React.FC<TTabTicketsProps> = ({
           className="label-input-page-base"
           label="Электронная почта"
           name="email"
-          rules={[
-            {
-              type: 'email',
-              required: true,
-              message: 'Введите электронную почту',
-            },
-          ]}
+          // @ts-ignore
+          rules={emailRules}
         >
           <Input
             className="input-page-base"
@@ -94,25 +98,12 @@ export const TabTicketsView: React.FC<TTabTicketsProps> = ({
         className="label-input-page-base"
         label="Обращение"
         name="subject"
-        rules={[
-          {
-            required: true,
-            message: 'Введите тему сообщения',
-          },
-        ]}
+        rules={subjectRules}
       >
         <Input className="input-page-base" placeholder="Тема" />
       </Form.Item>
     </Col>
-    <Form.Item
-      name="text"
-      rules={[
-        {
-          required: true,
-          message: 'Введите сообщение',
-        },
-      ]}
-    >
+    <Form.Item name="text" rules={textRules}>
       <Input.TextArea
         className="textarea-appel-filds"
         placeholder="Текст обращения"

@@ -1,37 +1,10 @@
-import { Row, Col, Table, Form } from 'antd';
-import { SelectDateRange } from '../SelectDateRange';
-import { SelectTicketsStatus } from '../SelectTicketsStatus';
-import { SelectAddress } from '../SelectAddress';
-import { EmptyBox } from '../EmptyBox';
-import { TTabTicketsHistoryViewProps } from './TabTicketsHistoryTypes';
-
-const columns = [
-  {
-    title: 'Дата',
-    dataIndex: 'date',
-    key: 'date',
-  },
-  {
-    title: 'Статус',
-    dataIndex: 'status',
-    key: 'status',
-  },
-  {
-    title: 'Тема',
-    dataIndex: 'topic',
-    key: 'topic',
-  },
-  {
-    title: 'ФИО',
-    dataIndex: 'fio',
-    key: 'fio',
-  },
-  {
-    title: 'Адрес',
-    dataIndex: 'address',
-    key: 'address',
-  },
-];
+import { Row, Col, Table, Form } from 'antd'
+import { SelectDateRange } from '../SelectDateRange'
+import { SelectTicketsStatus } from '../SelectTicketsStatus'
+import { SelectAddress } from '../SelectAddress'
+import { EmptyBox } from '../EmptyBox'
+import { TTabTicketsHistoryViewProps } from './TabTicketsHistoryTypes'
+import { columns } from './data'
 
 export const TabTicketsHistoryView: React.FC<TTabTicketsHistoryViewProps> = ({
   tableTicketsData,
@@ -81,5 +54,5 @@ export const TabTicketsHistoryView: React.FC<TTabTicketsHistoryViewProps> = ({
         />
       </Form>
     </EmptyBox>
-  );
-};
+  )
+}
