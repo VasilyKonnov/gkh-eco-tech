@@ -1,8 +1,9 @@
 import { useCallback, useState } from 'react'
 import { Typography, Modal } from 'antd'
+import { userAgreementText, userPrivacyPolicy } from './constants'
 import './RightAgreementBox.css'
 
-export const RightAgreementBox = () => {
+export const RightAgreementBox: React.FC = () => {
   const [isUserAgreementVisible, setIsUserAgreementVisible] = useState(false)
   const [isPersonalDataVisible, setIsPersonalDataVisible] = useState(false)
   const handleCancelUserAgreement = () => setIsUserAgreementVisible(false)
@@ -35,7 +36,7 @@ export const RightAgreementBox = () => {
         visible={isUserAgreementVisible}
         onCancel={handleCancelUserAgreement}
       >
-        <h1>Тут будет тест Пользовательского соглашения</h1>
+        {userAgreementText}
       </Modal>
       <Modal
         footer={null}
@@ -44,9 +45,7 @@ export const RightAgreementBox = () => {
         visible={isPersonalDataVisible}
         onCancel={handleCancelPersonalData}
       >
-        <h1>
-          Тут будет тест соглашения c Политикой обработки персональных данных
-        </h1>
+        {userPrivacyPolicy}
       </Modal>
     </>
   )
