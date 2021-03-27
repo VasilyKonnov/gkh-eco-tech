@@ -1,0 +1,25 @@
+.tab-news-wrap {
+	padding: 0 0 50px;
+}
+
+.item-img-wrap {
+	width: 100%;
+}
+
+.item-img-wrap img {
+	display: block;
+	max-width: 100%;
+	margin-bottom: 16px;
+}
+
+.item-text-wrap h3 {
+	font-size: 14px;
+	font-weight: 500;
+	margin-bottom: 12px;
+}
+
+.item-text-wrap--text {
+	font-size: 12px;
+	font-weight: 400;
+	color: #666666;
+}

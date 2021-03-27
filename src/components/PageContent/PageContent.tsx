@@ -44,7 +44,7 @@ const pages: TPages = {
     content: 'Форма услуг',
   },
   news: {
-    title: 'Новости',
+    title: '',
     content: <TabNews />,
   },
   admin: {
@@ -86,7 +86,7 @@ const PageContent: React.FC<TPageContentProps> = ({ currentPage }) => {
 
   return (
     <>
-      <HeadingPage title={title} />
+      {title && <HeadingPage title={title} />}
       {pageHasTabs.current && (
         <PageTabs tabs={tabs} onChangeTab={onChangeTab} activeTab={activeTab} />
       )}
