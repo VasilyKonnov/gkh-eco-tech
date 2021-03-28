@@ -30,6 +30,12 @@ deploy:
     - apk add --no-cache openssh-client bash
     - mkdir -p /www/
     - cp -r build_$env /www/
+    - eval $(ssh-agent -s)
+    - echo "$DEPLOY_DEV_KEY" | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan dev.brain4you.ru >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
   script:  
     - bash deploy.sh
   only:
