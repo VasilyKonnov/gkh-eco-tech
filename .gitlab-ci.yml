@@ -25,12 +25,13 @@ install_dependencies:
 
 deploy:
   stage: deploy
-  script:
+  before_script:
     - apk update
     - apk add --no-cache openssh-client bash
-    - mkdir -p /www/dev/
-    - cp -r build_$env /www/dev/
-    - scp -i $DEPLOY_DEV_FILE -o StrictHostKeyChecking=no -r /www/dev/build_$env/* student@dev.brain4you.ru:/srv/build/build_dev/
+    - mkdir -p /www/
+    - cp -r build_$env /www/
+  script:  
+    - bash deploy.sh
   only:
     - develop
     - merge_requests
