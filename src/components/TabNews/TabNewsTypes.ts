@@ -17,3 +17,7 @@ export type TTabNewsProps = {
   newsContent?: TNew[]
   firstNew?: TNew
 }
+
+export type TArticlePage = {
+  id: string
+}

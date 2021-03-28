@@ -1,0 +1,34 @@
+.head-article {
+	margin-top: 44px;
+}
+
+.back-to-news {
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	color: #004F9E;
+	margin-bottom: 24px;
+}
+
+.article-title {
+	font-size: 20px;
+	font-weight: 500;
+	margin-bottom: 29px;
+}
+
+.article-body {
+	padding-bottom: 50px;
+}
+
+.article-body img {
+	float: left;
+	max-width: 100%;
+	margin-right: 40px;
+	margin-bottom: 40px;
+}
+
+@media (min-width: 576px) {
+	.article-body img {
+		max-width: 548px;
+	}
+}
