@@ -38,6 +38,7 @@ const meterSlice = createSlice({
     setRefresh: (state) => {
       state.fetchingState = FetchingStateTypes.none;
     },
+    meterClearStore: () => initialState,
   },
 });
 
@@ -48,6 +49,7 @@ export const {
   setMeterTypes,
   addNewMeter,
   setVisibleModal,
-  setRefresh
+  setRefresh,
+  meterClearStore
 } = meterSlice.actions;
 export const meterReducer = meterSlice.reducer;

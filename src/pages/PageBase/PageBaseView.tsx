@@ -1,4 +1,4 @@
-import { Layout, Row, Col, Button } from 'antd';
+import { Layout, Row, Col, Button, Avatar, Menu } from 'antd';
 import {
   NavMenu,
   INavMenuProps,
@@ -9,6 +9,7 @@ import {
 } from '../../components';
 import imgLoginPage from '../../assets/image/loginpage.png';
 import { MenuOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 const { Header, Content } = Layout;
 
@@ -26,17 +27,19 @@ export const PageBaseView: React.FC<IPageBaseViewProps> = ({
   hideNavMenu,
   currentMenu,
   onChangeMenu,
-  onLogout,
   userPhone,
   avatarUrl,
   toogleMobileMenu,
   visible,
+  handlerUserMenu,
 }) => (
   <Layout className="page">
     <Header className="page-header">
       <Row justify="space-between">
         <Col>
-          <img src={imgLoginPage} width={80} height={50} alt="logo" />
+          <Link to="/">
+            <img src={imgLoginPage} width={80} height={50} alt="logo" />
+          </Link>
         </Col>
         <Col>
           {hideNavMenu && (
@@ -52,29 +55,39 @@ export const PageBaseView: React.FC<IPageBaseViewProps> = ({
                 icon={<MenuOutlined />}
                 size="large"
                 shape="circle"
-                ghost
               />
               <MobileMenu
                 title={
-                  <UserMenu
-                    onLogout={onLogout}
-                    avatarUrl={avatarUrl}
-                    userPhone={userPhone}
-                  />
+                  <>
+                    <Avatar src={avatarUrl} style={{ marginTop: -8 }} />
+                    {userPhone}
+                  </>
                 }
                 visible={visible}
                 onClose={() => toogleMobileMenu(false)}
               >
-                <NavMenu
-                  currentMenu={currentMenu}
-                  onChangeMenu={onChangeMenu}
-                  isVertical
-                />
+                <Menu>
+                  <Menu.ItemGroup key="group-menu" title="Меню">
+                    <NavMenu
+                      currentMenu={currentMenu}
+                      onChangeMenu={onChangeMenu}
+                      isVertical
+                    />
+                  </Menu.ItemGroup>
+                  <Menu.ItemGroup key="group-profile" title="Учетная запись">
+                    <UserMenu
+                      handlerUserMenu={handlerUserMenu}
+                      avatarUrl={avatarUrl}
+                      userPhone={userPhone}
+                      isVertical
+                    />
+                  </Menu.ItemGroup>
+                </Menu>
               </MobileMenu>
             </>
           ) : (
             <UserMenu
-              onLogout={onLogout}
+              handlerUserMenu={handlerUserMenu}
               avatarUrl={avatarUrl}
               userPhone={userPhone}
             />
@@ -82,7 +95,7 @@ export const PageBaseView: React.FC<IPageBaseViewProps> = ({
         </Col>
       </Row>
     </Header>
-    <Content className="page-header">
+    <Content className="page-content">
       <PageContent currentPage={currentMenu} />
     </Content>
   </Layout>

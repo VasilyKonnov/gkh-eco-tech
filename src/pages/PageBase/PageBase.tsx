@@ -15,31 +15,32 @@ export const PageBase: React.FC = () => {
   const user = useSelector(userSelector);
   const dispath = useDispatch();
   const [visibleMenu, setVisibleMenu] = useState(false);
-  const { lg, md } = useBreakpoint();  
+  const { lg, md } = useBreakpoint();
 
   function onChangeMenu(props: React.Attributes) {
     history.push(`/${props.key}`);
-  }
-
-  function onLogout() {
-    dispath(userAction.logout());
   }
 
   function toogleMobileMenu(bool: boolean) {
     setVisibleMenu(bool);
   }
 
+  function handlerUserMenu(props: React.Attributes) {
+    props.key === 'profile' && history.push(`/${props.key}`);
+    props.key === 'logout' && dispath(userAction.logout());
+  }
+
   return (
     <PageBaseView
       currentMenu={currentMenu}
       onChangeMenu={onChangeMenu}
-      onLogout={onLogout}
       userPhone={user.phone}
       avatarUrl="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
       toogleMobileMenu={toogleMobileMenu}
       visible={visibleMenu}
       hideUserMenu={!lg}
       hideNavMenu={!!md}
+      handlerUserMenu={handlerUserMenu}
     />
   );
 };

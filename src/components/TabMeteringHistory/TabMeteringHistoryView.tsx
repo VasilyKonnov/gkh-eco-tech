@@ -1,9 +1,9 @@
-import { Row, Col, Table, Form } from 'antd'
-import { SelectDateRange } from '../SelectDateRange'
-import { SelectMeter } from '../SelectMeter'
-import { SelectAddress } from '../SelectAddress'
-import { EmptyBox } from '../EmptyBox'
-import { TTabMeteringHistoryViewProps } from './TabMeteringHistoryTypes'
+import { Row, Col, Table, Form } from 'antd';
+import { SelectDateRange } from '../SelectDateRange';
+import { SelectMeter } from '../SelectMeter';
+import { SelectAddress } from '../SelectAddress';
+import { EmptyBox } from '../EmptyBox';
+import { TTabMeteringHistoryViewProps } from './TabMeteringHistoryTypes';
 
 const columns = [
   {
@@ -26,7 +26,9 @@ const columns = [
     dataIndex: 'address',
     key: 'address',
   },
-]
+];
+
+const responsiveFilterCol = { xs: 24, sm: 24, md: 8, lg: 8, xl: 8 };
 
 export const TabMeteringHistoryView: React.FC<TTabMeteringHistoryViewProps> = ({
   handlerChangeValue,
@@ -36,22 +38,22 @@ export const TabMeteringHistoryView: React.FC<TTabMeteringHistoryViewProps> = ({
 }) => (
   <EmptyBox text="Нет данных для отображения">
     <Form layout="vertical" size="large">
-      <Row justify="space-between" gutter={[16, 16]}>
-        <Col span={8}>
+      <Row justify="space-between" gutter={16}>
+        <Col {...responsiveFilterCol}>
           <Form.Item label="Дата" name="date" className="form-item">
             <SelectDateRange
               onChangeRange={handlerChangeValue.bind(null, 'date')}
             />
           </Form.Item>
         </Col>
-        <Col span={8}>
+        <Col {...responsiveFilterCol}>
           <Form.Item label="Счетчик" name="meter" className="form-item">
             <SelectMeter
               onChangeMeter={handlerChangeValue.bind(null, 'meter')}
             />
           </Form.Item>
         </Col>
-        <Col span={8}>
+        <Col {...responsiveFilterCol}>
           <Form.Item label="Адрес" name="address" className="form-item">
             <SelectAddress
               onChangeAddress={handlerChangeValue.bind(null, 'address')}
@@ -70,4 +72,4 @@ export const TabMeteringHistoryView: React.FC<TTabMeteringHistoryViewProps> = ({
       />
     </Form>
   </EmptyBox>
-)
+);

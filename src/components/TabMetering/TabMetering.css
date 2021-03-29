@@ -23,10 +23,21 @@
   font-weight: 500;
 }
 
-.btn-submit.ant-btn-primary {
+.btn-submit.ant-btn.ant-btn-primary,
+.btn-submit.ant-btn.ant-btn-dangerous {
   min-width: 300px;
   min-height: 56px;
-  background: #2b6db0;
+}
+
+.btn-submit.ant-btn.ant-btn-primary {
+  background: #004f9e;
+}
+
+.btn-submit.ant-btn.ant-btn-primary:hover,
+.btn-submit.ant-btn.ant-btn-primary:focus {
+  min-width: 300px;
+  min-height: 56px;
+  background: #003264;
 }
 
 .ant-card-meta-description {

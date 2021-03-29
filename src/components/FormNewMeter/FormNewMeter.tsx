@@ -27,16 +27,15 @@ const fieldParams = {
 }
 
 export const FormNewMeter: React.FC = () => {
-  const [form] = Form.useForm()
-  const dispatch = useDispatch()
-  const { types, visibleModalAddMeter } = useSelector(meterSelector)
-
+  const [form] = Form.useForm();
+  const dispatch = useDispatch();
+  const { types, visibleModalAddMeter } = useSelector(meterSelector);
   const onCreateMeter = useCallback(() => {
     form.validateFields().then((values) => {
-      dispatch(meterAction.create(values, form.resetFields))
-    })
-  }, [dispatch, form])
-
+      dispatch(meterAction.create(values, form.resetFields));
+    });
+  }, [dispatch, form]);
+  
   function onClose() {
     dispatch(setVisibleModal({ visible: false }))
   }

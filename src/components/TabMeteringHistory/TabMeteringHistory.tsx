@@ -1,13 +1,13 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { meterSelector, TMeterItem } from '../../store/meter'
-import { valueSelector } from '../../store/value/valueSelector'
-import { useCallback, useEffect, useState } from 'react'
-import { FetchingStateTypes } from '../../store'
-import { valueAction, TValueItem } from '../../store/value'
-import { TMeterAddressItem } from '../../store/meter'
-import { parseAddressValue } from '../../helpers'
-import { TabMeteringHistoryView } from './TabMeteringHistoryView'
-import { TValuesForm, TTableRowItem } from './TabMeteringHistoryTypes'
+import { useDispatch, useSelector } from 'react-redux';
+import { meterAction, meterSelector, TMeterItem } from '../../store/meter';
+import { valueSelector } from '../../store/value/valueSelector';
+import { useCallback, useEffect, useState } from 'react';
+import { FetchingStateTypes } from '../../store';
+import { valueAction, TValueItem } from '../../store/value';
+import { TMeterAddressItem } from '../../store/meter';
+import { parseAddressValue } from '../../helpers';
+import { TabMeteringHistoryView } from './TabMeteringHistoryView';
+import { TValuesForm, TTableRowItem } from './TabMeteringHistoryTypes';
 import {
   filterByMeter,
   filterByDate,
@@ -28,10 +28,14 @@ const fillUniqAddress = (acc: TMeterAddressItem[], cur: TMeterItem) => {
 }
 
 export const TabMeteringHistory = () => {
-  const dispatch = useDispatch()
-  const { data: meters } = useSelector(meterSelector)
-  const addresses = meters.reduce(fillUniqAddress, [])
-  const { fetchingState, data: values } = useSelector(valueSelector)
+  const dispatch = useDispatch();
+  const { data: meters, fetchingState: metersFetchingState } = useSelector(
+    meterSelector
+  );
+  const addresses = meters.reduce(fillUniqAddress, []);
+  const { fetchingState: valuesFetchingState, data: values } = useSelector(
+    valueSelector
+  );
   const [valuesForm, setValuesForm] = useState<TValuesForm>({
     date: EDateValue.all,
     meter: null,
@@ -70,10 +74,13 @@ export const TabMeteringHistory = () => {
   }, [meters, values, valuesForm])
 
   useEffect(() => {
-    if (fetchingState === FetchingStateTypes.none) {
-      dispatch(valueAction.list())
+    if (valuesFetchingState === FetchingStateTypes.none) {
+      dispatch(valueAction.list());
     }
-  }, [dispatch, fetchingState])
+    if (metersFetchingState === FetchingStateTypes.none) {
+      dispatch(meterAction.list());
+    }
+  }, [dispatch, valuesFetchingState, metersFetchingState]);
 
   useEffect(() => {
     refreshData()
@@ -89,7 +96,10 @@ export const TabMeteringHistory = () => {
   return (
     <TabMeteringHistoryView
       handlerChangeValue={handlerChangeValue}
-      isLoading={fetchingState === FetchingStateTypes.loading}
+      isLoading={
+        valuesFetchingState === FetchingStateTypes.loading ||
+        metersFetchingState === FetchingStateTypes.loading
+      }
       tableData={tableData}
       addresses={addresses}
     />

@@ -1,15 +1,27 @@
+import { message } from 'antd';
+import { TMeterAddressItem, meterClearStore } from './../meter';
+import { valueClearStore } from './../value';
 import { userApi } from '../../utils/api';
 import {
   setAuthData,
   userFetching,
   userFetchingError,
-  userLogout,
+  userClearStore,
   setStateDeliveryPass,
+  // changingProfileFetching,
+  changingProfileError,
+  setProfileData,
 } from './userSlice';
 import jwt_decode from 'jwt-decode';
 import axios from '../../services/axios';
 import { formatPhoneNumber, openNotification } from '../../helpers';
-import { TJwt, TUserAction, TTokenParams, TVerifyParams } from './userTypes';
+import {
+  TJwt,
+  TUserAction,
+  TTokenParams,
+  TVerifyParams,
+  TProfile,
+} from './userTypes';
 
 export const userAction: TUserAction = {
   sendMobile: (post: object) => (dispatch) => {
@@ -38,14 +50,13 @@ export const userAction: TUserAction = {
         window.localStorage.setItem('Token', data.access);
         axios.defaults.headers.common['Authorization'] =
           'Bearer ' + data.access;
-
         dispatch(
           setAuthData({
             userId: sub.user_id,
             phone: post.mobile,
-            role: 'user',
           })
         );
+        dispatch(userAction.profile(sub.user_id) as any);
         openNotification({
           type: 'success',
           title: 'Успешно!',
@@ -89,7 +100,34 @@ export const userAction: TUserAction = {
           setAuthData({
             userId: userId,
             phone: data.mobile,
-            role: 'user',
+          })
+        );
+        let address = {
+          id: 0,
+          street: '',
+          house: '',
+          building: '',
+          apartment: '',
+        };
+        if (data.addresses.length) {
+          const [addressItem] = data.addresses.filter(
+            (item: TMeterAddressItem) => item.is_main
+          );
+          address = addressItem;
+        } else if (data.address) {
+          address = data.address;
+        }
+        dispatch(
+          setProfileData({
+            profile: {
+              name: data.name,
+              surname: data.surname,
+              patronymic: data.patronymic,
+              email: data.email,
+              attachment: data.attachment,
+              personal_account: data.personal_account,
+              address,
+            },
           })
         );
       })
@@ -102,13 +140,85 @@ export const userAction: TUserAction = {
         });
       });
   },
+  changeProfile: (profileId: number, profile: TProfile, onFinish) => (
+    dispatch
+  ) => {
+    // dispatch(changingProfileFetching());
+    const key = 'changing';
+    message.loading({ content: 'Изменение данных...', key });
+    userApi
+      .changeProfile(profileId, profile)
+      .then(({ status, data }) => {
+        if (status !== 200) throw new Error('Failed change profile');
+
+        let address = {};
+        if (data.address) {
+          address = data.address;
+        } else if (Array.isArray(data.addresses)) {
+          [address] = data.address.filter(
+            (item: TMeterAddressItem) => item.is_main
+          );
+        }
+        dispatch(
+          setProfileData({
+            profile: {
+              name: data.name,
+              surname: data.surname,
+              patronymic: data.patronymic,
+              email: data.email,
+              attachment: data.attachment,
+              personal_account: data.personal_account,
+              address,
+            },
+          })
+        );
+        onFinish();
+        message.success({
+          content: 'Данные пользователя обновлены!',
+          key,
+          duration: 2,
+        });
+      })
+      .catch(() => {
+        dispatch(changingProfileError());
+        openNotification({
+          type: 'error',
+          title: 'Ошибка!',
+          text: 'Не удалось сохранить изменения',
+        });
+      });
+  },
+  removeProfile: (userId) => (dispatch) => {
+    userApi
+      .removeProfile(userId)
+      .then(({ status }) => {
+        if (status !== 204) throw new Error('Failed remove profile');
+        dispatch(userAction.clearAllStore() as any);
+        openNotification({
+          type: 'success',
+          title: 'Успешно!',
+          text: 'Данные профиля удалены',
+        });
+      })
+      .catch(() => {
+        openNotification({
+          type: 'error',
+          title: 'Ошибка!',
+          text: 'Не удалось удалить профиль пользователя',
+        });
+      });
+  },
   logout: () => (dispatch) => {
-    window.localStorage.removeItem('Token');
-    dispatch(userLogout());
-    window.location.reload();
     openNotification({
       type: 'success',
       title: 'Выполнен выход',
     });
+    dispatch(userAction.clearAllStore() as any);
+  },
+  clearAllStore: () => (dispatch) => {
+    window.localStorage.removeItem('Token');
+    dispatch(userClearStore());
+    dispatch(meterClearStore());
+    dispatch(valueClearStore());
   },
 };

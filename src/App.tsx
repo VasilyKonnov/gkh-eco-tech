@@ -16,9 +16,9 @@ const App: React.FC = () => {
     '/metering',
     '/tickets',
     '/services',
-    '/admin',
+    '/profile',
     '/news/:id?',
-  ]
+  ];
 
   const isCheckingToken =
     window.localStorage.getItem('Token') &&

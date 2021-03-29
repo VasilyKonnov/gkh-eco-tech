@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Form } from 'antd';
+import { Form, message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import TabMeteringView from './TabMeteringView';
 import { meterAction, meterSelector, TMeterItem } from '../../store/meter';
@@ -91,6 +91,14 @@ export const TabMetering = () => {
   }
 
   function handlerSendValue(values: TSendValueProps) {
+    if (+prevValue > +values.value) {
+      message.warning('Текущие показание не может быть меньше предыдущего!');
+      return;
+    }
+    if (!values.street.trim().length || !values.house.trim().length) {
+      message.warning('Поле улица и дом не могут быть пустыми!');
+      return;
+    }
     dispatch(valueAction.send(values, handlerRefreshForm));
   }
 

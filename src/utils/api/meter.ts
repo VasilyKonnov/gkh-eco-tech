@@ -1,4 +1,4 @@
-import { TMeterAddress } from './../../store/meter/meterTypes';
+import { TMeterAddress } from '../../store/meter/meterTypes';
 import { axios } from '../../services';
 
 export type TCreateMeterProps = {

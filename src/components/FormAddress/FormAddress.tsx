@@ -1,7 +1,7 @@
-import { Input, Form, Row, Col } from 'antd'
+import { Input, Form, Row, Col } from 'antd';
 
-const responsiveColStreet = { xs: 24, sm: 24, md: 24, lg: 14, xl: 14 }
-const responsiveColNum = { xs: 24, sm: 24, md: 8, lg: 3, xl: 3 }
+const responsiveColStreet = { xs: 24, sm: 24, md: 24, lg: 14, xl: 14 };
+const responsiveColNum = { xs: 24, sm: 24, md: 8, lg: 3, xl: 3 };
 const fieldParams = {
   street: [{ required: true, message: 'Не указана улица!' }],
   meters_type: [
@@ -14,7 +14,7 @@ const fieldParams = {
 };
 
 type TFormAddressProps = {
-  readOnly: boolean;
+  readOnly?: boolean;
 };
 
 export const FormAddress: React.FC<TFormAddressProps> = ({ readOnly }) => {
