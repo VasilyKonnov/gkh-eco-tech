@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { DocButtonView } from './DocButtonView'
 
 const fakeImg =
-  'https://migrantvisa.ru/wp-content/uploads/2019/03/wsi-imageoptim-Uplata-gosposhliny.jpg'
+  'https://u.9111s.ru/uploads/202102/20/d6fd6657e02633321069bdbd829fe6c7.jpg'
 
 export const DocButton = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)

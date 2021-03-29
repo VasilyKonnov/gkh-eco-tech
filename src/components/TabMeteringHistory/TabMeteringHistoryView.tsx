@@ -1,9 +1,9 @@
-import { Row, Col, Table, Form } from 'antd';
-import { SelectDateRange } from '../SelectDateRange';
-import { SelectMeter } from '../SelectMeter';
-import { SelectAddress } from '../SelectAddress';
-import { EmptyBox } from '../EmptyBox';
-import { TTabMeteringHistoryViewProps } from './TabMeteringHistoryTypes';
+import { Row, Col, Table, Form } from 'antd'
+import { SelectDateRange } from '../SelectDateRange'
+import { SelectMeter } from '../SelectMeter'
+import { SelectAddress } from '../SelectAddress'
+import { EmptyBox } from '../EmptyBox'
+import { TTabMeteringHistoryViewProps } from './TabMeteringHistoryTypes'
 
 const columns = [
   {
@@ -26,7 +26,7 @@ const columns = [
     dataIndex: 'address',
     key: 'address',
   },
-];
+]
 
 export const TabMeteringHistoryView: React.FC<TTabMeteringHistoryViewProps> = ({
   handlerChangeValue,
@@ -66,7 +66,8 @@ export const TabMeteringHistoryView: React.FC<TTabMeteringHistoryViewProps> = ({
         columns={columns}
         pagination={false}
         loading={isLoading}
+        scroll={{ x: 600 }}
       />
     </Form>
   </EmptyBox>
-);
+)
