@@ -3,7 +3,6 @@ stages:
   - deploy
 
 variables:
-  docker_html_path: '/www'
   env: dev
 
 install_dependencies:
@@ -24,10 +23,21 @@ install_dependencies:
   only:
     - develop
 
-deploy_dev:
+deploy:
   stage: deploy
-  script:
-    - rm -rf $docker_html_path/build_$env
-    - cp -r build_$env $docker_html_path
+  before_script:
+    - apk update
+    - apk add --no-cache openssh-client bash
+    - mkdir -p /www/
+    - cp -r build_$env /www/
+    - eval $(ssh-agent -s)
+    - echo "$DEPLOY_DEV_KEY" | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan dev.brain4you.ru >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:  
+    - bash deploy.sh
   only:
     - develop
+    - merge_requests
