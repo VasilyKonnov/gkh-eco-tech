@@ -85,7 +85,6 @@ export const FormProfile: React.FC = () => {
   function getChangedFields(values: TValuesForm) {
     return Object.entries(values).filter((field) => {
       const [key, val] = field;
-      // FIXME: при входе очищается адрес профиля
       if (addressKeys.includes(key) && profile.address.hasOwnProperty(key)) {
         // @ts-ignore
         return val?.toString().trim() !== profile.address[key];

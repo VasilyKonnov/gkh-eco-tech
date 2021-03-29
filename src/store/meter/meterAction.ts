@@ -7,6 +7,7 @@ import {
   setMeterTypes,
   addNewMeter,
   setRefresh,
+  fillNewMeter,
 } from './meterSlice';
 import { TMeterAction } from './meterTypes';
 
@@ -43,15 +44,26 @@ export const meterAction: TMeterAction = {
     const { data: meter } = await meterApi.byId(values.meter);
     if (!meter.address) {
       const { apartment, building, house, street } = values;
-      meterApi.fillAddress(values.meter, {
-        address: {
-          apartment,
-          building,
-          house,
-          street,
-        },
-      });
-    }
-    dispatch(setRefresh());
+      const address = {
+        apartment,
+        building,
+        house,
+        street,
+      };
+
+      meterApi
+        .fillAddress(values.meter, {
+          address,
+        })
+        .then(({ data }) => {
+          dispatch(
+            fillNewMeter({
+              meterId: values.meter,
+              address: data.address,
+              previous_value: data.previous_value,
+            })
+          );
+        });
+    } else dispatch(setRefresh());
   },
 };

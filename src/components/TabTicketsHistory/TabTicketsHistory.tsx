@@ -13,6 +13,8 @@ import {
 } from '../../utils/filter'
 import { sortByDate, fillUniqAddress } from './utils'
 
+
+
 export const TabTicketsHistory: React.FC = () => {
   const { data: tasks, statuses: taskStatuses, fetchingState } = useSelector(
     ticketsSelector,
@@ -51,7 +53,7 @@ export const TabTicketsHistory: React.FC = () => {
           }),
           status: getStatusName(val.task_status),
           topic: val.subject,
-          fio: `${val.surname} ${val.name} ${val.patronymic}`,
+          fio: `${val.surname} ${val.name} ${val.patronymic || ''}`,
           address: parseAddressValue(val.address),
         }
       })

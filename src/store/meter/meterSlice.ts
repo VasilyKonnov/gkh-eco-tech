@@ -38,6 +38,15 @@ const meterSlice = createSlice({
     setRefresh: (state) => {
       state.fetchingState = FetchingStateTypes.none;
     },
+    fillNewMeter: (state, { payload }) => {
+      state.data = state.data.map((meterItem) => {
+        if (meterItem.id === payload.meterId) {
+          meterItem.address = payload.address;
+          meterItem.previous_value = payload.previous_value
+        }
+        return meterItem;
+      });
+    },
     meterClearStore: () => initialState,
   },
 });
@@ -50,6 +59,7 @@ export const {
   addNewMeter,
   setVisibleModal,
   setRefresh,
-  meterClearStore
+  fillNewMeter,
+  meterClearStore,
 } = meterSlice.actions;
 export const meterReducer = meterSlice.reducer;

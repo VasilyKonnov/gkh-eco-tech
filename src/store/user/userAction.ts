@@ -113,7 +113,7 @@ export const userAction: TUserAction = {
           const [addressItem] = data.addresses.filter(
             (item: TMeterAddressItem) => item.is_main
           );
-          address = addressItem;
+          if (addressItem?.id) address = addressItem;
         } else if (data.address) {
           address = data.address;
         }
