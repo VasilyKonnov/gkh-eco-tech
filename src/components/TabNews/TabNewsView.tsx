@@ -33,6 +33,11 @@ export const TabNewsView: React.FC<TTabNewsProps> = ({
                     ? firstNew.title.slice(0, 200) + '...'
                     : firstNew.title}
                 </h3>
+                <p className="new-create-at">
+                  {`Дата ${new Date(firstNew.created_at).toLocaleDateString(
+                    'ru-Ru',
+                  )}`}
+                </p>
                 <div className="item-text-wrap--text">
                   {firstNew.preview.slice(0, 300) + '...'}
                 </div>
@@ -58,6 +63,9 @@ export const TabNewsView: React.FC<TTabNewsProps> = ({
                           ? news.title.slice(0, 55) + '...'
                           : news.title}
                       </h3>
+                      <p className="new-create-at">{`Дата ${new Date(
+                        news.created_at,
+                      ).toLocaleDateString('ru-Ru')}`}</p>
                       <div className="item-text-wrap--text">
                         {news.preview.slice(0, 85) + '...'}
                       </div>

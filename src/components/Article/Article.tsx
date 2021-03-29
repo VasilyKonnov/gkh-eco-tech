@@ -45,6 +45,7 @@ export const Article: React.FC<TArticleProps> = ({ page }) => {
       pageImage={articleData ? articleData.image : ''}
       pageTitle={articleData ? articleData.title : ''}
       pageContent={articleData ? articleData.content : ''}
+      pageDate={articleData ? articleData.created_at : ''}
     />
   )
 }

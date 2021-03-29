@@ -7,11 +7,30 @@ import { TPages, TPageContentProps } from './PageContentTypes'
 import { TabTickets } from '../TabTickets'
 import { TabTicketsHistory } from '../TabTicketsHistory'
 import { TabNews } from '../TabNews'
+import { TabAccruals } from '../TabAccruals'
+import {
+  dataTable2021,
+  dataTable2020,
+  dataTable2019,
+} from '../TabAccruals/dataColumns'
 
 const pages: TPages = {
   payments: {
     title: 'Начисления',
-    content: 'Форма начислений',
+    tabs: {
+      'tabs-2021': {
+        title: '2021',
+        content: <TabAccruals tableData={dataTable2021} />,
+      },
+      'tabs-2020': {
+        title: '2020',
+        content: <TabAccruals tableData={dataTable2020} />,
+      },
+      'tabs-2019': {
+        title: '2019',
+        content: <TabAccruals tableData={dataTable2019} />,
+      },
+    },
   },
   metering: {
     title: 'Показания',

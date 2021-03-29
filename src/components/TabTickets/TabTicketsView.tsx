@@ -7,11 +7,9 @@ const responsiveCol = { xs: 24, sm: 24, md: 24, lg: 8, xl: 8 }
 const responsiveColSubject = { xs: 24, sm: 24, md: 24, lg: 10, xl: 10 }
 const surnameRules = [{ required: true, message: 'Введите фамилию' }]
 const nameRules = [{ required: true, message: 'Введите имя' }]
-const patronymicRules = [{ required: true, message: 'Введите отчество' }]
+const patronymicRules = [{ message: 'Введите отчество' }]
 const phoneRules = [{ required: true, message: 'Введите корректный номер' }]
-const emailRules = [
-  { required: true, message: 'Введите электронную почту', type: 'email' },
-]
+const emailRules = [{ message: 'Введите электронную почту', type: 'email' }]
 const subjectRules = [{ required: true, message: 'Введите тему сообщения' }]
 const textRules = [{ required: true, message: 'Введите сообщение' }]
 

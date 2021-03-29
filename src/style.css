@@ -167,6 +167,12 @@ h1 {
 	padding-bottom: 50px;
 }
 
+.ant-table-wrapper.table-data-history {
+	max-width: 95vw;
+	margin: 0 auto;
+	padding-bottom: 50px;
+}
+
 .table-data-history .ant-table-thead>tr>th {
 	font-size: 11px;
 	text-transform: uppercase;

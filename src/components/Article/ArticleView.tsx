@@ -9,6 +9,7 @@ export const ArticleView: React.FC<TArticleViewProps> = ({
   pageImage,
   pageTitle,
   pageContent,
+  pageDate,
 }) => {
   return (
     <>
@@ -20,6 +21,9 @@ export const ArticleView: React.FC<TArticleViewProps> = ({
           </div>
         </Link>
         <h1 className="article-title">{pageTitle}</h1>
+        <p className="article-create-at">{`Дата ${new Date(
+          pageDate,
+        ).toLocaleDateString('ru-Ru')}`}</p>
       </div>
       <div className="article-body">
         <img src={pageImage ? pageImage : failImg} alt="Картинка в новости" />

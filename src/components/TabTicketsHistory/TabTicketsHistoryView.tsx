@@ -51,7 +51,7 @@ export const TabTicketsHistoryView: React.FC<TTabTicketsHistoryViewProps> = ({
           columns={columns}
           pagination={false}
           loading={isLoading}
-          scroll={{ y: 590 }}
+          scroll={{ x: 600 }}
         />
       </Form>
     </EmptyBox>
