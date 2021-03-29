@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { meterSelector, TMeterItem } from '../../store/meter';
+import { meterAction, meterSelector, TMeterItem } from '../../store/meter';
 import { valueSelector } from '../../store/value/valueSelector';
 import { useCallback, useEffect, useState } from 'react';
 import { FetchingStateTypes } from '../../store';
@@ -29,9 +29,13 @@ const fillUniqAddress = (acc: TMeterAddressItem[], cur: TMeterItem) => {
 
 export const TabMeteringHistory = () => {
   const dispatch = useDispatch();
-  const { data: meters } = useSelector(meterSelector);
+  const { data: meters, fetchingState: metersFetchingState } = useSelector(
+    meterSelector
+  );
   const addresses = meters.reduce(fillUniqAddress, []);
-  const { fetchingState, data: values } = useSelector(valueSelector);
+  const { fetchingState: valuesFetchingState, data: values } = useSelector(
+    valueSelector
+  );
   const [valuesForm, setValuesForm] = useState<TValuesForm>({
     date: EDateValue.all,
     meter: null,
@@ -70,10 +74,13 @@ export const TabMeteringHistory = () => {
   }, [meters, values, valuesForm]);
 
   useEffect(() => {
-    if (fetchingState === FetchingStateTypes.none) {
+    if (valuesFetchingState === FetchingStateTypes.none) {
       dispatch(valueAction.list());
     }
-  }, [dispatch, fetchingState]);
+    if (metersFetchingState === FetchingStateTypes.none) {
+      dispatch(meterAction.list());
+    }
+  }, [dispatch, valuesFetchingState, metersFetchingState]);
 
   useEffect(() => {
     refreshData();
@@ -89,7 +96,10 @@ export const TabMeteringHistory = () => {
   return (
     <TabMeteringHistoryView
       handlerChangeValue={handlerChangeValue}
-      isLoading={fetchingState === FetchingStateTypes.loading}
+      isLoading={
+        valuesFetchingState === FetchingStateTypes.loading ||
+        metersFetchingState === FetchingStateTypes.loading
+      }
       tableData={tableData}
       addresses={addresses}
     />

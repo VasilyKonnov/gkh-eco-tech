@@ -20,7 +20,7 @@ export const MobileMenu: React.FC<TMobileMenuProps> = ({
     onClose={onClose}
     visible={visible}
     bodyStyle={{ padding: 0 }}
-    width={300}
+    width={200}
   >
     {children}
   </Drawer>

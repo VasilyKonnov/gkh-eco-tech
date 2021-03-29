@@ -26,6 +26,7 @@ const valueSlice = createSlice({
     setRefresh: (state) => {
       state.fetchingState = FetchingStateTypes.none;
     },
+    valueClearStore: () => initialState,
   },
 });
 
@@ -34,5 +35,6 @@ export const {
   valueFetching,
   valueFetchingError,
   setRefresh,
+  valueClearStore,
 } = valueSlice.actions;
 export const valueReducer = valueSlice.reducer;

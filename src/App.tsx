@@ -13,10 +13,10 @@ const App: React.FC = () => {
   const patches: string[] = [
     '/payments',
     '/metering',
-    '/tickets/:id?',
+    '/tickets',
     '/services',
-    '/admin',
-    '/news',
+    '/profile',
+    '/news/:id?',
   ];
 
   const isCheckingToken =

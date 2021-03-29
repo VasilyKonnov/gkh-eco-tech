@@ -4,11 +4,29 @@ import { PageTabs } from '../PageTabs';
 import { TabMetering } from '../TabMetering';
 import { TabMeteringHistory } from '../TabMeteringHistory';
 import { TPages, TPageContentProps } from './PageContentTypes';
+import { FormProfile } from '../FormProfile';
 
 const pages: TPages = {
+  profile: {
+    title: 'Профиль',
+    content: <FormProfile />,
+  },
   payments: {
     title: 'Начисления',
-    content: 'Форма начислений',
+    tabs: {
+      'tabs-2021': {
+        title: '2021',
+        content: <div>Данные за 2021</div>,
+      },
+      'tabs-2020': {
+        title: '2020',
+        content: <div>Данные за 2020</div>,
+      },
+      'tabs-2019': {
+        title: '2019',
+        content: <div>Данные за 2019</div>,
+      },
+    }
   },
   metering: {
     title: 'Показания',
@@ -43,10 +61,6 @@ const pages: TPages = {
   news: {
     title: 'Новости',
     content: 'Форма новостей',
-  },
-  admin: {
-    title: 'Администратор',
-    content: 'Форма администратора',
   },
 };
 

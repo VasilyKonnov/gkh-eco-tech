@@ -5,9 +5,24 @@ import { TUserState } from './userTypes';
 const initialState: TUserState = {
   userId: 0,
   phone: '',
-  role: 'none',
+  profile: {
+    name: '',
+    surname: '',
+    patronymic: '',
+    email: '',
+    attachment: '',
+    personal_account: null,
+    address: {
+      id: 0,
+      street: '',
+      house: '',
+      building: '',
+      apartment: '',
+    },
+  },
   isAuth: false,
   fetchingState: FetchingStateTypes.none,
+  changingProfileState: FetchingStateTypes.none,
   passDeliveryState: false,
   errorText: '',
 };
@@ -23,7 +38,6 @@ const userSlice = createSlice({
     setAuthData: (state, { payload }) => {
       state.userId = payload.userId;
       state.phone = payload.phone;
-      state.role = payload.role;
       state.isAuth = true;
       state.fetchingState = FetchingStateTypes.success;
     },
@@ -34,14 +48,17 @@ const userSlice = createSlice({
       state.fetchingState = FetchingStateTypes.failed;
       state.errorText = payload.errorText;
     },
-    userLogout: (state) => {
-      state.userId = 0;
-      state.phone = '';
-      state.role = 'none';
-      state.isAuth = false;
-      state.fetchingState = FetchingStateTypes.none;
-      state.passDeliveryState = false;
+    setProfileData: (state, { payload }) => {
+      state.profile = { ...payload.profile };
+      state.changingProfileState = FetchingStateTypes.success;
     },
+    changingProfileFetching: (state) => {
+      state.changingProfileState = FetchingStateTypes.loading;
+    },
+    changingProfileError: (state) => {
+      state.changingProfileState = FetchingStateTypes.failed;
+    },
+    userClearStore: () => initialState,
   },
 });
 
@@ -49,7 +66,10 @@ export const {
   setAuthData,
   userFetching,
   userFetchingError,
-  userLogout,
+  userClearStore,
+  setProfileData,
   setStateDeliveryPass,
+  changingProfileFetching,
+  changingProfileError,
 } = userSlice.actions;
 export const userReducer = userSlice.reducer;

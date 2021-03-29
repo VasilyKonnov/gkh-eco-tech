@@ -27,6 +27,7 @@ export type TMeterAddressItem = {
   house: string;
   building: string;
   apartment: string;
+  is_main?: boolean;
 };
 
 export type TMeterType = {

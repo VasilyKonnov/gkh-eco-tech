@@ -4,5 +4,3 @@ export enum FetchingStateTypes {
   success = 'success',
   failed = 'failed',
 }
-
-export declare type UserRoleTypes = 'user' | 'admin' | 'none';
