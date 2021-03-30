@@ -29,19 +29,19 @@ export const TabTicketsHistory: React.FC = () => {
   const refreshData = useCallback(() => {
     const { date, status, address } = valuesForm
     const getStatusName = (statusId: number) => {
-      const [status] = taskStatuses.filter((status) => status.id === statusId)
+      const [status] = taskStatuses.filter((status: any) => status.id === statusId)
       return status.title
     }
 
     const data = tasks
       .filter(
-        (val) =>
+        (val: any) =>
           filterByStatus(status, val) &&
           filterByAddressTicket(address, val) &&
           filterByDate(date, val.created_at),
       )
       .sort(sortByDate)
-      .map((val) => {
+      .map((val: any) => {
         return {
           key: val.id,
           date: new Date(val.created_at).toLocaleDateString('ru-Ru', {

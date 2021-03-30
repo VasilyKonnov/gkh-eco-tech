@@ -1,3 +1,3 @@
-import { RootState } from '../store'
+import { RootState } from '../store';
 
-export const ticketsSelector = (state: RootState) => state.tickets
+export const ticketsSelector = (state: RootState) => state.tickets;
