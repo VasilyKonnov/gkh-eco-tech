@@ -1,3 +1,4 @@
+import { priceReducer } from './price';
 import { configureStore } from '@reduxjs/toolkit'
 import thunk from 'redux-thunk'
 import { userReducer, userAction } from './user'
@@ -13,6 +14,7 @@ export const store = configureStore({
     tickets: ticketsReducer,
     value: valueReducer,
     news: newsReducer,
+    price: priceReducer
   },
   middleware: [thunk],
 })

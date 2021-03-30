@@ -8,6 +8,13 @@ import { FormProfile } from '../FormProfile';
 import { TabTickets } from '../TabTickets';
 import { TabTicketsHistory } from '../TabTicketsHistory';
 import { TabNews } from '../TabNews';
+import { TabAccruals } from '../TabAccruals';
+import {
+  dataTable2021,
+  dataTable2020,
+  dataTable2019,
+} from '../TabAccruals/dataColumns';
+import { PriceList } from '../PriceList';
 
 const pages: TPages = {
   profile: {
@@ -19,15 +26,15 @@ const pages: TPages = {
     tabs: {
       'tabs-2021': {
         title: '2021',
-        content: <div>Данные за 2021</div>,
+        content: <TabAccruals tableData={dataTable2021} />,
       },
       'tabs-2020': {
         title: '2020',
-        content: <div>Данные за 2020</div>,
+        content: <TabAccruals tableData={dataTable2020} />,
       },
       'tabs-2019': {
         title: '2019',
-        content: <div>Данные за 2019</div>,
+        content: <TabAccruals tableData={dataTable2019} />,
       },
     },
   },
@@ -59,7 +66,7 @@ const pages: TPages = {
   },
   services: {
     title: 'Услуги',
-    content: 'Форма услуг',
+    content: <PriceList />,
   },
   news: {
     title: '',

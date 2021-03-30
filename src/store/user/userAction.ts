@@ -1,6 +1,7 @@
 import { message } from 'antd';
 import { TMeterAddressItem, meterClearStore } from './../meter';
 import { valueClearStore } from './../value';
+import { ticketClearStore } from './../tickets';
 import { userApi } from '../../utils/api';
 import {
   setAuthData,
@@ -220,5 +221,6 @@ export const userAction: TUserAction = {
     dispatch(userClearStore());
     dispatch(meterClearStore());
     dispatch(valueClearStore());
+    dispatch(ticketClearStore());
   },
 };

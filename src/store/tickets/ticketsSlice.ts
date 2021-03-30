@@ -38,6 +38,7 @@ const ticketsSlice = createSlice({
     setTicketStatuses: (state, { payload }) => {
       state.statuses = payload.statuses;
     },
+    ticketClearStore: () => initialState,
   },
 });
 
@@ -49,5 +50,6 @@ export const {
   ticketSending,
   ticketSendingError,
   setTicketStatuses,
+  ticketClearStore
 } = ticketsSlice.actions;
 export const ticketsReducer = ticketsSlice.reducer;
