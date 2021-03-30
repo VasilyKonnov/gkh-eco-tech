@@ -1,9 +1,9 @@
-import { TArticleViewProps } from './ArticleType'
-import backtonews from '../../assets/image/back-to-news.svg'
-import { Link } from 'react-router-dom'
-import './Article.css'
+import { TArticleViewProps } from './ArticleType';
+import backtonews from '../../assets/image/back-to-news.svg';
+import { Button } from 'antd';
+import './Article.css';
 
-const failImg = 'https://www.schelcovo.ru/image/logo/uk.png'
+const failImg = 'https://www.schelcovo.ru/image/logo/uk.png';
 
 export const ArticleView: React.FC<TArticleViewProps> = ({
   pageImage,
@@ -14,15 +14,15 @@ export const ArticleView: React.FC<TArticleViewProps> = ({
   return (
     <>
       <div className="head-article">
-        <Link to="/news">
+        <Button type="link" onClick={() => window.history.back()}>
           <div className="back-to-news">
             <img src={backtonews} alt="arrow back to news" />
             <span> Ко всем новостям</span>
           </div>
-        </Link>
+        </Button>
         <h1 className="article-title">{pageTitle}</h1>
         <p className="article-create-at">{`Дата ${new Date(
-          pageDate,
+          pageDate
         ).toLocaleDateString('ru-Ru')}`}</p>
       </div>
       <div className="article-body">
@@ -30,5 +30,5 @@ export const ArticleView: React.FC<TArticleViewProps> = ({
         <p>{pageContent}</p>
       </div>
     </>
-  )
-}
+  );
+};

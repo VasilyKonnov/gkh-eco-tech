@@ -1,44 +1,18 @@
-import { TArticleProps, TArticle } from './ArticleType'
-import { ArticleView } from './ArticleView'
-import { newsApi } from '../../utils/api/news'
-import { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { TArticleProps, TArticle } from './ArticleType';
+import { ArticleView } from './ArticleView';
+import { newsApi } from '../../utils/api/news';
+import { useEffect, useState } from 'react';
 
 export const Article: React.FC<TArticleProps> = ({ page }) => {
-  const [articleData, setArticleData] = useState<TArticle>()
-  const history = useHistory()
-
-  const articleByDirectLink = () => {
-    let currentLocation = window.location.href.split('/')
-    let articleId = currentLocation[currentLocation.length - 1]
-
-    if (articleId) {
-      newsApi.byId(articleId).then((response) => {
-        if (!response) {
-          history.push('/news')
-        } else {
-          let artData = response.data
-          setArticleData(artData)
-        }
-      })
-    }
-  }
+  const [articleData, setArticleData] = useState<TArticle>();
 
   useEffect(() => {
     if (page) {
-      newsApi.byId(page).then((response) => {
-        if (!response) {
-          history.push('/news')
-        } else {
-          let artData = response.data
-          setArticleData(artData)
-        }
-      })
-    } else if (!page) {
-      articleByDirectLink()
+      newsApi.byId(page).then(({ data }) => {
+        setArticleData(data);
+      });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [history, page])
+  }, [page]);
 
   return (
     <ArticleView
@@ -47,5 +21,5 @@ export const Article: React.FC<TArticleProps> = ({ page }) => {
       pageContent={articleData ? articleData.content : ''}
       pageDate={articleData ? articleData.created_at : ''}
     />
-  )
-}
+  );
+};
