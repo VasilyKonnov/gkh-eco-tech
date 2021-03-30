@@ -1,8 +1,10 @@
 import { Row, Col, Form, Input } from 'antd';
 
 const fieldParams = {
-  surname: [{ required: true, message: 'Не указана фамилия!' }],
-  name: [{ required: true, message: 'Не указано имя!' }],
+  surname: [
+    { required: true, message: 'Не указана фамилия!', whitespace: true },
+  ],
+  name: [{ required: true, message: 'Не указано имя!', whitespace: true }],
   patronymic: [{ message: 'Не указано отчество!' }],
 };
 

@@ -42,8 +42,8 @@ export const FormProfile: React.FC = () => {
 
   // fill form on open
   useEffect(() => {
-    fillForm();
-  }, [fillForm]);
+    if (!loading) fillForm();
+  }, [fillForm, loading]);
 
   function makeFormData(values: any) {
     const formData = new FormData();
@@ -94,6 +94,10 @@ export const FormProfile: React.FC = () => {
       }
     });
   }
+  function onSubmit() {
+    form.submit();
+    form.validateFields().then((values) => handlerChangeProfile());
+  }
 
   function handlerRemoveProfile() {
     dispatch(userAction.removeProfile(userId));
@@ -129,7 +133,7 @@ export const FormProfile: React.FC = () => {
         btnTitle={btnTitle}
         canDelete={canDelete}
         loading={loading}
-        handlerChangeProfile={handlerChangeProfile}
+        handlerChangeProfile={onSubmit}
         handlerRemoveProfile={handlerRemoveProfile}
       />
     </>

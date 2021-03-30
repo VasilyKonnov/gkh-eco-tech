@@ -24,6 +24,13 @@ export const FormProfileView: React.FC<TFormProfileViewProps> = memo(
               label="№ лицевого счета"
               name="personal_account"
               className="form-item"
+              rules={[
+                {
+                  required: true,
+                  message: 'Введите корректный № лицевого счета',
+                  max: 9,
+                },
+              ]}
             >
               <Input
                 type="number"
@@ -39,6 +46,7 @@ export const FormProfileView: React.FC<TFormProfileViewProps> = memo(
               className="form-item"
               rules={[
                 {
+                  required: true,
                   message: 'Введите электронную почту',
                   type: 'email',
                 },
