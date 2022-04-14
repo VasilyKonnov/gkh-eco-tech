@@ -10,7 +10,9 @@ import { FetchingStateTypes } from './store'
 
 const App: React.FC = () => {
   const { isAuth, fetchingState } = useSelector(userSelector)
+
   const dispatch = useDispatch()
+
   const patches: string[] = [
     '/payments',
     '/metering',
@@ -18,7 +20,7 @@ const App: React.FC = () => {
     '/services',
     '/profile',
     '/news/:id?',
-  ];
+  ]
 
   const isCheckingToken =
     window.localStorage.getItem('Token') &&
